@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2o0seo5k2ev5"]
+[gd_scene load_steps=3 format=3 uid="uid://b2o0seo5k2ev5"]
+
+[ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
 
 [node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_ssbip")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
