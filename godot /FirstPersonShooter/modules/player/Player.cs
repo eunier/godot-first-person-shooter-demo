@@ -13,17 +13,25 @@ public partial class Player : CharacterBody3D
         Vector3 velocity = this.Velocity;
 
         // Add the gravity.
-        if (!IsOnFloor())
-            velocity.Y -= gravity * (float)delta;
+        if (!this.IsOnFloor())
+        {
+            velocity.Y -= this.gravity * (float)delta;
+        }
 
         // Handle Jump.
-        if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+        if (Input.IsActionJustPressed("ui_accept") && this.IsOnFloor())
+        {
             velocity.Y = JumpVelocity;
+        }
 
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
         Vector2 inputDir = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-        Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+
+        Vector3 direction = (
+            this.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)
+        ).Normalized();
+
         if (direction != Vector3.Zero)
         {
             velocity.X = direction.X * Speed;
@@ -31,11 +39,11 @@ public partial class Player : CharacterBody3D
         }
         else
         {
-            velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-            velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+            velocity.X = Mathf.MoveToward(this.Velocity.X, 0, Player.Speed);
+            velocity.Z = Mathf.MoveToward(this.Velocity.Z, 0, Player.Speed);
         }
 
-        Velocity = velocity;
-        MoveAndSlide();
+        this.Velocity = velocity;
+        _ = this.MoveAndSlide();
     }
 }
