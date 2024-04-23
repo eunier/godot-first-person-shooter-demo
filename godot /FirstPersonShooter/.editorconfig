@@ -1,5 +1,9 @@
 [*.{cs,vb}]
 
+indent_style = tab
+csharp_new_line_before_open_brace = none
+max_line_length = 80
+
 # IDE
 dotnet_analyzer_diagnostic.category-Style.severity = warning
 
@@ -13,3 +17,4 @@ dotnet_style_qualification_for_property = true:warning
 dotnet_diagnostic.IDE0002.severity = none
 
 
+dotnet_diagnostic.IDE0055.severity = warning
