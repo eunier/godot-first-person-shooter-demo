@@ -73,7 +73,7 @@ public partial class Player : CharacterBody3D
 	{
 		if (Input.IsActionJustPressed(action: "jump") && this.IsOnFloor())
 		{
-			velocity.Y = JumpVelocity;
+			velocity.Y = Player.JumpVelocity;
 			velocity.Y = Mathf.Sqrt(this._jumpHeight * 2 * this.gravity);
 		}
 	}
