@@ -48,19 +48,19 @@ public partial class Player : CharacterBody3D
 		_ = this.MoveAndSlide();
 	}
 
-	public override void _Input(InputEvent @event)
+	public override void _Input(InputEvent inputEvent)
 	{
-		base._Input(@event);
+		base._Input(inputEvent);
 
 		if (
-			@event is InputEventMouseMotion mouseMotionInputEvent
+			inputEvent is InputEventMouseMotion mouseMotionInputEvent
 			&& Input.MouseMode == Input.MouseModeEnum.Captured
 		)
 		{
 			this.mouseMotion = -mouseMotionInputEvent.Relative * 0.003f;
 		}
 
-		if (@event.IsActionPressed("ui_cancel"))
+		if (inputEvent.IsActionPressed("ui_cancel"))
 		{
 			Input.MouseMode = Input.MouseModeEnum.Visible;
 		}
