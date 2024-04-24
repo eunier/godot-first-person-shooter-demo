@@ -14,7 +14,21 @@ public partial class Player : CharacterBody3D
 		.GetSetting("physics/3d/default_gravity")
 		.AsSingle();
 
-	// TODO: var hitpoints
+	private float hitpoints;
+	public float Hitpoints
+	{
+		get { return this.hitpoints; }
+		set
+		{
+			this.hitpoints = value;
+			GD.Print(this.hitpoints);
+
+			if (this.hitpoints <= 0)
+			{
+				this.GetTree().Quit();
+			}
+		}
+	}
 
 	public override void _Ready()
 	{
@@ -44,6 +58,11 @@ public partial class Player : CharacterBody3D
 		)
 		{
 			this.mouseMotion = -mouseMotionInputEvent.Relative * 0.003f;
+		}
+
+		if (@event.IsActionPressed("ui_cancel"))
+		{
+			Input.MouseMode = Input.MouseModeEnum.Visible;
 		}
 	}
 
