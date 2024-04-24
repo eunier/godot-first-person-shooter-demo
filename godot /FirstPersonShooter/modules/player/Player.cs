@@ -34,15 +34,23 @@ public partial class Player : CharacterBody3D
 	{
 		if (!this.IsOnFloor())
 		{
-			velocity.Y -= this.gravity * (float)delta;
+			if (velocity.Y >= 0)
+			{
+				velocity.Y -= this.gravity * (float)delta;
+			}
+			else
+			{
+				velocity.Y -= this.gravity * (float)delta * (float)this._fallMultiplier;
+			}
 		}
 	}
 
 	private void HandleJump(ref Vector3 velocity)
 	{
-		if (Input.IsActionJustPressed(action: "ui_accept") && this.IsOnFloor())
+		if (Input.IsActionJustPressed(action: "jump") && this.IsOnFloor())
 		{
 			velocity.Y = JumpVelocity;
+			velocity.Y = Godot.Mathf.Sqrt(this._jumpHeight * 2 * this.gravity);
 		}
 	}
 
