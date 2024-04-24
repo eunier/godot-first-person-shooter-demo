@@ -14,6 +14,8 @@ public partial class Player : CharacterBody3D
 		.GetSetting("physics/3d/default_gravity")
 		.AsSingle();
 
+	// TODO: var hitpoints
+
 	public override void _Ready()
 	{
 		base._Ready();
