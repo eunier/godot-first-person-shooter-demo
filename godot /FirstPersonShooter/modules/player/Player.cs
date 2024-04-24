@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Player : CharacterBody3D
@@ -13,6 +14,9 @@ public partial class Player : CharacterBody3D
 
 	[Export]
 	private float _maxHitpoints = 100;
+
+	[Export]
+	private Node3D _cameraPivot;
 
 	private Vector2 _mouseMotion = Vector2.Zero;
 
@@ -102,5 +106,14 @@ public partial class Player : CharacterBody3D
 	private void HandleCameraRotation()
 	{
 		this.RotateY(this._mouseMotion.X);
+		this._cameraPivot.RotateX(this._mouseMotion.Y);
+
+		this._cameraPivot.RotationDegrees = new Vector3(
+			(float)Mathf.Clamp(this._cameraPivot.RotationDegrees.X, -90.0, 90.0),
+			this._cameraPivot.RotationDegrees.Y,
+			this._cameraPivot.RotationDegrees.Z
+		);
+
+		this._mouseMotion = Vector2.Zero;
 	}
 }
