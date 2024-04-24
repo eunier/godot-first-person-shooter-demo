@@ -42,12 +42,11 @@ public partial class Player : CharacterBody3D
 		base._Input(inputEvent);
 
 		if (
-			inputEvent is InputEventMouseMotion
+			inputEvent is InputEventMouseMotion motion
 			&& Input.MouseMode == Input.MouseModeEnum.Captured
 		)
 		{
-			this._mouseMotion =
-				-((InputEventMouseMotion)inputEvent).Relative * 0.003f;
+			this._mouseMotion = -motion.Relative * 0.003f;
 		}
 	}
 
