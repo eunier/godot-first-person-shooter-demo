@@ -7,8 +7,8 @@ public partial class Player : CharacterBody3D
 	private const float JUMP_VELOCITY = 4.5f;
 	private const float MAX_HITPOINTS = 100f;
 	private const float SPEED = 5.0f;
-	private Node3D _cameraPivot;
-	private Vector2 _mouseMotion = Vector2.Zero;
+	private Node3D cameraPivot;
+	private Vector2 mouseMotion = Vector2.Zero;
 
 	private float _gravity = ProjectSettings
 		.GetSetting("physics/3d/default_gravity")
@@ -20,7 +20,7 @@ public partial class Player : CharacterBody3D
 	{
 		base._Ready();
 		Input.MouseMode = Input.MouseModeEnum.Captured;
-		this._cameraPivot = this.GetNode<Node3D>("CameraPivot");
+		this.cameraPivot = this.GetNode<Node3D>("CameraPivot");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -34,16 +34,16 @@ public partial class Player : CharacterBody3D
 		_ = this.MoveAndSlide();
 	}
 
-	public override void _Input(InputEvent inputEvent)
+	public override void _Input(InputEvent @event)
 	{
-		base._Input(inputEvent);
+		base._Input(@event);
 
 		if (
-			inputEvent is InputEventMouseMotion motion
+			@event is InputEventMouseMotion mouseMotionInputEvent
 			&& Input.MouseMode == Input.MouseModeEnum.Captured
 		)
 		{
-			this._mouseMotion = -motion.Relative * 0.003f;
+			this.mouseMotion = -mouseMotionInputEvent.Relative * 0.003f;
 		}
 	}
 
@@ -98,15 +98,15 @@ public partial class Player : CharacterBody3D
 
 	private void HandleCameraRotation()
 	{
-		this.RotateY(this._mouseMotion.X);
-		this._cameraPivot.RotateX(this._mouseMotion.Y);
+		this.RotateY(this.mouseMotion.X);
+		this.cameraPivot.RotateX(this.mouseMotion.Y);
 
-		this._cameraPivot.RotationDegrees = new Vector3(
-			(float)Mathf.Clamp(this._cameraPivot.RotationDegrees.X, -90.0, 90.0),
-			this._cameraPivot.RotationDegrees.Y,
-			this._cameraPivot.RotationDegrees.Z
+		this.cameraPivot.RotationDegrees = new Vector3(
+			(float)Mathf.Clamp(this.cameraPivot.RotationDegrees.X, -90.0, 90.0),
+			this.cameraPivot.RotationDegrees.Y,
+			this.cameraPivot.RotationDegrees.Z
 		);
 
-		this._mouseMotion = Vector2.Zero;
+		this.mouseMotion = Vector2.Zero;
 	}
 }
