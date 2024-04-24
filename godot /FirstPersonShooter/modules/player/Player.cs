@@ -20,14 +20,35 @@ public partial class Player : CharacterBody3D
 		.GetSetting("physics/3d/default_gravity")
 		.AsSingle();
 
+	public override void _Ready()
+	{
+		base._Ready();
+		Input.MouseMode = Input.MouseModeEnum.Captured;
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = this.Velocity;
+		this.HandleCameraRotation();
 		this.ApplyGravity(delta, ref velocity);
 		this.HandleJump(ref velocity);
 		this.HandleMovement(ref velocity);
 		this.Velocity = velocity;
 		_ = this.MoveAndSlide();
+	}
+
+	public override void _Input(InputEvent inputEvent)
+	{
+		base._Input(inputEvent);
+
+		if (
+			inputEvent is InputEventMouseMotion
+			&& Input.MouseMode == Input.MouseModeEnum.Captured
+		)
+		{
+			this._mouseMotion =
+				-((InputEventMouseMotion)inputEvent).Relative * 0.003f;
+		}
 	}
 
 	private void ApplyGravity(double delta, ref Vector3 velocity)
@@ -50,7 +71,7 @@ public partial class Player : CharacterBody3D
 		if (Input.IsActionJustPressed(action: "jump") && this.IsOnFloor())
 		{
 			velocity.Y = JumpVelocity;
-			velocity.Y = Godot.Mathf.Sqrt(this._jumpHeight * 2 * this.gravity);
+			velocity.Y = Mathf.Sqrt(this._jumpHeight * 2 * this.gravity);
 		}
 	}
 
@@ -77,5 +98,10 @@ public partial class Player : CharacterBody3D
 			velocity.X = Mathf.MoveToward(this.Velocity.X, 0, Player.Speed);
 			velocity.Z = Mathf.MoveToward(this.Velocity.Z, 0, Player.Speed);
 		}
+	}
+
+	private void HandleCameraRotation()
+	{
+		this.RotateY(this._mouseMotion.X);
 	}
 }
