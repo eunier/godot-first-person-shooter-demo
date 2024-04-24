@@ -9,18 +9,17 @@ public partial class Player : CharacterBody3D
 	private const float Speed = 5.0f;
 	private Node3D cameraPivot;
 	private Vector2 mouseMotion = Vector2.Zero;
-
-	private float Gravity = ProjectSettings
+	private float gravity = ProjectSettings
 		.GetSetting("physics/3d/default_gravity")
 		.AsSingle();
-
 	private float hitpoints;
-	public float Hitpoints
+	private float Hitpoints
 	{
 		get { return this.hitpoints; }
 		set
 		{
 			this.hitpoints = value;
+
 			GD.Print(this.hitpoints);
 
 			if (this.hitpoints <= 0)
@@ -72,11 +71,11 @@ public partial class Player : CharacterBody3D
 		{
 			if (velocity.Y >= 0)
 			{
-				velocity.Y -= this.Gravity * (float)delta;
+				velocity.Y -= this.gravity * (float)delta;
 			}
 			else
 			{
-				velocity.Y -= this.Gravity * (float)delta * Player.FallMultiplier;
+				velocity.Y -= this.gravity * (float)delta * Player.FallMultiplier;
 			}
 		}
 	}
@@ -86,7 +85,7 @@ public partial class Player : CharacterBody3D
 		if (Input.IsActionJustPressed(action: "jump") && this.IsOnFloor())
 		{
 			velocity.Y = Player.JumpVelocity;
-			velocity.Y = Mathf.Sqrt(Player.JumpHeight * 2 * this.Gravity);
+			velocity.Y = Mathf.Sqrt(Player.JumpHeight * 2 * this.gravity);
 		}
 	}
 
