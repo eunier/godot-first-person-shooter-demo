@@ -1,11 +1,11 @@
 [*.{cs,vb}]
 
+# csharp_new_line_before_open_brace = none
 indent_style = tab
-csharp_new_line_before_open_brace = none
 max_line_length = 80
 
 # IDE
-dotnet_analyzer_diagnostic.category-Style.severity = warning
+# dotnet_analyzer_diagnostic.category-Style.severity = warning
 
 # `this` and `Me` preferences (IDE0003 and IDE0009)
 dotnet_style_qualification_for_event = true:warning
@@ -16,5 +16,10 @@ dotnet_style_qualification_for_property = true:warning
 # Simplify member access (IDE0002)
 dotnet_diagnostic.IDE0002.severity = none
 
-
+# Formatting rule (IDE0055)
 dotnet_diagnostic.IDE0055.severity = warning
+
+# IDE0008: Use explicit type
+csharp_style_var_elsewhere = false
+csharp_style_var_for_built_in_types = false
+csharp_style_var_when_type_is_apparent = false

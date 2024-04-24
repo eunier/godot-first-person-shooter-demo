@@ -1,12 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2o0seo5k2ev5"]
+[gd_scene load_steps=4 format=3 uid="uid://b2o0seo5k2ev5"]
 
 [ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mlo3j"]
+
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_ssbip")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_xia7e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_mlo3j")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
