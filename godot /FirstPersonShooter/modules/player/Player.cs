@@ -2,15 +2,15 @@ using Godot;
 
 public partial class Player : CharacterBody3D
 {
-	private const float FALL_MULTIPLIER = 1.5f;
-	private const float JUMP_HEIGHT = 1f;
-	private const float JUMP_VELOCITY = 4.5f;
-	private const float MAX_HITPOINTS = 100f;
-	private const float SPEED = 5.0f;
+	private const float FallMultiplier = 1.5f;
+	private const float JumpHeight = 1f;
+	private const float JumpVelocity = 4.5f;
+	private const float MaxHitpoints = 100f;
+	private const float Speed = 5.0f;
 	private Node3D cameraPivot;
 	private Vector2 mouseMotion = Vector2.Zero;
 
-	private float _gravity = ProjectSettings
+	private float Gravity = ProjectSettings
 		.GetSetting("physics/3d/default_gravity")
 		.AsSingle();
 
@@ -72,11 +72,11 @@ public partial class Player : CharacterBody3D
 		{
 			if (velocity.Y >= 0)
 			{
-				velocity.Y -= this._gravity * (float)delta;
+				velocity.Y -= this.Gravity * (float)delta;
 			}
 			else
 			{
-				velocity.Y -= this._gravity * (float)delta * Player.FALL_MULTIPLIER;
+				velocity.Y -= this.Gravity * (float)delta * Player.FallMultiplier;
 			}
 		}
 	}
@@ -85,8 +85,8 @@ public partial class Player : CharacterBody3D
 	{
 		if (Input.IsActionJustPressed(action: "jump") && this.IsOnFloor())
 		{
-			velocity.Y = Player.JUMP_VELOCITY;
-			velocity.Y = Mathf.Sqrt(Player.JUMP_HEIGHT * 2 * this._gravity);
+			velocity.Y = Player.JumpVelocity;
+			velocity.Y = Mathf.Sqrt(Player.JumpHeight * 2 * this.Gravity);
 		}
 	}
 
@@ -105,13 +105,13 @@ public partial class Player : CharacterBody3D
 
 		if (direction != Vector3.Zero)
 		{
-			velocity.X = direction.X * SPEED;
-			velocity.Z = direction.Z * SPEED;
+			velocity.X = direction.X * Speed;
+			velocity.Z = direction.Z * Speed;
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(this.Velocity.X, 0, Player.SPEED);
-			velocity.Z = Mathf.MoveToward(this.Velocity.Z, 0, Player.SPEED);
+			velocity.X = Mathf.MoveToward(this.Velocity.X, 0, Player.Speed);
+			velocity.Z = Mathf.MoveToward(this.Velocity.Z, 0, Player.Speed);
 		}
 	}
 
