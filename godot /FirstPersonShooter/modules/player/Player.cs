@@ -16,27 +16,46 @@ public partial class Player : CharacterBody3D
 
 	private Vector2 _mouseMotion = Vector2.Zero;
 
-	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	public float gravity = ProjectSettings
+		.GetSetting("physics/3d/default_gravity")
+		.AsSingle();
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = this.Velocity;
+		this.ApplyGravity(delta, ref velocity);
+		this.HandleJump(ref velocity);
+		this.HandleMovement(ref velocity);
+		this.Velocity = velocity;
+		_ = this.MoveAndSlide();
+	}
 
-		// Add the gravity.
+	private void ApplyGravity(double delta, ref Vector3 velocity)
+	{
 		if (!this.IsOnFloor())
 		{
 			velocity.Y -= this.gravity * (float)delta;
 		}
+	}
 
-		// Handle Jump.
-		if (Input.IsActionJustPressed("ui_accept") && this.IsOnFloor())
+	private void HandleJump(ref Vector3 velocity)
+	{
+		if (Input.IsActionJustPressed(action: "ui_accept") && this.IsOnFloor())
 		{
 			velocity.Y = JumpVelocity;
 		}
+	}
 
-		var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
+	private void HandleMovement(ref Vector3 velocity)
+	{
+		var inputDir = Input.GetVector(
+			"move_left",
+			"move_right",
+			"move_forward",
+			"move_backward"
+		);
 
-		Vector3 direction = (
+		var direction = (
 			this.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)
 		).Normalized();
 
@@ -50,18 +69,5 @@ public partial class Player : CharacterBody3D
 			velocity.X = Mathf.MoveToward(this.Velocity.X, 0, Player.Speed);
 			velocity.Z = Mathf.MoveToward(this.Velocity.Z, 0, Player.Speed);
 		}
-
-		this.Velocity = velocity;
-		_ = this.MoveAndSlide();
 	}
-
-	// private float ApplyGravity(float delta, Vector3 velocity)
-	// {
-	// 	if (!this.IsOnFloor())
-	// 	{
-	// 		velocity.Y -= this.gravity * (float)delta;
-	// 	}
-
-	// 	return 0.0
-	// }
 }
