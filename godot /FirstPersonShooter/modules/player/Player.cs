@@ -34,7 +34,7 @@ public partial class Player : CharacterBody3D
 			velocity.Y = JumpVelocity;
 		}
 
-		var inputDir = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
 
 		Vector3 direction = (
 			this.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)
