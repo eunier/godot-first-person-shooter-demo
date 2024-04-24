@@ -43,7 +43,7 @@ public partial class Player : CharacterBody3D
 		this.HandleJump(ref velocity);
 		this.HandleMovement(ref velocity);
 		this.Velocity = velocity;
-		_ = this.MoveAndSlide();
+		this.MoveAndSlide();
 	}
 
 	public override void _Input(InputEvent inputEvent)
