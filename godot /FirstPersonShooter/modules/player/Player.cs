@@ -5,6 +5,17 @@ public partial class Player : CharacterBody3D
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 
+	[Export]
+	private float _jumpHeight;
+
+	[Export]
+	private float _fallMultiplier;
+
+	[Export]
+	private float _maxHitpoints;
+
+	private Vector2 _mouseMotion = Vector2.Zero;
+
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
 	public override void _PhysicsProcess(double delta)
