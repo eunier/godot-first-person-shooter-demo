@@ -1,26 +1,16 @@
-using System;
 using Godot;
 
 public partial class Player : CharacterBody3D
 {
-	public const float Speed = 5.0f;
-	public const float JumpVelocity = 4.5f;
-
-	[Export]
-	private float _jumpHeight = 1;
-
-	[Export]
-	private double _fallMultiplier = 1.5;
-
-	[Export]
-	private float _maxHitpoints = 100;
-
-	[Export]
+	private const float FALL_MULTIPLIER = 1.5f;
+	private const float JUMP_HEIGHT = 1f;
+	private const float JUMP_VELOCITY = 4.5f;
+	private const float MAX_HITPOINTS = 100f;
+	private const float SPEED = 5.0f;
 	private Node3D _cameraPivot;
-
 	private Vector2 _mouseMotion = Vector2.Zero;
 
-	public float gravity = ProjectSettings
+	private float _gravity = ProjectSettings
 		.GetSetting("physics/3d/default_gravity")
 		.AsSingle();
 
@@ -28,6 +18,7 @@ public partial class Player : CharacterBody3D
 	{
 		base._Ready();
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		this._cameraPivot = this.GetNode<Node3D>("CameraPivot");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -60,11 +51,11 @@ public partial class Player : CharacterBody3D
 		{
 			if (velocity.Y >= 0)
 			{
-				velocity.Y -= this.gravity * (float)delta;
+				velocity.Y -= this._gravity * (float)delta;
 			}
 			else
 			{
-				velocity.Y -= this.gravity * (float)delta * (float)this._fallMultiplier;
+				velocity.Y -= this._gravity * (float)delta * Player.FALL_MULTIPLIER;
 			}
 		}
 	}
@@ -73,8 +64,8 @@ public partial class Player : CharacterBody3D
 	{
 		if (Input.IsActionJustPressed(action: "jump") && this.IsOnFloor())
 		{
-			velocity.Y = Player.JumpVelocity;
-			velocity.Y = Mathf.Sqrt(this._jumpHeight * 2 * this.gravity);
+			velocity.Y = Player.JUMP_VELOCITY;
+			velocity.Y = Mathf.Sqrt(Player.JUMP_HEIGHT * 2 * this._gravity);
 		}
 	}
 
@@ -93,13 +84,13 @@ public partial class Player : CharacterBody3D
 
 		if (direction != Vector3.Zero)
 		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
+			velocity.X = direction.X * SPEED;
+			velocity.Z = direction.Z * SPEED;
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(this.Velocity.X, 0, Player.Speed);
-			velocity.Z = Mathf.MoveToward(this.Velocity.Z, 0, Player.Speed);
+			velocity.X = Mathf.MoveToward(this.Velocity.X, 0, Player.SPEED);
+			velocity.Z = Mathf.MoveToward(this.Velocity.Z, 0, Player.SPEED);
 		}
 	}
 

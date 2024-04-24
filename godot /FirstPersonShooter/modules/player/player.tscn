@@ -6,10 +6,9 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mlo3j"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_cameraPivot")]
+[node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_ssbip")
-_cameraPivot = NodePath("CameraPivot")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_xia7e")
