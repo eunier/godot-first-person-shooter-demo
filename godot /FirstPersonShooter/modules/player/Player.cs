@@ -19,7 +19,6 @@ public partial class Player : CharacterBody3D
 		set
 		{
 			this.hitpoints = value;
-
 			GD.Print(this.hitpoints);
 
 			if (this.hitpoints <= 0)
