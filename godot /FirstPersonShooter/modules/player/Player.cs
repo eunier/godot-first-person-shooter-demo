@@ -6,13 +6,13 @@ public partial class Player : CharacterBody3D
 	public const float JumpVelocity = 4.5f;
 
 	[Export]
-	private float _jumpHeight;
+	private float _jumpHeight = 1;
 
 	[Export]
-	private float _fallMultiplier;
+	private double _fallMultiplier = 1.5;
 
 	[Export]
-	private float _maxHitpoints;
+	private float _maxHitpoints = 100;
 
 	private Vector2 _mouseMotion = Vector2.Zero;
 
