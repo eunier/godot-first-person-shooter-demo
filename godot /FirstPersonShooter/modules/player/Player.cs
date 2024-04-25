@@ -9,9 +9,11 @@ public partial class Player : CharacterBody3D
 	private const float Speed = 5.0f;
 	private Node3D cameraPivot;
 	private Vector2 mouseMotion = Vector2.Zero;
+
 	private float gravity = ProjectSettings
 		.GetSetting("physics/3d/default_gravity")
 		.AsSingle();
+
 	private float hitpoints;
 	private float Hitpoints
 	{
