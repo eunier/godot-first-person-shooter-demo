@@ -2,12 +2,6 @@ using System;
 using System.Linq;
 using Godot;
 
-public enum WeaponType
-{
-	Rifle,
-	Cannon,
-}
-
 public partial class WeaponSystem : Node3D
 {
 	private readonly Godot.Collections.Dictionary<WeaponType, Node3D> weapons =
