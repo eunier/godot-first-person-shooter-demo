@@ -148,6 +148,6 @@ shadow_mesh = SubResource("ArrayMesh_e5ugh")
 [node name="AssaultRifle" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0.05)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.01, -0.05)
 mesh = SubResource("ArrayMesh_r1rda")
 skeleton = NodePath("")
