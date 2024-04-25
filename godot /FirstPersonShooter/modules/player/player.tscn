@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
 [ext_resource type="Script" path="res://modules/weapons/WeaponSystem.cs" id="2_txt2e"]
-[ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://modules/weapons/weapons/assault_rifle.tscn" id="3_fxvum"]
+[ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://modules/weapons/weapons/rifle.tscn" id="3_fxvum"]
 [ext_resource type="PackedScene" uid="uid://7kheabegsno" path="res://modules/weapons/weapons/cannon.tscn" id="4_yqa4w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
@@ -28,6 +28,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.462322)
 script = ExtResource("2_txt2e")
 
-[node name="AssaultRifle" parent="CameraPivot/Camera3D/WeaponSystem" instance=ExtResource("3_fxvum")]
+[node name="Rifle" parent="CameraPivot/Camera3D/WeaponSystem" instance=ExtResource("3_fxvum")]
 
 [node name="Cannon" parent="CameraPivot/Camera3D/WeaponSystem" instance=ExtResource("4_yqa4w")]
