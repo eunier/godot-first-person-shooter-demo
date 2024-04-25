@@ -46,3 +46,6 @@ dotnet_diagnostic.SA1009.severity = none
 
 # SA1111: Closing parenthesis should be on line of last parameter
 dotnet_diagnostic.SA1111.severity = none
+
+# CA1050: Declare types in namespaces
+dotnet_diagnostic.CA1050.severity = none
