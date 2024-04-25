@@ -1,76 +1,79 @@
-using System;
-using System.Linq;
-using Godot;
-
-public partial class WeaponSystem : Node3D
+namespace App.Modules.Weapons
 {
-	private readonly Godot.Collections.Dictionary<WeaponType, Node3D> weapons =
-		new();
+	using System;
+	using System.Linq;
+	using Godot;
 
-	private System.Collections.Generic.KeyValuePair<
-		WeaponType,
-		Node3D
-	> currentWeapon;
-
-	public override void _Ready()
+	public partial class WeaponSystem : Node3D
 	{
-		this.GetChildrenWeapons();
-		this.Equip(WeaponType.Rifle);
-	}
+		private readonly Godot.Collections.Dictionary<WeaponType, Node3D> weapons =
+			new();
 
-	public override void _Process(double delta) { }
+		private System.Collections.Generic.KeyValuePair<
+			WeaponType,
+			Node3D
+		> currentWeapon;
 
-	private void GetChildrenWeapons()
-	{
-		var children = this.GetChildren();
-
-		var allWeaponsTypes = new WeaponType[]
+		public override void _Ready()
 		{
-			WeaponType.Rifle,
-			WeaponType.Cannon,
-		};
-
-		if (children.Count != allWeaponsTypes.Length)
-		{
-			var msg = "Missing weapon(s).";
-			GD.PrintErr(msg);
-			throw new Exception(msg);
+			this.GetChildrenWeapons();
+			this.Equip(WeaponType.Rifle);
 		}
 
-		foreach (var child in children)
+		public override void _Process(double delta) { }
+
+		private void GetChildrenWeapons()
 		{
-			if (child is not Node3D)
+			var children = this.GetChildren();
+
+			var allWeaponsTypes = new WeaponType[]
 			{
-				var msg = "child is not a Node3D.";
+				WeaponType.Rifle,
+				WeaponType.Cannon,
+			};
+
+			if (children.Count != allWeaponsTypes.Length)
+			{
+				var msg = "Missing weapon(s).";
 				GD.PrintErr(msg);
 				throw new Exception(msg);
 			}
-		}
 
-		var zip = children.Zip(allWeaponsTypes);
-
-		foreach (var (child, weaponType) in zip)
-		{
-			this.weapons.Add(weaponType, (Node3D)child);
-		}
-	}
-
-	private void Equip(WeaponType weaponType)
-	{
-		foreach (var kvp in this.weapons)
-		{
-			var (k, v) = kvp;
-
-			if (k == weaponType)
+			foreach (var child in children)
 			{
-				this.currentWeapon = kvp;
-				v.Visible = true;
-				v.SetProcess(true);
+				if (child is not Node3D)
+				{
+					var msg = "child is not a Node3D.";
+					GD.PrintErr(msg);
+					throw new Exception(msg);
+				}
 			}
-			else
+
+			var zip = children.Zip(allWeaponsTypes);
+
+			foreach (var (child, weaponType) in zip)
 			{
-				v.Visible = false;
-				v.SetProcess(false);
+				this.weapons.Add(weaponType, (Node3D)child);
+			}
+		}
+
+		private void Equip(WeaponType weaponType)
+		{
+			foreach (var kvp in this.weapons)
+			{
+				var (k, v) = kvp;
+
+				if (k == weaponType)
+				{
+					this.currentWeapon = kvp;
+					v.Visible = true;
+					v.SetProcess(true);
+				}
+				else
+				{
+					v.Visible = false;
+					v.SetProcess(false);
+				}
 			}
 		}
 	}
