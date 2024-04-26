@@ -17,7 +17,7 @@ namespace App.Modules.Weapons
 			this.Equip(WeaponType.Rifle);
 		}
 
-		public override void _PhysicsProcess(double delta)
+		public override void _Process(double delta)
 		{
 			if (Input.IsActionPressed("shoot"))
 			{
