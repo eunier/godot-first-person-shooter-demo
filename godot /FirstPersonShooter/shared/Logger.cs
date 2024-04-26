@@ -45,7 +45,7 @@ namespace App.Shared
 				? string.Empty
 				: System.IO.Path.GetFileNameWithoutExtension(filePath);
 
-			return $"[{className}.{memberName}:line {lineNumber}]: {message}";
+			return $"[{className}.{memberName}:{lineNumber}]: {message}";
 		}
 	}
 }

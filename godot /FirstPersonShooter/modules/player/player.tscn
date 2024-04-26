@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
 [ext_resource type="Script" path="res://modules/weapons/WeaponSystem.cs" id="2_txt2e"]
-[ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://modules/weapons/weapons/rifle.tscn" id="3_fxvum"]
-[ext_resource type="Script" path="res://modules/weapons/weapons/Rifle.cs" id="4_hk6io"]
-[ext_resource type="PackedScene" uid="uid://7kheabegsno" path="res://modules/weapons/weapons/cannon.tscn" id="4_yqa4w"]
+[ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://modules/weapons/weapons/rifle/rifle.tscn" id="3_fxvum"]
+[ext_resource type="Script" path="res://modules/weapons/weapons/rifle/Rifle.cs" id="4_hk6io"]
+[ext_resource type="PackedScene" uid="uid://7kheabegsno" path="res://modules/weapons/weapons/cannon/cannon.tscn" id="4_yqa4w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
 
