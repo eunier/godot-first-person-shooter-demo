@@ -5,10 +5,17 @@ namespace App.Modules.Weapons.Resource
 	[GlobalClass]
 	public partial class WeaponResource : Resource
 	{
-		[Export]
+		public WeaponResource()
+			: this(0, 0) { }
+
+		public WeaponResource(int damage, int range)
+		{
+			this.Damage = damage;
+			this.Range = range;
+		}
+
 		public int Damage { get; set; }
 
-		[Export]
 		public int Range { get; set; }
 	}
 }
