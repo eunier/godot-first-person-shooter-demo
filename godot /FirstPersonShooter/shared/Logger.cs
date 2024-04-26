@@ -10,7 +10,7 @@ namespace App.Shared
 
 		[Conditional(Logger.DebugConditionString)]
 		public static void Print(
-			string message,
+			string message = "",
 			[CallerFilePath] string filePath = "",
 			[CallerMemberName] string memberName = "",
 			[CallerLineNumber] int lineNumber = 0
@@ -23,7 +23,7 @@ namespace App.Shared
 
 		[Conditional(Logger.DebugConditionString)]
 		public static void PrintErr(
-			string message,
+			string message = "",
 			[CallerFilePath] string filePath = "",
 			[CallerMemberName] string memberName = "",
 			[CallerLineNumber] int lineNumber = 0
@@ -45,7 +45,7 @@ namespace App.Shared
 				? string.Empty
 				: System.IO.Path.GetFileNameWithoutExtension(filePath);
 
-			return $"[{className}.{memberName} at line {lineNumber}]: {message}";
+			return $"[{className}.{memberName}:line {lineNumber}]: {message}";
 		}
 	}
 }

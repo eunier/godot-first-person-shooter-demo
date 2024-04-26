@@ -1,19 +1,15 @@
 namespace App.Modules.Weapons
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 	using App.Shared;
 	using Godot;
 
-	public partial class Weapon : Node3D
+	public partial class WeaponSystem : Node3D
 	{
-		private readonly Godot.Collections.Dictionary<WeaponType, Node3D> weapons =
-			new();
-
-		private System.Collections.Generic.KeyValuePair<
-			WeaponType,
-			Node3D
-		> currentWeapon;
+		private readonly Dictionary<WeaponType, Node3D> weapons = new();
+		private KeyValuePair<WeaponType, Node3D> currentWeapon;
 
 		public override void _Ready()
 		{
@@ -21,9 +17,12 @@ namespace App.Modules.Weapons
 			this.Equip(WeaponType.Rifle);
 		}
 
-		public override void _Process(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
-			this.Shoot();
+			if (Input.IsActionPressed("shoot"))
+			{
+				this.Shoot();
+			}
 		}
 
 		private void GetChildrenWeapons()
@@ -39,7 +38,7 @@ namespace App.Modules.Weapons
 			if (children.Count != allWeaponsTypes.Length)
 			{
 				var msg = "Missing weapon(s).";
-				GD.PrintErr(msg);
+				Logger.PrintErr(msg);
 				throw new Exception(msg);
 			}
 
@@ -47,8 +46,8 @@ namespace App.Modules.Weapons
 			{
 				if (child is not Node3D)
 				{
-					var msg = "child is not a Node3D.";
-					GD.PrintErr(msg);
+					var msg = "child is not a `Godot.Node3D`.";
+					Logger.PrintErr(msg);
 					throw new Exception(msg);
 				}
 			}
@@ -83,7 +82,19 @@ namespace App.Modules.Weapons
 
 		private void Shoot()
 		{
-			Logger.Print("shotting");
+			switch (this.currentWeapon.Key)
+			{
+				case WeaponType.Rifle:
+					((Rifle)this.currentWeapon.Value).Shoot();
+					break;
+
+				case WeaponType.Cannon:
+					((Cannon)this.currentWeapon.Value).Shoot();
+					break;
+
+				default:
+					break;
+			}
 		}
 	}
 }
