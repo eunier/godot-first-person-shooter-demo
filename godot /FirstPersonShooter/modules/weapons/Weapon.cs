@@ -2,9 +2,10 @@ namespace App.Modules.Weapons
 {
 	using System;
 	using System.Linq;
+	using App.Shared;
 	using Godot;
 
-	public partial class WeaponSystem : Node3D
+	public partial class Weapon : Node3D
 	{
 		private readonly Godot.Collections.Dictionary<WeaponType, Node3D> weapons =
 			new();
@@ -20,7 +21,10 @@ namespace App.Modules.Weapons
 			this.Equip(WeaponType.Rifle);
 		}
 
-		public override void _Process(double delta) { }
+		public override void _Process(double delta)
+		{
+			this.Shoot();
+		}
 
 		private void GetChildrenWeapons()
 		{
@@ -75,6 +79,11 @@ namespace App.Modules.Weapons
 					v.SetProcess(false);
 				}
 			}
+		}
+
+		private void Shoot()
+		{
+			Logger.Log("shotting");
 		}
 	}
 }
