@@ -83,7 +83,7 @@ namespace App.Modules.Weapons
 
 		private void Shoot()
 		{
-			Logger.Log("shotting");
+			Logger.Print("shotting");
 		}
 	}
 }
