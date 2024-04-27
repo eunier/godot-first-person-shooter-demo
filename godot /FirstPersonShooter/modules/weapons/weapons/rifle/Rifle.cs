@@ -5,15 +5,19 @@ namespace App.Modules.Weapons
 
 	public partial class Rifle : Node3D
 	{
-		// Called when the node enters the scene tree for the first time.
-		public override void _Ready() { }
+		private GpuParticles3D muzzleFlash;
+
+		public override void _Ready()
+		{
+			this.muzzleFlash = this.GetNode<GpuParticles3D>("MuzzleFlash");
+		}
 
 		// Called every frame. 'delta' is the elapsed time since the previous frame.
 		public override void _Process(double delta) { }
 
 		public void Shoot()
 		{
-			Logger.Print();
+			this.muzzleFlash.Restart();
 		}
 	}
 }

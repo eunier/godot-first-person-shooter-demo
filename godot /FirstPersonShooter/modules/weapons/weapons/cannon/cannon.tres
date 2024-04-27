@@ -5,4 +5,4 @@
 [resource]
 script = ExtResource("1_x8rra")
 Damage = 40
-Range = 0
+Range = 100
