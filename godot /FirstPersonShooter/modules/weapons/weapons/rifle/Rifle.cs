@@ -9,10 +9,13 @@ namespace App.Modules.Weapons
 		[Export]
 		private HitscanShootComponent shootComponent;
 
-		public void Shoot(RayCast3D rayCast)
+		[Export]
+		private RayCast3D rayCast;
+
+		public void Shoot()
 		{
-			Logger.Print($"Shotting with `rayCast`: {rayCast}.");
-			this.shootComponent.Shoot(rayCast, 100);
+			Logger.Print($"Shotting with `rayCast`: {this.rayCast}.");
+			this.shootComponent.Shoot(this.rayCast, 100);
 		}
 	}
 }

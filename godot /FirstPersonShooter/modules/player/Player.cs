@@ -14,9 +14,6 @@ namespace App.Modules.Player
 		private const float Speed = 5.0f;
 
 		[Export]
-		private RayCast3D rayCast;
-
-		[Export]
 		[ExportGroup("Weapons")]
 		private Rifle rifle;
 
@@ -224,7 +221,7 @@ namespace App.Modules.Player
 			switch (this.currentWeapon.Value)
 			{
 				case Rifle rifle:
-					rifle.Shoot(this.rayCast);
+					rifle.Shoot();
 					break;
 
 				default:
