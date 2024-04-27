@@ -13,22 +13,19 @@ namespace App.Modules.Player
 		private const float JumpVelocity = 4.5f;
 		private const float Speed = 5.0f;
 
-		[Export]
-		[ExportGroup("Weapons")]
-		private Rifle rifle;
-
-		[Export]
-		[ExportGroup("Weapons")]
-		private Cannon cannon;
-
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
 
 		private Node3D cameraPivot;
 		private Vector2 mouseMotion = Vector2.Zero;
+
+		#region Weapons
 		private Dictionary<WeaponEnum, Weapon> weapons = new();
 		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
+		private Rifle rifle;
+		private Cannon cannon;
+		#endregion
 
 		private float hitpoints;
 		private float Hitpoints
