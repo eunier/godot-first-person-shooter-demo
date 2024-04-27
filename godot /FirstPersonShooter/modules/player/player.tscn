@@ -1,16 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2o0seo5k2ev5"]
+[gd_scene load_steps=7 format=3 uid="uid://b2o0seo5k2ev5"]
 
 [ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
 [ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://modules/weapons/weapons/rifle/rifle.tscn" id="3_fxvum"]
+[ext_resource type="PackedScene" uid="uid://chwy5yi3kg7m2" path="res://shared/components/hitscan_shoot_component/hitscan_shoot_component.tscn" id="4_127mx"]
 [ext_resource type="PackedScene" uid="uid://7kheabegsno" path="res://modules/weapons/weapons/cannon/cannon.tscn" id="4_yqa4w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mlo3j"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rifle", "cannon")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rayCast", "rifle", "cannon")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_ssbip")
+rayCast = NodePath("CameraPivot/Camera3D/RayCast3D")
 rifle = NodePath("CameraPivot/Camera3D/WeaponGroup/Rifle")
 cannon = NodePath("CameraPivot/Camera3D/WeaponGroup/Cannon")
 
@@ -35,3 +37,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.46232
 
 [node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D"]
 target_position = Vector3(0, 0, -1)
+
+[node name="HitscanShootComponent" parent="." instance=ExtResource("4_127mx")]

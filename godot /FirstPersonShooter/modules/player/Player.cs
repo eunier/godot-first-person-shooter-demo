@@ -14,11 +14,14 @@ namespace App.Modules.Player
 		private const float Speed = 5.0f;
 
 		[Export]
-		[Required]
+		private RayCast3D rayCast;
+
+		[Export]
+		[ExportGroup("Weapons")]
 		private Rifle rifle;
 
 		[Export]
-		[Required]
+		[ExportGroup("Weapons")]
 		private Cannon cannon;
 
 		private float gravity = ProjectSettings
@@ -58,7 +61,6 @@ namespace App.Modules.Player
 
 		public override void _PhysicsProcess(double delta)
 		{
-			base._PhysicsProcess(delta);
 			var velocity = this.Velocity;
 			this.HandleCameraRotation();
 			this.ApplyGravity(delta, ref velocity);
@@ -93,6 +95,11 @@ namespace App.Modules.Player
 			if (@event.IsActionPressed(Shared.Constants.InputMap.PreviousWeapon))
 			{
 				this.EquipPreviousWeapon();
+			}
+
+			if (@event.IsActionPressed(Shared.Constants.InputMap.Shoot))
+			{
+				this.Shoot();
 			}
 		}
 
@@ -210,6 +217,19 @@ namespace App.Modules.Player
 			var previousWeaponEnum = (WeaponEnum)nextWeaponIndex;
 			Logger.Print($"Equipping preview weapon: {previousWeaponEnum}.");
 			this.EquipWeapon((WeaponEnum)nextWeaponIndex);
+		}
+
+		private void Shoot()
+		{
+			switch (this.currentWeapon.Value)
+			{
+				case Rifle rifle:
+					rifle.Shoot(this.rayCast);
+					break;
+
+				default:
+					break;
+			}
 		}
 	}
 }
