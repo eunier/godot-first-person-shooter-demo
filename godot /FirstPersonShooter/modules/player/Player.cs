@@ -1,12 +1,9 @@
 namespace App.Modules.Player
 {
-	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Reflection.Metadata;
 	using App.Modules.Weapons;
-	using App.Shared;
+	using App.Shared.Utils;
 	using Godot;
 
 	public partial class Player : CharacterBody3D

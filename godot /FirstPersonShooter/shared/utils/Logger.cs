@@ -1,4 +1,4 @@
-namespace App.Shared
+namespace App.Shared.Utils
 {
 	using System.Diagnostics;
 	using System.Runtime.CompilerServices;

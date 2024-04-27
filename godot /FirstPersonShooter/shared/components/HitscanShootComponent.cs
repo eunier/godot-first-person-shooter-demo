@@ -1,6 +1,7 @@
 namespace App.Shared.Components
 {
 	using System;
+	using App.Shared.Utils;
 	using Godot;
 
 	public partial class HitscanShootComponent : Node3D
