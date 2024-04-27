@@ -14,7 +14,7 @@ namespace App.Modules.WeaponController
 		private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
 
 		[Export]
-		private RayCast3D rayCast;
+		private Camera3D playerCamera;
 
 		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
 		private Rifle rifle;
@@ -23,7 +23,6 @@ namespace App.Modules.WeaponController
 		public override void _Ready()
 		{
 			this.rifle = this.GetNode<Rifle>(NodePaths.Rifle);
-			this.rifle.RayCast = this.rayCast;
 			this.cannon = this.GetNode<Cannon>(NodePaths.Cannon);
 			this.weapons.Add(WeaponEnum.Rifle, this.rifle);
 			this.weapons.Add(WeaponEnum.Cannon, this.cannon);
@@ -103,7 +102,7 @@ namespace App.Modules.WeaponController
 			switch (this.currentWeapon.Value)
 			{
 				case Rifle rifle:
-					rifle.Shoot();
+					rifle.Shoot(this.playerCamera.GlobalPosition);
 					break;
 
 				default:

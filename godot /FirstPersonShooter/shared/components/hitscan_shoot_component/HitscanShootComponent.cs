@@ -5,10 +5,31 @@ namespace App.Shared.Components
 
 	public partial class HitscanShootComponent : Node3D
 	{
-		public void Shoot(RayCast3D rayCast, float range)
+		[Export]
+		private RayCast3D rayCast;
+
+		public GodotObject Shoot()
 		{
-			Logger.Print($"Shotting with `rayCast`: {rayCast}.");
-			Logger.Print($"Shotting with `range`: {range}.");
+			if (this.rayCast is null)
+			{
+				Logger.Print("No RayCast3D set, returning.");
+				return null;
+			}
+
+			var collider = this.rayCast.GetCollider();
+
+#if DEBUG
+			if (collider is not null)
+			{
+				Logger.Print($"Hit: {collider}.");
+			}
+			else
+			{
+				Logger.Print("Miss.");
+			}
+#endif
+
+			return collider;
 		}
 	}
 }

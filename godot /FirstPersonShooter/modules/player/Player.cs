@@ -1,5 +1,9 @@
 namespace App.Modules.Player
 {
+	using System.Dynamic;
+	using App.Modules.Player.Constants;
+	using App.Shared.Constants;
+	using App.Shared.Utils;
 	using Godot;
 
 	public partial class Player : CharacterBody3D
@@ -8,18 +12,56 @@ namespace App.Modules.Player
 		private const float JumpHeight = 1f;
 		private const float JumpVelocity = 4.5f;
 		private const float Speed = 5.0f;
-
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
-
 		private Node3D cameraPivot;
 		private Vector2 mouseMotion = Vector2.Zero;
+		public RayCast3D RayCast { get; private set; }
+
+		public static Player GetPlayer(Node caller)
+		{
+			var node = caller.GetTree().GetFirstNodeInGroup(Groups.Player);
+
+			if (node is null)
+			{
+				Logger.Print($"No node found in group '{Groups.Player}'.");
+				return null;
+			}
+
+			if (node is not Player player)
+			{
+				Logger.Print(
+					$"Node found in group '{Groups.Player}' is not of type `Player`."
+				);
+				return null;
+			}
+			else
+			{
+				Logger.Print($"Found player: {player}.");
+				return player;
+			}
+		}
+
+		public static RayCast3D GetCameraRayCast(Node caller)
+		{
+			var player = Player.GetPlayer(caller);
+
+			if (player is null)
+			{
+				Logger.Print(
+					"Can not find player ray cast because player was not found."
+				);
+			}
+
+			return player.RayCast;
+		}
 
 		public override void _Ready()
 		{
 			Input.MouseMode = Input.MouseModeEnum.Captured;
-			this.cameraPivot = this.GetNode<Node3D>("CameraPivot");
+			this.cameraPivot = this.GetNode<Node3D>(NodePaths.CameraPivot);
+			this.RayCast = this.GetNode<RayCast3D>(NodePaths.CameraRayCast);
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -35,6 +77,14 @@ namespace App.Modules.Player
 
 		public override void _Input(InputEvent @event)
 		{
+			if (
+				@event is InputEventMouseButton
+				&& Input.MouseMode is not Input.MouseModeEnum.Captured
+			)
+			{
+				Input.MouseMode = Input.MouseModeEnum.Captured;
+			}
+
 			if (
 				@event is InputEventMouseMotion mouseMotionInputEvent
 				&& Input.MouseMode == Input.MouseModeEnum.Captured

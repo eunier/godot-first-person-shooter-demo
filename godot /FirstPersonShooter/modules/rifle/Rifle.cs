@@ -9,25 +9,23 @@ namespace App.Modules.Rifle
 	public partial class Rifle : Weapon
 	{
 		private HitscanShootComponent shootComponent;
-		public RayCast3D RayCast { private get; set; }
+		private RayCast3D rayCast;
 
 		public override void _Ready()
 		{
 			this.shootComponent = this.GetNode<HitscanShootComponent>(
 				NodePaths.HitscanShootComponent
 			);
+
+			this.rayCast = this.GetNode<RayCast3D>(NodePaths.RayCast3D);
 		}
 
-		public void Shoot()
+		public void Shoot(Vector3 fromPosition)
 		{
-			if (this.RayCast is null)
-			{
-				Logger.Print("No `RayCast` defined, returning.");
-				return;
-			}
-
-			Logger.Print($"Shooting with `RayCast`: {this.RayCast}.");
-			this.shootComponent.Shoot(this.RayCast, 100);
+			Logger.Print($"Shooting");
+			this.rayCast.GlobalPosition = fromPosition;
+			this.rayCast.TargetPosition = new Vector3(0, 0, -2);
+			this.shootComponent.Shoot();
 		}
 	}
 }
