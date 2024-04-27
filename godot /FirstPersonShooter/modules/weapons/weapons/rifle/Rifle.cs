@@ -1,9 +1,8 @@
 namespace App.Modules.Weapons
 {
-	using App.Shared;
 	using Godot;
 
-	public partial class Rifle : Node3D
+	public partial class Rifle : Weapon
 	{
 		private GpuParticles3D muzzleFlash;
 

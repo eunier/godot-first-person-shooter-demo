@@ -1,5 +1,11 @@
 namespace App.Modules.Player
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
+	using System.Linq;
+	using App.Modules.Weapons;
+	using App.Shared;
 	using Godot;
 
 	public partial class Player : CharacterBody3D
@@ -7,14 +13,24 @@ namespace App.Modules.Player
 		private const float FallMultiplier = 1.5f;
 		private const float JumpHeight = 1f;
 		private const float JumpVelocity = 4.5f;
-		private const float MaxHitpoints = 100f;
 		private const float Speed = 5.0f;
-		private Node3D cameraPivot;
-		private Vector2 mouseMotion = Vector2.Zero;
+
+		[Export]
+		[Required]
+		private Rifle rifle;
+
+		[Export]
+		[Required]
+		private Cannon cannon;
 
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
+
+		private Node3D cameraPivot;
+		private Vector2 mouseMotion = Vector2.Zero;
+		private Dictionary<WeaponType, Weapon> weapons = new();
+		private Weapon currentWeapon;
 
 		private float hitpoints;
 		private float Hitpoints
@@ -34,9 +50,13 @@ namespace App.Modules.Player
 
 		public override void _Ready()
 		{
-			base._Ready();
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			this.cameraPivot = this.GetNode<Node3D>("CameraPivot");
+			this.weapons.Add(WeaponType.Rifle, this.rifle);
+			this.weapons.Add(WeaponType.Cannon, this.cannon);
+			this.EquipWeapon(WeaponType.Rifle);
+			Logger.Print(this.rifle.Visible.ToString());
+			Logger.Print(this.cannon.Visible.ToString());
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -129,6 +149,26 @@ namespace App.Modules.Player
 			);
 
 			this.mouseMotion = Vector2.Zero;
+		}
+
+		private void EquipWeapon(WeaponType weaponType)
+		{
+			foreach (var kvp in this.weapons)
+			{
+				var (k, v) = kvp;
+
+				if (k == weaponType)
+				{
+					this.currentWeapon = v;
+					v.Visible = true;
+					v.SetProcess(true);
+				}
+				else
+				{
+					v.Visible = false;
+					v.SetProcess(false);
+				}
+			}
 		}
 	}
 }

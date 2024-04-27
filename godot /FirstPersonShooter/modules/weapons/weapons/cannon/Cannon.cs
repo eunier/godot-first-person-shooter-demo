@@ -1,10 +1,8 @@
 namespace App.Modules.Weapons
 {
-	using System;
 	using App.Shared;
-	using Godot;
 
-	public partial class Cannon : Node3D
+	public partial class Cannon : Weapon
 	{
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready() { }
