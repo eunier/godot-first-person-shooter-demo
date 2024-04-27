@@ -30,8 +30,8 @@ namespace App.Modules.Player
 
 		private Node3D cameraPivot;
 		private Vector2 mouseMotion = Vector2.Zero;
-		private Dictionary<WeaponType, Weapon> weapons = new();
-		private KeyValuePair<WeaponType, Weapon> currentWeapon;
+		private Dictionary<WeaponEnum, Weapon> weapons = new();
+		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
 
 		private float hitpoints;
 		private float Hitpoints
@@ -54,9 +54,9 @@ namespace App.Modules.Player
 			base._Ready();
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			this.cameraPivot = this.GetNode<Node3D>("CameraPivot");
-			this.weapons.Add(WeaponType.Rifle, this.rifle);
-			this.weapons.Add(WeaponType.Cannon, this.cannon);
-			this.EquipWeapon(WeaponType.Rifle);
+			this.weapons.Add(WeaponEnum.Rifle, this.rifle);
+			this.weapons.Add(WeaponEnum.Cannon, this.cannon);
+			this.EquipWeapon(WeaponEnum.Rifle);
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -165,7 +165,7 @@ namespace App.Modules.Player
 			this.mouseMotion = Vector2.Zero;
 		}
 
-		private void EquipWeapon(WeaponType weaponType)
+		private void EquipWeapon(WeaponEnum weaponType)
 		{
 			Logger.Print($"Equipping {weaponType}");
 
@@ -197,9 +197,9 @@ namespace App.Modules.Player
 				this.weapons.Count
 			);
 
-			var nextWeaponType = (WeaponType)nextWeaponIndex;
+			var nextWeaponType = (WeaponEnum)nextWeaponIndex;
 			Logger.Print($"Equipping preview weapon: {nextWeaponType}.");
-			this.EquipWeapon((WeaponType)nextWeaponIndex);
+			this.EquipWeapon((WeaponEnum)nextWeaponIndex);
 		}
 
 		private void EquipPreviousWeapon()
@@ -210,9 +210,9 @@ namespace App.Modules.Player
 				this.weapons.Count
 			);
 
-			var previousWeaponType = (WeaponType)nextWeaponIndex;
+			var previousWeaponType = (WeaponEnum)nextWeaponIndex;
 			Logger.Print($"Equipping preview weapon: {previousWeaponType}.");
-			this.EquipWeapon((WeaponType)nextWeaponIndex);
+			this.EquipWeapon((WeaponEnum)nextWeaponIndex);
 		}
 	}
 }

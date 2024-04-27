@@ -1,6 +1,6 @@
 namespace App.Modules.Weapons
 {
-	public enum WeaponType
+	public enum WeaponEnum
 	{
 		Rifle,
 		Cannon,
