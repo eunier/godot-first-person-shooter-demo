@@ -61,6 +61,7 @@ namespace App.Modules.Player
 
 		public override void _PhysicsProcess(double delta)
 		{
+			base._PhysicsProcess(delta);
 			var velocity = this.Velocity;
 			this.HandleCameraRotation();
 			this.ApplyGravity(delta, ref velocity);
