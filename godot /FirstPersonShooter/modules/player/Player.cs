@@ -57,10 +57,10 @@ namespace App.Modules.Player
 		public override void _PhysicsProcess(double delta)
 		{
 			var velocity = this.Velocity;
-			this.HandleCameraRotation();
-			this.ApplyGravity(delta, ref velocity);
-			this.HandleJump(ref velocity);
-			this.HandleMovement(ref velocity);
+			this.ProcessCameraRotation();
+			this.ProcessGravity(delta, ref velocity);
+			this.ProcessJump(ref velocity);
+			this.ProcessMovement(ref velocity);
 			this.Velocity = velocity;
 			this.MoveAndSlide();
 		}
@@ -98,7 +98,7 @@ namespace App.Modules.Player
 			}
 		}
 
-		private void ApplyGravity(double delta, ref Vector3 velocity)
+		private void ProcessGravity(double delta, ref Vector3 velocity)
 		{
 			if (!this.IsOnFloor())
 			{
@@ -113,7 +113,7 @@ namespace App.Modules.Player
 			}
 		}
 
-		private void HandleJump(ref Vector3 velocity)
+		private void ProcessJump(ref Vector3 velocity)
 		{
 			if (
 				Input.IsActionJustPressed(action: Shared.Constants.InputMap.Jump)
@@ -125,7 +125,7 @@ namespace App.Modules.Player
 			}
 		}
 
-		private void HandleMovement(ref Vector3 velocity)
+		private void ProcessMovement(ref Vector3 velocity)
 		{
 			var inputDir = Input.GetVector(
 				Shared.Constants.InputMap.MoveLeft,
@@ -150,7 +150,7 @@ namespace App.Modules.Player
 			}
 		}
 
-		private void HandleCameraRotation()
+		private void ProcessCameraRotation()
 		{
 			this.RotateY(this.mouseMotion.X);
 			this.cameraPivot.RotateX(this.mouseMotion.Y);
