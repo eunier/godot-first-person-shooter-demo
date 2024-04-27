@@ -25,7 +25,7 @@ namespace App.Modules.Rifle
 			Logger.Print($"Shooting");
 			this.rayCast.GlobalPosition = fromPosition;
 			this.rayCast.TargetPosition = new Vector3(0, 0, -5);
-			this.shootComponent.Shoot();
+			var collider = this.shootComponent.Shoot();
 		}
 	}
 }
