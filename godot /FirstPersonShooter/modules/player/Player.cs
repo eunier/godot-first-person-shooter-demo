@@ -4,6 +4,7 @@ namespace App.Modules.Player
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.Linq;
+	using System.Reflection.Metadata;
 	using App.Modules.Weapons;
 	using App.Shared;
 	using Godot;
@@ -30,7 +31,7 @@ namespace App.Modules.Player
 		private Node3D cameraPivot;
 		private Vector2 mouseMotion = Vector2.Zero;
 		private Dictionary<WeaponType, Weapon> weapons = new();
-		private Weapon currentWeapon;
+		private KeyValuePair<WeaponType, Weapon> currentWeapon;
 
 		private float hitpoints;
 		private float Hitpoints
@@ -50,13 +51,12 @@ namespace App.Modules.Player
 
 		public override void _Ready()
 		{
+			base._Ready();
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			this.cameraPivot = this.GetNode<Node3D>("CameraPivot");
 			this.weapons.Add(WeaponType.Rifle, this.rifle);
 			this.weapons.Add(WeaponType.Cannon, this.cannon);
 			this.EquipWeapon(WeaponType.Rifle);
-			Logger.Print(this.rifle.Visible.ToString());
-			Logger.Print(this.cannon.Visible.ToString());
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -70,21 +70,31 @@ namespace App.Modules.Player
 			this.MoveAndSlide();
 		}
 
-		public override void _Input(InputEvent inputEvent)
+		public override void _Input(InputEvent @event)
 		{
-			base._Input(inputEvent);
+			base._Input(@event);
 
 			if (
-				inputEvent is InputEventMouseMotion mouseMotionInputEvent
+				@event is InputEventMouseMotion mouseMotionInputEvent
 				&& Input.MouseMode == Input.MouseModeEnum.Captured
 			)
 			{
 				this.mouseMotion = -mouseMotionInputEvent.Relative * 0.003f;
 			}
 
-			if (inputEvent.IsActionPressed("ui_cancel"))
+			if (@event.IsActionPressed(Shared.Constants.InputMap.UiCancel))
 			{
 				Input.MouseMode = Input.MouseModeEnum.Visible;
+			}
+
+			if (@event.IsActionPressed(Shared.Constants.InputMap.NextWeapon))
+			{
+				this.EquipNextWeapon();
+			}
+
+			if (@event.IsActionPressed(Shared.Constants.InputMap.PreviousWeapon))
+			{
+				this.EquipPreviousWeapon();
 			}
 		}
 
@@ -105,7 +115,10 @@ namespace App.Modules.Player
 
 		private void HandleJump(ref Vector3 velocity)
 		{
-			if (Input.IsActionJustPressed(action: "jump") && this.IsOnFloor())
+			if (
+				Input.IsActionJustPressed(action: Shared.Constants.InputMap.Jump)
+				&& this.IsOnFloor()
+			)
 			{
 				velocity.Y = Player.JumpVelocity;
 				velocity.Y = Mathf.Sqrt(Player.JumpHeight * 2 * this.gravity);
@@ -115,10 +128,10 @@ namespace App.Modules.Player
 		private void HandleMovement(ref Vector3 velocity)
 		{
 			var inputDir = Input.GetVector(
-				"move_left",
-				"move_right",
-				"move_forward",
-				"move_backward"
+				Shared.Constants.InputMap.MoveLeft,
+				Shared.Constants.InputMap.MoveRight,
+				Shared.Constants.InputMap.MoveForward,
+				Shared.Constants.InputMap.MoveBackward
 			);
 
 			var direction = (
@@ -153,22 +166,52 @@ namespace App.Modules.Player
 
 		private void EquipWeapon(WeaponType weaponType)
 		{
+			Logger.Print($"Equipping {weaponType}");
+
 			foreach (var kvp in this.weapons)
 			{
 				var (k, v) = kvp;
 
 				if (k == weaponType)
 				{
-					this.currentWeapon = v;
+					this.currentWeapon = kvp;
 					v.Visible = true;
 					v.SetProcess(true);
+					Logger.Print($"Equipped {k}.");
 				}
 				else
 				{
 					v.Visible = false;
 					v.SetProcess(false);
+					Logger.Print($"Unequipped {k}.");
 				}
 			}
+		}
+
+		private void EquipNextWeapon()
+		{
+			var nextWeaponIndex = Mathf.Wrap(
+				(int)this.currentWeapon.Key + 1,
+				0,
+				this.weapons.Count
+			);
+
+			var nextWeaponType = (WeaponType)nextWeaponIndex;
+			Logger.Print($"Equipping preview weapon: {nextWeaponType}.");
+			this.EquipWeapon((WeaponType)nextWeaponIndex);
+		}
+
+		private void EquipPreviousWeapon()
+		{
+			var nextWeaponIndex = Mathf.Wrap(
+				(int)this.currentWeapon.Key - 1,
+				0,
+				this.weapons.Count
+			);
+
+			var previousWeaponType = (WeaponType)nextWeaponIndex;
+			Logger.Print($"Equipping preview weapon: {previousWeaponType}.");
+			this.EquipWeapon((WeaponType)nextWeaponIndex);
 		}
 	}
 }
