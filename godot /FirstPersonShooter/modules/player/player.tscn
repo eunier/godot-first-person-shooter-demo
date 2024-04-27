@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2o0seo5k2ev5"]
+[gd_scene load_steps=5 format=3 uid="uid://b2o0seo5k2ev5"]
 
 [ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
-[ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://modules/rifle/rifle.tscn" id="3_fxvum"]
-[ext_resource type="PackedScene" uid="uid://7kheabegsno" path="res://modules/cannon/cannon.tscn" id="4_yqa4w"]
+[ext_resource type="PackedScene" uid="uid://bmq05c8lrya8b" path="res://modules/weapon_controller/weapon_controller.tscn" id="2_7v6ta"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
 
@@ -12,25 +11,21 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_ssbip")
 
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+
+[node name="WeaponController" parent="CameraPivot/Camera3D" node_paths=PackedStringArray("rayCast") instance=ExtResource("2_7v6ta")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.462322)
+rayCast = NodePath("../RayCast3D")
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D"]
+target_position = Vector3(0, 0, -1)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_xia7e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("CapsuleMesh_mlo3j")
-
-[node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-
-[node name="WeaponGroup" type="Node3D" parent="CameraPivot/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.462322)
-
-[node name="Rifle" parent="CameraPivot/Camera3D/WeaponGroup" node_paths=PackedStringArray("rayCast") instance=ExtResource("3_fxvum")]
-rayCast = NodePath("../../RayCast3D")
-
-[node name="Cannon" parent="CameraPivot/Camera3D/WeaponGroup" instance=ExtResource("4_yqa4w")]
-
-[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D"]
-target_position = Vector3(0, 0, -1)

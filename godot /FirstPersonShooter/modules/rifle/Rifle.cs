@@ -8,10 +8,8 @@ namespace App.Modules.Rifle
 
 	public partial class Rifle : Weapon
 	{
-		[Export]
-		private RayCast3D rayCast;
-
 		private HitscanShootComponent shootComponent;
+		public RayCast3D RayCast { private get; set; }
 
 		public override void _Ready()
 		{
@@ -22,8 +20,14 @@ namespace App.Modules.Rifle
 
 		public void Shoot()
 		{
-			Logger.Print($"Shotting with `rayCast`: {this.rayCast}.");
-			this.shootComponent.Shoot(this.rayCast, 100);
+			if (this.RayCast is null)
+			{
+				Logger.Print("No `RayCast` defined, returning.");
+				return;
+			}
+
+			Logger.Print($"Shooting with `RayCast`: {this.RayCast}.");
+			this.shootComponent.Shoot(this.RayCast, 100);
 		}
 	}
 }

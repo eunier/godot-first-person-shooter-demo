@@ -1,12 +1,5 @@
 namespace App.Modules.Player
 {
-	using System.Collections.Generic;
-	using App.Modules.Cannon;
-	using App.Modules.Player.Constants;
-	using App.Modules.Rifle;
-	using App.Shared.Abstract;
-	using App.Shared.Enums;
-	using App.Shared.Utils;
 	using Godot;
 
 	public partial class Player : CharacterBody3D
@@ -22,36 +15,11 @@ namespace App.Modules.Player
 
 		private Node3D cameraPivot;
 		private Vector2 mouseMotion = Vector2.Zero;
-		private Dictionary<WeaponEnum, Weapon> weapons = new();
-		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
-		private Rifle rifle;
-		private Cannon cannon;
-
-		private float hitpoints;
-		private float Hitpoints
-		{
-			get { return this.hitpoints; }
-			set
-			{
-				this.hitpoints = value;
-				GD.Print(this.hitpoints);
-
-				if (this.hitpoints <= 0)
-				{
-					this.GetTree().Quit();
-				}
-			}
-		}
 
 		public override void _Ready()
 		{
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			this.cameraPivot = this.GetNode<Node3D>("CameraPivot");
-			this.rifle = this.GetNode<Rifle>(NodePaths.Rifle);
-			this.cannon = this.GetNode<Cannon>(NodePaths.Cannon);
-			this.weapons.Add(WeaponEnum.Rifle, this.rifle);
-			this.weapons.Add(WeaponEnum.Cannon, this.cannon);
-			this.EquipWeapon(WeaponEnum.Rifle);
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -67,8 +35,6 @@ namespace App.Modules.Player
 
 		public override void _Input(InputEvent @event)
 		{
-			base._Input(@event);
-
 			if (
 				@event is InputEventMouseMotion mouseMotionInputEvent
 				&& Input.MouseMode == Input.MouseModeEnum.Captured
@@ -80,21 +46,6 @@ namespace App.Modules.Player
 			if (@event.IsActionPressed(Shared.Constants.InputMap.UiCancel))
 			{
 				Input.MouseMode = Input.MouseModeEnum.Visible;
-			}
-
-			if (@event.IsActionPressed(Shared.Constants.InputMap.NextWeapon))
-			{
-				this.EquipNextWeapon();
-			}
-
-			if (@event.IsActionPressed(Shared.Constants.InputMap.PreviousWeapon))
-			{
-				this.EquipPreviousWeapon();
-			}
-
-			if (@event.IsActionPressed(Shared.Constants.InputMap.Shoot))
-			{
-				this.Shoot();
 			}
 		}
 
@@ -162,69 +113,6 @@ namespace App.Modules.Player
 			);
 
 			this.mouseMotion = Vector2.Zero;
-		}
-
-		private void EquipWeapon(WeaponEnum weaponEnum)
-		{
-			Logger.Print($"Equipping {weaponEnum}");
-
-			foreach (var kvp in this.weapons)
-			{
-				var (k, v) = kvp;
-
-				if (k == weaponEnum)
-				{
-					this.currentWeapon = kvp;
-					v.Visible = true;
-					v.SetProcess(true);
-					Logger.Print($"Equipped {k}.");
-				}
-				else
-				{
-					v.Visible = false;
-					v.SetProcess(false);
-					Logger.Print($"Unequipped {k}.");
-				}
-			}
-		}
-
-		private void EquipNextWeapon()
-		{
-			var nextWeaponIndex = Mathf.Wrap(
-				(int)this.currentWeapon.Key + 1,
-				0,
-				this.weapons.Count
-			);
-
-			var nextWeaponEnum = (WeaponEnum)nextWeaponIndex;
-			Logger.Print($"Equipping preview weapon: {nextWeaponEnum}.");
-			this.EquipWeapon((WeaponEnum)nextWeaponIndex);
-		}
-
-		private void EquipPreviousWeapon()
-		{
-			var nextWeaponIndex = Mathf.Wrap(
-				(int)this.currentWeapon.Key - 1,
-				0,
-				this.weapons.Count
-			);
-
-			var previousWeaponEnum = (WeaponEnum)nextWeaponIndex;
-			Logger.Print($"Equipping preview weapon: {previousWeaponEnum}.");
-			this.EquipWeapon((WeaponEnum)nextWeaponIndex);
-		}
-
-		private void Shoot()
-		{
-			switch (this.currentWeapon.Value)
-			{
-				case Rifle rifle:
-					rifle.Shoot();
-					break;
-
-				default:
-					break;
-			}
 		}
 	}
 }
