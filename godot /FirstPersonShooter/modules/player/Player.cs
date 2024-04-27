@@ -1,8 +1,11 @@
 namespace App.Modules.Player
 {
 	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using App.Modules.Weapons;
+	using App.Modules.Cannon;
+	using App.Modules.Player.Constants;
+	using App.Modules.Rifle;
+	using App.Shared.Abstract;
+	using App.Shared.Enums;
 	using App.Shared.Utils;
 	using Godot;
 
@@ -19,13 +22,10 @@ namespace App.Modules.Player
 
 		private Node3D cameraPivot;
 		private Vector2 mouseMotion = Vector2.Zero;
-
-		#region Weapons
 		private Dictionary<WeaponEnum, Weapon> weapons = new();
 		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
 		private Rifle rifle;
 		private Cannon cannon;
-		#endregion
 
 		private float hitpoints;
 		private float Hitpoints
@@ -45,9 +45,10 @@ namespace App.Modules.Player
 
 		public override void _Ready()
 		{
-			base._Ready();
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			this.cameraPivot = this.GetNode<Node3D>("CameraPivot");
+			this.rifle = this.GetNode<Rifle>(NodePaths.Rifle);
+			this.cannon = this.GetNode<Cannon>(NodePaths.Cannon);
 			this.weapons.Add(WeaponEnum.Rifle, this.rifle);
 			this.weapons.Add(WeaponEnum.Cannon, this.cannon);
 			this.EquipWeapon(WeaponEnum.Rifle);

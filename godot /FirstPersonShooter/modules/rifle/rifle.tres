@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://c8pav3odtj4ar"]
+
+[ext_resource type="Script" path="res://shared/resources/WeaponResource.cs" id="1_w8rir"]
+
+[resource]
+script = ExtResource("1_w8rir")
+Damage = 20
+Range = 100
