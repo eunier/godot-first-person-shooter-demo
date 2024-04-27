@@ -162,15 +162,15 @@ namespace App.Modules.Player
 			this.mouseMotion = Vector2.Zero;
 		}
 
-		private void EquipWeapon(WeaponEnum weaponType)
+		private void EquipWeapon(WeaponEnum weaponEnum)
 		{
-			Logger.Print($"Equipping {weaponType}");
+			Logger.Print($"Equipping {weaponEnum}");
 
 			foreach (var kvp in this.weapons)
 			{
 				var (k, v) = kvp;
 
-				if (k == weaponType)
+				if (k == weaponEnum)
 				{
 					this.currentWeapon = kvp;
 					v.Visible = true;
@@ -194,8 +194,8 @@ namespace App.Modules.Player
 				this.weapons.Count
 			);
 
-			var nextWeaponType = (WeaponEnum)nextWeaponIndex;
-			Logger.Print($"Equipping preview weapon: {nextWeaponType}.");
+			var nextWeaponEnum = (WeaponEnum)nextWeaponIndex;
+			Logger.Print($"Equipping preview weapon: {nextWeaponEnum}.");
 			this.EquipWeapon((WeaponEnum)nextWeaponIndex);
 		}
 
@@ -207,8 +207,8 @@ namespace App.Modules.Player
 				this.weapons.Count
 			);
 
-			var previousWeaponType = (WeaponEnum)nextWeaponIndex;
-			Logger.Print($"Equipping preview weapon: {previousWeaponType}.");
+			var previousWeaponEnum = (WeaponEnum)nextWeaponIndex;
+			Logger.Print($"Equipping preview weapon: {previousWeaponEnum}.");
 			this.EquipWeapon((WeaponEnum)nextWeaponIndex);
 		}
 	}
