@@ -5,7 +5,6 @@ namespace App.Modules.Rifle
 		public static class NodePaths
 		{
 			public const string HitscanShootComponent = "HitscanShootComponent";
-			public const string RayCast3D = "RayCast3D";
 		}
 	}
 }

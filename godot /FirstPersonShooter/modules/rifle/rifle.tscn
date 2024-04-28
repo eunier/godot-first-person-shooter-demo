@@ -192,9 +192,4 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_pg2w7")
 draw_pass_1 = SubResource("BoxMesh_3edu6")
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0506169, -0.521362)
-target_position = Vector3(0, 0, -100)
-
-[node name="HitscanShootComponent" parent="." node_paths=PackedStringArray("rayCast") instance=ExtResource("2_87gv7")]
-rayCast = NodePath("../RayCast3D")
+[node name="HitscanShootComponent" parent="." instance=ExtResource("2_87gv7")]

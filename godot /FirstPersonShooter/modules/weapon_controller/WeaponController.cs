@@ -12,6 +12,9 @@ namespace App.Modules.WeaponController
 	public partial class WeaponController : Node3D
 	{
 		private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
+
+		[Export]
+		private Came? camera;
 		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
 		private Rifle rifle;
 		private Cannon cannon;
@@ -25,7 +28,7 @@ namespace App.Modules.WeaponController
 			this.EquipWeapon(WeaponEnum.Rifle);
 		}
 
-		public override void _Input(InputEvent @event)
+		public override void _UnhandledInput(InputEvent @event)
 		{
 			if (@event.IsActionPressed(Shared.Constants.InputMap.NextWeapon))
 			{
@@ -95,10 +98,11 @@ namespace App.Modules.WeaponController
 
 		private void Shoot()
 		{
+			Input.MouseMode = Input.MouseModeEnum.Visible;
 			switch (this.currentWeapon.Value)
 			{
 				case Rifle rifle:
-					rifle.Shoot();
+					rifle.Shoot(this.camera);
 					break;
 
 				default:

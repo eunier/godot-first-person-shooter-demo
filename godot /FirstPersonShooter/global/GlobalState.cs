@@ -32,6 +32,10 @@ namespace App.Global
 						"Cannot access PlayerCameraGlobalPosition if PlayerCamera is null.";
 					Logger.PrintErr(msg);
 				}
+				else
+				{
+					Logger.Print(this.PlayerCamera.GlobalPosition.ToString());
+				}
 #endif
 				return this.PlayerCamera?.GlobalPosition;
 			}

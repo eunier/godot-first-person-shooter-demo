@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2o0seo5k2ev5"]
+[gd_scene load_steps=6 format=3 uid="uid://b2o0seo5k2ev5"]
 
 [ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
 [ext_resource type="PackedScene" uid="uid://bmq05c8lrya8b" path="res://modules/weapon_controller/weapon_controller.tscn" id="2_7v6ta"]
+[ext_resource type="Theme" uid="uid://be45corbhswpd" path="res://shared/resources/debug.tres" id="3_qyi01"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
 
@@ -16,11 +17,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 
-[node name="WeaponController" parent="CameraPivot/Camera3D" instance=ExtResource("2_7v6ta")]
+[node name="WeaponController" parent="CameraPivot/Camera3D" node_paths=PackedStringArray("camera") instance=ExtResource("2_7v6ta")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.462322)
-
-[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D"]
-target_position = Vector3(0, 0, -1)
+camera = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_xia7e")
@@ -28,3 +27,29 @@ shape = SubResource("CapsuleShape3D_xia7e")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("CapsuleMesh_mlo3j")
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 50.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("3_qyi01")
+
+[node name="Label" type="Label" parent="UserInterface/DebugPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "test
+"

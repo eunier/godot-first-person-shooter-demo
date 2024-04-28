@@ -18,8 +18,7 @@ namespace App.Modules.Player
 		private Camera3D? camera;
 		private Vector2 mouseMotion = Vector2.Zero;
 		private GlobalState? globalState;
-
-		public RayCast3D? RayCast { get; private set; }
+		private Label? debugLabel1;
 
 		public static Player? GetPlayer(Node caller)
 		{
@@ -45,30 +44,12 @@ namespace App.Modules.Player
 			}
 		}
 
-		public static RayCast3D? GetCameraRayCast(Node caller)
-		{
-			var player = Player.GetPlayer(caller);
-
-			if (player is null)
-			{
-				Logger.Print(
-					"Can not find player ray cast because player was not found."
-				);
-			}
-
-			return player?.RayCast;
-		}
-
 		public override void _Ready()
 		{
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 
 			this.cameraPivot = this.GetNode<Node3D>(
 				PlayerConstants.NodePaths.CameraPivot
-			);
-
-			this.RayCast = this.GetNode<RayCast3D>(
-				PlayerConstants.NodePaths.CameraRayCast
 			);
 
 			this.globalState = this.GetNode<GlobalState>(
@@ -78,6 +59,21 @@ namespace App.Modules.Player
 			this.camera = this.GetNode<Camera3D>(PlayerConstants.NodePaths.Camera3D);
 			Logger.Print($"Setting GlobalState PlayerCamera with : {this.camera}");
 			this.globalState.PlayerCamera = this.camera;
+
+#if DEBUG
+			var debugPanel = this.GetNode<PanelContainer>(
+				PlayerConstants.NodePaths.DebugPanel
+			);
+
+			if (debugPanel is not null)
+			{
+				debugPanel.Visible = true;
+			}
+
+			this.debugLabel1 = this.GetNode<Label>(
+				PlayerConstants.NodePaths.DebugLabel1
+			);
+#endif
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -88,8 +84,13 @@ namespace App.Modules.Player
 			this.ProcessJump(ref velocity);
 			this.ProcessMovement(ref velocity);
 			this.Velocity = velocity;
+#if DEBUG
+			if (this.debugLabel1 is not null)
+			{
+				this.debugLabel1.Text = this.camera?.GlobalPosition.ToString();
+			}
+#endif
 			this.MoveAndSlide();
-			Logger.Print(this.camera?.GlobalPosition.ToString());
 		}
 
 		public override void _Input(InputEvent @event)
