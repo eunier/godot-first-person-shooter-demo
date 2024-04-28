@@ -7,7 +7,7 @@ namespace App.Modules.EnemyModule
 
 	public partial class Enemy : CharacterBody3D
 	{
-		private const float Speed = 5.0f;
+		private const float Speed = 3.0f;
 		private const float FallMultiplier = 1.5f;
 		private const float AttackRange = 1.5f;
 		private const int AttackDamage = 20;
@@ -22,7 +22,7 @@ namespace App.Modules.EnemyModule
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
 
-		private float hitpoints;
+		private float hitpoints = Enemy.MaxHitpoints;
 		private float Hitpoints
 		{
 			get { return this.hitpoints; }
@@ -52,6 +52,12 @@ namespace App.Modules.EnemyModule
 		{
 			this.player = (Player?)
 				this.GetTree().GetFirstNodeInGroup(Constants.Groups.Player);
+
+#if DEBUG
+			Logger.Print(
+				this.player is not null ? "Found player." : "Player not found."
+			);
+#endif
 
 			this.animationPlayer = this.GetNode<AnimationPlayer>(
 				EnemyConstants.NodePaths.AnimationPlayer
@@ -101,6 +107,7 @@ namespace App.Modules.EnemyModule
 
 			if (direction != Vector3.Zero)
 			{
+				this.LookAtTarget(direction);
 				velocity.X = direction.X * Speed;
 				velocity.Z = direction.Z * Speed;
 			}

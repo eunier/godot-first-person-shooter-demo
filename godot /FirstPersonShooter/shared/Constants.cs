@@ -18,7 +18,7 @@ namespace App.Shared
 
 		public static class Groups
 		{
-			public const string Player = "Player";
+			public const string Player = "player";
 		}
 
 		public static class NodePaths

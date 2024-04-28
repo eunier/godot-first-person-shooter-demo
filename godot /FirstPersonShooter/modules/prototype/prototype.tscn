@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://butyccgbf8dvb"]
+[gd_scene load_steps=8 format=3 uid="uid://butyccgbf8dvb"]
 
 [ext_resource type="Material" uid="uid://dtxb7ee04ynku" path="res://modules/prototype/materials/blue_3_material.tres" id="1_qh0kv"]
 [ext_resource type="PackedScene" uid="uid://b2o0seo5k2ev5" path="res://modules/player/player.tscn" id="2_lpi8l"]
@@ -17,6 +17,10 @@ sky = SubResource("Sky_d65g2")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_rgnbq"]
+vertices = PackedVector3Array(-1, 0.5, -18.5, 0, 0.5, -18.75, 0, 0.5, -31.5, -31.5, 0.5, -31.5, 0.25, 0.5, -1.5, 0, 0.5, -16.25, -1, 0.5, -16.75, -31.5, 0.5, -31.5, -31.5, 0.5, 0, -1, 0.5, -0.75, -1, 0.5, -16.75, -1, 0.5, -18.5, -31.5, 0.5, -31.5, -31.5, 0.5, 0, -1, 0.5, 0, -1, 0.5, -0.75, 0, 0.5, -31.5, 0, 0.5, -18.75, 1, 0.5, -18.5, 31.5, 0.5, -31.5, 1, 0.5, -16.5, 0, 0.5, -16.25, 0.25, 0.5, -1.5, 1.25, 0.5, 0.25, 1, 0.5, -18.5, 1, 0.5, -16.5, 1.25, 0.5, 0.25, 31.5, 0.5, 0.25, 31.5, 0.5, -31.5, -1, 0.5, 0.75, -1, 0.5, 0, -31.5, 0.5, 0, 0, 0.5, 31.5, 0, 0.5, 1, -1, 0.5, 0.75, -31.5, 0.5, 0, -31.5, 0.5, 31.5, 0.75, 0.5, 1, 0, 0.5, 1, 0, 0.5, 31.5, 31.5, 0.5, 0.25, 1.25, 0.5, 0.25, 0.75, 0.5, 1, 0, 0.5, 31.5, 31.5, 0.5, 31.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 9), PackedInt32Array(6, 9, 8), PackedInt32Array(6, 8, 7), PackedInt32Array(12, 11, 10), PackedInt32Array(15, 14, 13), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(27, 24, 28), PackedInt32Array(31, 30, 29), PackedInt32Array(33, 32, 34), PackedInt32Array(34, 32, 36), PackedInt32Array(34, 36, 35), PackedInt32Array(39, 38, 37), PackedInt32Array(41, 40, 42), PackedInt32Array(42, 40, 44), PackedInt32Array(42, 44, 43)]
+
 [node name="Prototype" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -26,13 +30,16 @@ environment = SubResource("Environment_5138v")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="Player" parent="." instance=ExtResource("2_lpi8l")]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_rgnbq")
+
+[node name="Floor" type="CSGBox3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 size = Vector3(64, 1, 64)
 material = ExtResource("1_qh0kv")
 
-[node name="Player" parent="." instance=ExtResource("2_lpi8l")]
-
-[node name="Enemy" parent="." instance=ExtResource("3_gfubl")]
+[node name="Enemy" parent="NavigationRegion3D" instance=ExtResource("3_gfubl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19209e-07, -17.5927)

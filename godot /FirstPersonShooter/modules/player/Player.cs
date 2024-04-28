@@ -21,7 +21,7 @@ namespace App.Modules.PlayerModule
 		private GlobalState? globalState;
 		private Label? debugLabel1;
 
-		private float hitpoints;
+		private float hitpoints = Player.MaxHitpoints;
 		public float Hitpoints
 		{
 			get { return this.hitpoints; }
