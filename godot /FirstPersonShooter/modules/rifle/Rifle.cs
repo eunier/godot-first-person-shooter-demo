@@ -1,6 +1,6 @@
 namespace App.Modules.Rifle
 {
-	using App.Modules.Rifle.Constants;
+	using App.Global;
 	using App.Shared.Abstract;
 	using App.Shared.Components;
 	using App.Shared.Utils;
@@ -8,24 +8,42 @@ namespace App.Modules.Rifle
 
 	public partial class Rifle : Weapon
 	{
-		private HitscanShootComponent shootComponent;
-		private RayCast3D rayCast;
+		private GlobalState? globalState;
+		private HitscanShootComponent? shootComponent;
+		private RayCast3D? rayCast;
 
 		public override void _Ready()
 		{
-			this.shootComponent = this.GetNode<HitscanShootComponent>(
-				NodePaths.HitscanShootComponent
+			this.globalState = this.GetNode<GlobalState>(
+				RifleConstants.NodePaths.GlobalState
 			);
 
-			this.rayCast = this.GetNode<RayCast3D>(NodePaths.RayCast3D);
+			this.shootComponent = this.GetNode<HitscanShootComponent>(
+				RifleConstants.NodePaths.HitscanShootComponent
+			);
+
+			this.rayCast = this.GetNode<RayCast3D>(
+				RifleConstants.NodePaths.RayCast3D
+			);
 		}
 
-		public void Shoot(Vector3 fromPosition)
+		public void Shoot()
 		{
 			Logger.Print($"Shooting");
-			this.rayCast.GlobalPosition = fromPosition;
-			this.rayCast.TargetPosition = new Vector3(0, 0, -5);
-			var collider = this.shootComponent.Shoot();
+			Logger.Print($"{this.rayCast?.GlobalPosition}");
+
+			if (this.globalState?.PlayerCameraGlobalPosition is not null)
+			{
+				this.rayCast = new RayCast3D
+				{
+					GlobalPosition = (Vector3)this.globalState.PlayerCameraGlobalPosition,
+					TargetPosition = new Vector3(0, 0, -5)
+				};
+
+				this.AddChild(this.rayCast);
+				var collider = this.shootComponent?.Shoot();
+				Logger.Print($"{this.rayCast.GlobalPosition}");
+			}
 		}
 	}
 }

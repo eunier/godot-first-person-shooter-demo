@@ -15,6 +15,10 @@ run/main_scene="res://modules/prototype/prototype.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GlobalState="*res://global/GlobalState.cs"
+
 [display]
 
 window/size/always_on_top=true

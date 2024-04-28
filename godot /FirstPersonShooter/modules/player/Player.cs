@@ -1,8 +1,7 @@
 namespace App.Modules.Player
 {
-	using System.Dynamic;
-	using App.Modules.Player.Constants;
-	using App.Shared.Constants;
+	using App.Global;
+	using App.Shared;
 	using App.Shared.Utils;
 	using Godot;
 
@@ -15,24 +14,27 @@ namespace App.Modules.Player
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
-		private Node3D cameraPivot;
+		private Node3D? cameraPivot;
+		private Camera3D? camera;
 		private Vector2 mouseMotion = Vector2.Zero;
-		public RayCast3D RayCast { get; private set; }
+		private GlobalState? globalState;
 
-		public static Player GetPlayer(Node caller)
+		public RayCast3D? RayCast { get; private set; }
+
+		public static Player? GetPlayer(Node caller)
 		{
-			var node = caller.GetTree().GetFirstNodeInGroup(Groups.Player);
+			var node = caller.GetTree().GetFirstNodeInGroup(Constants.Groups.Player);
 
 			if (node is null)
 			{
-				Logger.Print($"No node found in group '{Groups.Player}'.");
+				Logger.Print($"No node found in group '{Constants.Groups.Player}'.");
 				return null;
 			}
 
 			if (node is not Player player)
 			{
 				Logger.Print(
-					$"Node found in group '{Groups.Player}' is not of type `Player`."
+					$"Node found in group '{Constants.Groups.Player}' is not of type `Player`."
 				);
 				return null;
 			}
@@ -43,7 +45,7 @@ namespace App.Modules.Player
 			}
 		}
 
-		public static RayCast3D GetCameraRayCast(Node caller)
+		public static RayCast3D? GetCameraRayCast(Node caller)
 		{
 			var player = Player.GetPlayer(caller);
 
@@ -54,14 +56,28 @@ namespace App.Modules.Player
 				);
 			}
 
-			return player.RayCast;
+			return player?.RayCast;
 		}
 
 		public override void _Ready()
 		{
 			Input.MouseMode = Input.MouseModeEnum.Captured;
-			this.cameraPivot = this.GetNode<Node3D>(NodePaths.CameraPivot);
-			this.RayCast = this.GetNode<RayCast3D>(NodePaths.CameraRayCast);
+
+			this.cameraPivot = this.GetNode<Node3D>(
+				PlayerConstants.NodePaths.CameraPivot
+			);
+
+			this.RayCast = this.GetNode<RayCast3D>(
+				PlayerConstants.NodePaths.CameraRayCast
+			);
+
+			this.globalState = this.GetNode<GlobalState>(
+				Constants.NodePaths.GlobalState
+			);
+
+			this.camera = this.GetNode<Camera3D>(PlayerConstants.NodePaths.Camera3D);
+			Logger.Print($"Setting GlobalState PlayerCamera with : {this.camera}");
+			this.globalState.PlayerCamera = this.camera;
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -154,13 +170,16 @@ namespace App.Modules.Player
 		private void ProcessCameraRotation()
 		{
 			this.RotateY(this.mouseMotion.X);
-			this.cameraPivot.RotateX(this.mouseMotion.Y);
+			if (this.cameraPivot is not null)
+			{
+				this.cameraPivot.RotateX(this.mouseMotion.Y);
 
-			this.cameraPivot.RotationDegrees = new Vector3(
-				(float)Mathf.Clamp(this.cameraPivot.RotationDegrees.X, -90.0, 90.0),
-				this.cameraPivot.RotationDegrees.Y,
-				this.cameraPivot.RotationDegrees.Z
-			);
+				this.cameraPivot.RotationDegrees = new Vector3(
+					(float)Mathf.Clamp(this.cameraPivot.RotationDegrees.X, -90.0, 90.0),
+					this.cameraPivot.RotationDegrees.Y,
+					this.cameraPivot.RotationDegrees.Z
+				);
+			}
 
 			this.mouseMotion = Vector2.Zero;
 		}

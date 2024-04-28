@@ -12,10 +12,6 @@ namespace App.Modules.WeaponController
 	public partial class WeaponController : Node3D
 	{
 		private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
-
-		[Export]
-		private Camera3D playerCamera;
-
 		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
 		private Rifle rifle;
 		private Cannon cannon;
@@ -102,7 +98,7 @@ namespace App.Modules.WeaponController
 			switch (this.currentWeapon.Value)
 			{
 				case Rifle rifle:
-					rifle.Shoot(this.playerCamera.GlobalPosition);
+					rifle.Shoot();
 					break;
 
 				default:

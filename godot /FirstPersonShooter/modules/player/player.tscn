@@ -16,9 +16,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 
-[node name="WeaponController" parent="CameraPivot/Camera3D" node_paths=PackedStringArray("playerCamera") instance=ExtResource("2_7v6ta")]
+[node name="WeaponController" parent="CameraPivot/Camera3D" instance=ExtResource("2_7v6ta")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.462322)
-playerCamera = NodePath("..")
 
 [node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D"]
 target_position = Vector3(0, 0, -1)
