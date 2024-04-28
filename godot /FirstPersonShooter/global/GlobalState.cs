@@ -1,6 +1,5 @@
 namespace App.Global
 {
-	using System;
 	using App.Shared.Utils;
 	using Godot;
 
