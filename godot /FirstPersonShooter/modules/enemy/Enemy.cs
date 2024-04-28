@@ -55,7 +55,7 @@ namespace App.Modules.EnemyModule
 
 #if DEBUG
 			Logger.Print(
-				this.player is not null ? "Found player." : "Player not found."
+				this.player is not null ? "Player found." : "Player not found."
 			);
 #endif
 
