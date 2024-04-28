@@ -1,4 +1,4 @@
-namespace App.Modules.Rifle
+namespace App.Modules.RifleModule
 {
 	public static class RifleConstants
 	{

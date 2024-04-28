@@ -1,4 +1,4 @@
-namespace App.Modules.WeaponController.Constants
+namespace App.Modules.WeaponControllerModule.Constants
 {
 	public static class WeaponControllerConstants
 	{

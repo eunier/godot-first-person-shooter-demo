@@ -1,4 +1,4 @@
-namespace App.Modules.Cannon
+namespace App.Modules.CannonModule
 {
 	using App.Shared.Abstract;
 

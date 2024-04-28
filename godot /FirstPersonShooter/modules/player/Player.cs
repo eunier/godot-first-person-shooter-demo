@@ -1,4 +1,4 @@
-namespace App.Modules.Player
+namespace App.Modules.PlayerModule
 {
 	using App.Global;
 	using App.Shared;
@@ -83,7 +83,7 @@ namespace App.Modules.Player
 			this.ProcessGravity(delta, ref velocity);
 			this.ProcessJump(ref velocity);
 			this.ProcessMovement(ref velocity);
-			this.Velocity = velocity;
+
 #if DEBUG
 			if (this.debugLabel1 is not null)
 			{
@@ -91,6 +91,7 @@ namespace App.Modules.Player
 					$"Player Camera Global Position: {this.camera?.GlobalPosition.ToString()}";
 			}
 #endif
+			this.Velocity = velocity;
 			this.MoveAndSlide();
 		}
 

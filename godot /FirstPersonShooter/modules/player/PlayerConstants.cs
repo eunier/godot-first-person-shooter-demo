@@ -1,4 +1,4 @@
-namespace App.Modules.Player
+namespace App.Modules.PlayerModule
 {
 	public static class PlayerConstants
 	{

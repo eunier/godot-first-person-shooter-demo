@@ -1,9 +1,5 @@
-namespace App.Modules.Rifle
+namespace App.Modules.RifleModule
 {
-	using System.Linq;
-	using System.Reflection.Metadata;
-	using App.Global;
-	using App.Shared;
 	using App.Shared.Abstract;
 	using App.Shared.Components;
 	using App.Shared.Utils;

@@ -1,9 +1,9 @@
-namespace App.Modules.WeaponController
+namespace App.Modules.WeaponControllerModule
 {
 	using System.Collections.Generic;
-	using App.Modules.Cannon;
-	using App.Modules.Rifle;
-	using App.Modules.WeaponController.Constants;
+	using App.Modules.CannonModule;
+	using App.Modules.RifleModule;
+	using App.Modules.WeaponControllerModule.Constants;
 	using App.Shared.Abstract;
 	using App.Shared.Enums;
 	using App.Shared.Utils;
