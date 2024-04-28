@@ -71,6 +71,8 @@ namespace App.Modules.Player
 				PlayerConstants.NodePaths.CameraRayCast
 			);
 
+			// TODO: remove extra global nodes
+
 			this.globalState = this.GetNode<GlobalState>(
 				Constants.NodePaths.GlobalState
 			);
