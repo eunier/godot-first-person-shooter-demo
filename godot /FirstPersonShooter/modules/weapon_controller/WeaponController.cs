@@ -16,13 +16,19 @@ namespace App.Modules.WeaponController
 		[Export]
 		private Camera3D? camera;
 		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
-		private Rifle rifle;
-		private Cannon cannon;
+		private Rifle? rifle;
+		private Cannon? cannon;
 
 		public override void _Ready()
 		{
-			this.rifle = this.GetNode<Rifle>(NodePaths.Rifle);
-			this.cannon = this.GetNode<Cannon>(NodePaths.Cannon);
+			this.rifle = this.GetNode<Rifle>(
+				WeaponControllerConstants.NodePaths.Rifle
+			);
+
+			this.cannon = this.GetNode<Cannon>(
+				WeaponControllerConstants.NodePaths.Cannon
+			);
+
 			this.weapons.Add(WeaponEnum.Rifle, this.rifle);
 			this.weapons.Add(WeaponEnum.Cannon, this.cannon);
 			this.EquipWeapon(WeaponEnum.Rifle);
