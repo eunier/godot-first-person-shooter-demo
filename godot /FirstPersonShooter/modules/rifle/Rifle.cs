@@ -26,42 +26,7 @@ namespace App.Modules.Rifle
 
 			if (camera is not null)
 			{
-				var cameraCenter = camera.GetViewport().GetVisibleRect().Size / 2;
-				var rayOrigin = camera.ProjectRayOrigin(cameraCenter);
-				var rayEnd = rayOrigin + (camera.ProjectRayNormal(cameraCenter) * 2);
-				var rayQuery = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
-				var rayInterception = this.GetWorld3D()
-					.DirectSpaceState.IntersectRay(rayQuery);
-				if (rayInterception.Any()) { }
-				else
-				{
-					Logger.Print("Rifle miss.");
-				}
-				// var center =
-				// var origin = camera.ProjectRayOrigin(camera.GlobalTransform);
-				// var a = PhysicsRayQueryParameters3D.Create()
-
-				// var rayCast = new RayCast3D
-				// {
-				// 	GlobalPosition = camera.GlobalPosition,
-				// 	TargetPosition = new Vector3(0, 0, -5),
-				// };
-
-				// var rayCast = new RayCast3D();
-				// camera.AddChild(rayCast);
-
-				// Logger.Print($"Rifle RayCast.GlobalPosition: {rayCast.GlobalPosition}");
-
-				// var collider = this.shootComponent?.Shoot(rayCast);
-
-				// if (collider is not null)
-				// {
-				// 	Logger.Print($"Rifle hit: {collider}");
-				// }
-				// else
-				// {
-				// 	Logger.Print("Rifle miss.");
-				// }
+				var res = this.shootComponent?.Shoot(camera, 100);
 			}
 			else
 			{

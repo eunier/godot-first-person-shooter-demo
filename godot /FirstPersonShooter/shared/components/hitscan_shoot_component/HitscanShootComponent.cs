@@ -1,26 +1,31 @@
 namespace App.Shared.Components
 {
+	using System.Linq;
 	using App.Shared.Utils;
 	using Godot;
+	using Godot.Collections;
 
 	public partial class HitscanShootComponent : Node3D
 	{
-		public GodotObject? Shoot(RayCast3D rayCast)
+		public Dictionary Shoot(Camera3D camera, int range)
 		{
-			var collider = rayCast.GetCollider();
+			var cameraCenter = camera.GetViewport().GetVisibleRect().Size / 2;
+			var rayOrigin = camera.ProjectRayOrigin(cameraCenter);
+			var rayEnd = rayOrigin + (camera.ProjectRayNormal(cameraCenter) * range);
+			var rayQuery = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
+			var rayInterception = this.GetWorld3D()
+				.DirectSpaceState.IntersectRay(rayQuery);
 
-#if DEBUG
-			if (collider is not null)
+			if (rayInterception.Any())
 			{
-				Logger.Print($"Hit: {collider}.");
+				Logger.Print($"Rifle hit: {rayInterception}");
 			}
 			else
 			{
-				Logger.Print("Miss.");
+				Logger.Print("Rifle miss.");
 			}
-#endif
 
-			return collider;
+			return rayInterception;
 		}
 	}
 }

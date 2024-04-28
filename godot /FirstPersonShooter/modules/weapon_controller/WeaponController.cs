@@ -14,7 +14,7 @@ namespace App.Modules.WeaponController
 		private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
 
 		[Export]
-		private Came? camera;
+		private Camera3D? camera;
 		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
 		private Rifle rifle;
 		private Cannon cannon;
