@@ -15,11 +15,13 @@ namespace App.Modules.EnemyModule
 		private const int MaxHitpoints = 100;
 		private const int AggroRange = 12;
 		private bool provoked = false;
+		private Player? player;
+		private AnimationPlayer? animationPlayer;
+		private NavigationAgent3D? navigationAgent;
+
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
-
-		private Player? player;
 
 		private float hitpoints;
 		private float Hitpoints
@@ -41,10 +43,27 @@ namespace App.Modules.EnemyModule
 		{
 			this.player = (Player?)
 				this.GetTree().GetFirstNodeInGroup(Constants.Groups.Player);
+
+			this.animationPlayer = this.GetNode<AnimationPlayer>(
+				EnemyConstants.NodePaths.AnimationPlayer
+			);
+
+			this.navigationAgent = this.GetNode<NavigationAgent3D>(
+				EnemyConstants.NodePaths.NavigationAgent3D
+			);
+		}
+
+		public override void _Process(double delta)
+		{
+			if (this.provoked && this.player is not null)
+			{
+				this.navigationAgent!.TargetPosition = this.player.GlobalPosition;
+			}
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
+			// TODO continue here
 			Vector3 velocity = this.Velocity;
 
 			// Add the gravity.

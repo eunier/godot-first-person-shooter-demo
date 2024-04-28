@@ -107,7 +107,7 @@ namespace App.Modules.WeaponControllerModule
 			switch (this.currentWeapon.Value)
 			{
 				case Rifle rifle:
-					rifle.Shoot(this.camera);
+					rifle.Shoot(this.camera!);
 					break;
 
 				default:

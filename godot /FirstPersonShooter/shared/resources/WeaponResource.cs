@@ -15,7 +15,6 @@ namespace App.Shared.Resources
 		}
 
 		public int Damage { get; set; }
-
 		public int Range { get; set; }
 	}
 }

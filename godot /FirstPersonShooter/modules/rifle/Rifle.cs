@@ -16,18 +16,11 @@ namespace App.Modules.RifleModule
 			);
 		}
 
-		public void Shoot(Camera3D? camera)
+		public void Shoot(Camera3D camera)
 		{
 			Logger.Print($"Shooting");
-
-			if (camera is not null)
-			{
-				var res = this.shootComponent?.Shoot(camera, 100);
-			}
-			else
-			{
-				Logger.Print("No camera passed");
-			}
+			var res = this.shootComponent!.Shoot(camera, 100);
+			Logger.Print($"Hit something? res: {res}.");
 		}
 	}
 }

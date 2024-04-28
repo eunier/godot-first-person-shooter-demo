@@ -22,26 +22,20 @@ namespace App.Modules.PlayerModule
 
 		public static Player? GetPlayer(Node caller)
 		{
-			var node = caller.GetTree().GetFirstNodeInGroup(Constants.Groups.Player);
+			var player = (Player?)
+				caller.GetTree().GetFirstNodeInGroup(Constants.Groups.Player);
 
-			if (node is null)
+			if (player is null)
 			{
 				Logger.Print($"No node found in group '{Constants.Groups.Player}'.");
-				return null;
-			}
-
-			if (node is not Player player)
-			{
-				Logger.Print(
-					$"Node found in group '{Constants.Groups.Player}' is not of type `Player`."
-				);
 				return null;
 			}
 			else
 			{
 				Logger.Print($"Found player: {player}.");
-				return player;
 			}
+
+			return player;
 		}
 
 		public override void _Ready()
@@ -57,8 +51,6 @@ namespace App.Modules.PlayerModule
 			);
 
 			this.camera = this.GetNode<Camera3D>(PlayerConstants.NodePaths.Camera3D);
-			Logger.Print($"Setting GlobalState PlayerCamera with : {this.camera}");
-			this.globalState.PlayerCamera = this.camera;
 
 #if DEBUG
 			var debugPanel = this.GetNode<PanelContainer>(
