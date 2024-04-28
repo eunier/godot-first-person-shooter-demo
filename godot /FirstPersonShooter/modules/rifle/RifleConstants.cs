@@ -4,7 +4,7 @@ namespace App.Modules.RifleModule
 	{
 		public static class NodePaths
 		{
-			public const string HitscanShootComponent = "HitscanShootComponent";
+			public const string HitscanShootComponent = "%HitscanShootComponent";
 		}
 	}
 }

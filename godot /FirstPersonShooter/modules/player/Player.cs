@@ -82,6 +82,7 @@ namespace App.Modules.PlayerModule
 			this.debugLabel1 = this.GetNode<Label>(
 				PlayerConstants.NodePaths.DebugLabel1
 			);
+
 #endif
 		}
 

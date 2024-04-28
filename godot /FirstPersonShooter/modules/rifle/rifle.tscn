@@ -193,3 +193,4 @@ process_material = SubResource("ParticleProcessMaterial_pg2w7")
 draw_pass_1 = SubResource("BoxMesh_3edu6")
 
 [node name="HitscanShootComponent" parent="." instance=ExtResource("2_87gv7")]
+unique_name_in_owner = true

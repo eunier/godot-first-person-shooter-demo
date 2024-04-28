@@ -13,9 +13,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_ssbip")
 
 [node name="CameraPivot" type="Node3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+unique_name_in_owner = true
 
 [node name="WeaponController" parent="CameraPivot/Camera3D" node_paths=PackedStringArray("camera") instance=ExtResource("2_7v6ta")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.462322)
@@ -25,7 +27,6 @@ camera = NodePath("..")
 shape = SubResource("CapsuleShape3D_xia7e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
 mesh = SubResource("CapsuleMesh_mlo3j")
 
 [node name="UserInterface" type="Control" parent="."]
@@ -35,6 +36,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
 offset_left = 10.0
@@ -49,7 +51,8 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("3_qyi01")
 
-[node name="Label" type="Label" parent="UserInterface/DebugPanel/MarginContainer/VBoxContainer"]
+[node name="DebugLabel" type="Label" parent="UserInterface/DebugPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "test
 "

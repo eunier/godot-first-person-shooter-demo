@@ -123,14 +123,16 @@ surface_material_override/0 = ExtResource("2_yegdv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_2y8gx")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-debug_enabled = true
-
 [node name="Visor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0.5)
 mesh = SubResource("BoxMesh_qf7cm")
 
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+unique_name_in_owner = true
+debug_enabled = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_je2hx")
 }

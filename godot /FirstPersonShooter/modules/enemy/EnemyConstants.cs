@@ -4,8 +4,8 @@ namespace App.Modules.EnemyModule
 	{
 		public static class NodePaths
 		{
-			public const string AnimationPlayer = "AnimationPlayer";
-			public const string NavigationAgent3D = "NavigationAgent3D";
+			public const string AnimationPlayer = "%AnimationPlayer";
+			public const string NavigationAgent3D = "%NavigationAgent3D";
 		}
 
 		public static class Animations
