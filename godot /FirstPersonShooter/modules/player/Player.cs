@@ -11,6 +11,7 @@ namespace App.Modules.PlayerModule
 		private const float JumpHeight = 1f;
 		private const float JumpVelocity = 4.5f;
 		private const float Speed = 5.0f;
+		private const float MaxHitpoints = 100;
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
@@ -19,6 +20,22 @@ namespace App.Modules.PlayerModule
 		private Vector2 mouseMotion = Vector2.Zero;
 		private GlobalState? globalState;
 		private Label? debugLabel1;
+
+		private float hitpoints;
+		public float Hitpoints
+		{
+			get { return this.hitpoints; }
+			set
+			{
+				this.hitpoints = value;
+				Logger.Print(this.hitpoints.ToString());
+
+				if (this.hitpoints <= 0)
+				{
+					this.GetTree().Quit();
+				}
+			}
+		}
 
 		public static Player? GetPlayer(Node caller)
 		{

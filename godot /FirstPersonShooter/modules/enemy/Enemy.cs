@@ -7,13 +7,12 @@ namespace App.Modules.EnemyModule
 
 	public partial class Enemy : CharacterBody3D
 	{
-		private const float JumpVelocity = 4.5f;
 		private const float Speed = 5.0f;
 		private const float FallMultiplier = 1.5f;
 		private const float AttackRange = 1.5f;
 		private const int AttackDamage = 20;
-		private const int MaxHitpoints = 100;
 		private const int AggroRange = 12;
+		private const float MaxHitpoints = 100;
 		private bool provoked = false;
 		private Player? player;
 		private AnimationPlayer? animationPlayer;
@@ -36,6 +35,16 @@ namespace App.Modules.EnemyModule
 				{
 					this.GetTree().Quit();
 				}
+			}
+		}
+
+		public void Attack()
+		{
+			Logger.Print("Attacking.");
+
+			if (this.player is not null)
+			{
+				this.player.Hitpoints -= Enemy.AttackDamage;
 			}
 		}
 
@@ -63,31 +72,33 @@ namespace App.Modules.EnemyModule
 
 		public override void _PhysicsProcess(double delta)
 		{
-			// TODO continue here
-			Vector3 velocity = this.Velocity;
+			var velocity = this.Velocity;
 
-			// Add the gravity.
 			if (!this.IsOnFloor())
 			{
-				velocity.Y -= this.gravity * (float)delta;
+				velocity.Y -= this.gravity * (float)delta * Enemy.FallMultiplier;
 			}
 
-			if (Input.IsActionJustPressed("ui_accept") && this.IsOnFloor())
+			var nextPosition = this.navigationAgent!.GetNextPathPosition();
+			var direction = this.GlobalPosition.DirectionTo(nextPosition);
+
+			if (this.player is not null)
 			{
-				velocity.Y = Enemy.JumpVelocity;
+				var distanceToTarget = this.GlobalPosition.DistanceTo(
+					this.player.GlobalPosition
+				);
+
+				if (distanceToTarget <= Enemy.AggroRange)
+				{
+					this.provoked = true;
+				}
+
+				if (this.provoked && distanceToTarget <= Enemy.AttackRange)
+				{
+					this.animationPlayer!.Play(EnemyConstants.Animations.Attack);
+				}
 			}
 
-			// Get the input direction and handle the movement/deceleration.
-			// As good practice, you should replace UI actions with custom gameplay actions.
-			Vector2 inputDir = Input.GetVector(
-				"ui_left",
-				"ui_right",
-				"ui_up",
-				"ui_down"
-			);
-			Vector3 direction = (
-				this.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)
-			).Normalized();
 			if (direction != Vector3.Zero)
 			{
 				velocity.X = direction.X * Speed;
@@ -101,6 +112,12 @@ namespace App.Modules.EnemyModule
 
 			this.Velocity = velocity;
 			this.MoveAndSlide();
+		}
+
+		private void LookAtTarget(Vector3 direction)
+		{
+			direction.Y = 0;
+			this.LookAt(this.GlobalPosition + direction, Vector3.Up, true);
 		}
 	}
 }
