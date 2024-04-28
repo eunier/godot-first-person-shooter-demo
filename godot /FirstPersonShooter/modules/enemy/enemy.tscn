@@ -115,10 +115,12 @@ _data = {
 script = ExtResource("1_24pp3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_da40v")
 surface_material_override/0 = ExtResource("2_yegdv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_2y8gx")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
