@@ -41,11 +41,7 @@ namespace App.Modules.EnemyModule
 		public void Attack()
 		{
 			Logger.Print("Attacking.");
-
-			if (this.player is not null)
-			{
-				this.player.Hitpoints -= Enemy.AttackDamage;
-			}
+			this.player?.Damage(Enemy.AttackDamage);
 		}
 
 		public override void _Ready()

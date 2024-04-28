@@ -2,6 +2,7 @@ namespace App.Modules.PlayerModule
 {
 	using App.Global;
 	using App.Shared;
+	using App.Shared.Components;
 	using App.Shared.Utils;
 	using Godot;
 
@@ -10,32 +11,19 @@ namespace App.Modules.PlayerModule
 		private const float FallMultiplier = 1.5f;
 		private const float JumpHeight = 1f;
 		private const float JumpVelocity = 4.5f;
+		private const float MaxHealth = 100;
 		private const float Speed = 5.0f;
-		private const float MaxHitpoints = 100;
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
-		private Node3D? cameraPivot;
 		private Camera3D? camera;
-		private Vector2 mouseMotion = Vector2.Zero;
 		private GlobalState? globalState;
+		private HealthComponent? healthComponent;
 		private Label? debugLabel1;
+		private Node3D? cameraPivot;
+		private Vector2 mouseMotion = Vector2.Zero;
 
-		private float hitpoints = Player.MaxHitpoints;
-		public float Hitpoints
-		{
-			get { return this.hitpoints; }
-			set
-			{
-				this.hitpoints = value;
-				Logger.Print(this.hitpoints.ToString());
-
-				if (this.hitpoints <= 0)
-				{
-					this.GetTree().Quit();
-				}
-			}
-		}
+		private float health = Player.MaxHealth;
 
 		public static Player? GetPlayer(Node caller)
 		{
@@ -67,6 +55,10 @@ namespace App.Modules.PlayerModule
 				Constants.NodePaths.GlobalState
 			);
 
+			this.healthComponent = this.GetNode<HealthComponent>(
+				PlayerConstants.NodePaths.HealthComponent
+			);
+
 			this.camera = this.GetNode<Camera3D>(PlayerConstants.NodePaths.Camera3D);
 
 #if DEBUG
@@ -82,7 +74,6 @@ namespace App.Modules.PlayerModule
 			this.debugLabel1 = this.GetNode<Label>(
 				PlayerConstants.NodePaths.DebugLabel1
 			);
-
 #endif
 		}
 
@@ -127,6 +118,11 @@ namespace App.Modules.PlayerModule
 			{
 				Input.MouseMode = Input.MouseModeEnum.Visible;
 			}
+		}
+
+		public void Damage(float damageAmount)
+		{
+			this.healthComponent!.Damage(damageAmount);
 		}
 
 		private void ProcessGravity(double delta, ref Vector3 velocity)

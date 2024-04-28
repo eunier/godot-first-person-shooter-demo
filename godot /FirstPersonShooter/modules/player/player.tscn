@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2o0seo5k2ev5"]
+[gd_scene load_steps=7 format=3 uid="uid://b2o0seo5k2ev5"]
 
 [ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
+[ext_resource type="PackedScene" uid="uid://ch62vv72iyy1f" path="res://shared/components/helth_component/helth_component.tscn" id="2_6yqn0"]
 [ext_resource type="PackedScene" uid="uid://bmq05c8lrya8b" path="res://modules/weapon_controller/weapon_controller.tscn" id="2_7v6ta"]
 [ext_resource type="Theme" uid="uid://be45corbhswpd" path="res://shared/resources/debug.tres" id="3_qyi01"]
 
@@ -11,6 +12,10 @@
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_ssbip")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_6yqn0")]
+unique_name_in_owner = true
+maxHealth = 200.0
 
 [node name="CameraPivot" type="Node3D" parent="."]
 unique_name_in_owner = true

@@ -6,8 +6,9 @@ namespace App.Modules.PlayerModule
 		{
 			public const string Camera3D = "%Camera3D";
 			public const string CameraPivot = "%CameraPivot";
-			public const string DebugPanel = "%DebugPanel";
 			public const string DebugLabel1 = "%DebugLabel";
+			public const string DebugPanel = "%DebugPanel";
+			public const string HealthComponent = "%HealthComponent";
 		}
 	}
 }
