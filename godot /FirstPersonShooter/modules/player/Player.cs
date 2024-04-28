@@ -87,7 +87,8 @@ namespace App.Modules.Player
 #if DEBUG
 			if (this.debugLabel1 is not null)
 			{
-				this.debugLabel1.Text = this.camera?.GlobalPosition.ToString();
+				this.debugLabel1.Text =
+					$"Player Camera Global Position: {this.camera?.GlobalPosition.ToString()}";
 			}
 #endif
 			this.MoveAndSlide();

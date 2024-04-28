@@ -98,7 +98,6 @@ namespace App.Modules.WeaponController
 
 		private void Shoot()
 		{
-			Input.MouseMode = Input.MouseModeEnum.Visible;
 			switch (this.currentWeapon.Value)
 			{
 				case Rifle rifle:
