@@ -71,8 +71,6 @@ namespace App.Modules.Player
 				PlayerConstants.NodePaths.CameraRayCast
 			);
 
-			// TODO: remove extra global nodes
-
 			this.globalState = this.GetNode<GlobalState>(
 				Constants.NodePaths.GlobalState
 			);
@@ -91,6 +89,7 @@ namespace App.Modules.Player
 			this.ProcessMovement(ref velocity);
 			this.Velocity = velocity;
 			this.MoveAndSlide();
+			Logger.Print(this.camera?.GlobalPosition.ToString());
 		}
 
 		public override void _Input(InputEvent @event)

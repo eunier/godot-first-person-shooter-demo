@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://c51di2og1rb4h"]
+[gd_scene load_steps=15 format=3 uid="uid://c51di2og1rb4h"]
 
 [ext_resource type="Script" path="res://modules/rifle/Rifle.cs" id="1_h1nb3"]
-[ext_resource type="Script" path="res://global/GlobalState.cs" id="2_6hbdm"]
 [ext_resource type="PackedScene" uid="uid://chwy5yi3kg7m2" path="res://shared/components/hitscan_shoot_component/hitscan_shoot_component.tscn" id="2_87gv7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dogf"]
@@ -173,9 +172,6 @@ size = Vector3(0.1, 0.1, 0.1)
 
 [node name="Rifle" type="Node3D"]
 script = ExtResource("1_h1nb3")
-
-[node name="GlobalState" type="Node" parent="."]
-script = ExtResource("2_6hbdm")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.01, -0.05)

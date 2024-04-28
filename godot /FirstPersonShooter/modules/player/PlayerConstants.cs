@@ -7,7 +7,6 @@ namespace App.Modules.Player
 			public const string Camera3D = "CameraPivot/Camera3D";
 			public const string CameraPivot = "CameraPivot";
 			public const string CameraRayCast = "CameraPivot/Camera3D/RayCast3D";
-			public const string GlobalState = "GlobalState";
 		}
 	}
 }

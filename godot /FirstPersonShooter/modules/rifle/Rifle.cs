@@ -1,6 +1,8 @@
 namespace App.Modules.Rifle
 {
+	using System.Reflection.Metadata;
 	using App.Global;
+	using App.Shared;
 	using App.Shared.Abstract;
 	using App.Shared.Components;
 	using App.Shared.Utils;
@@ -15,7 +17,7 @@ namespace App.Modules.Rifle
 		public override void _Ready()
 		{
 			this.globalState = this.GetNode<GlobalState>(
-				RifleConstants.NodePaths.GlobalState
+				Constants.NodePaths.GlobalState
 			);
 
 			this.shootComponent = this.GetNode<HitscanShootComponent>(
