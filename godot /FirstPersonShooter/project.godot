@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GlobalState="*res://modules/global_state/global_state.tscn"
+GlobalState="*res://app/moduels/global_state/global_state.tscn"
 
 [display]
 

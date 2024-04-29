@@ -1,11 +1,11 @@
 namespace App.Modules.RifleModule
 {
-	using App.Module.Utils.LoggerModule;
 	using App.Modules.HitscanShooterModule;
+	using App.Modules.Utils.LoggerModule;
 	using App.Modules.WeaponModule;
 	using Godot;
 
-	public partial class Rifle : Weapon
+	public partial class Rifle : Node3D, IWeapon
 	{
 		private HitscanShooter? hitscanShooter;
 

@@ -1,20 +1,20 @@
 namespace App.Modules.WeaponControllerModule
 {
 	using System.Collections.Generic;
-	using App.Module.GlobalConstantsModule;
-	using App.Module.Utils.LoggerModule;
 	using App.Modules.CannonModule;
+	using App.Modules.GlobalConstantsModule;
 	using App.Modules.RifleModule;
+	using App.Modules.Utils.LoggerModule;
 	using App.Modules.WeaponModule;
 	using Godot;
 
 	public partial class WeaponController : Node3D
 	{
-		private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
+		private readonly Dictionary<WeaponEnum, Node3D> weapons = new();
 
 		[Export]
 		private Camera3D? camera;
-		private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
+		private KeyValuePair<WeaponEnum, Node3D> currentWeapon;
 		private Rifle? rifle;
 		private Cannon? cannon;
 
@@ -103,10 +103,10 @@ namespace App.Modules.WeaponControllerModule
 
 		private void Shoot()
 		{
-			switch (this.currentWeapon.Value)
+			switch (this.currentWeapon.Key)
 			{
-				case Rifle rifle:
-					rifle.Shoot(this.camera!);
+				case WeaponEnum.Rifle:
+					this.rifle!.Shoot(this.camera!);
 					break;
 
 				default:

@@ -1,6 +1,6 @@
 namespace App.Modules.GlobalStateModule
 {
-	using App.Module.Utils.LoggerModule;
+	using App.Modules.Utils.LoggerModule;
 	using Godot;
 
 	public partial class GlobalState : Node

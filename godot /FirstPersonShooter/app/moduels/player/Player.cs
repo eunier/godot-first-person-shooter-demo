@@ -1,9 +1,9 @@
 namespace App.Modules.PlayerModule
 {
-	using App.Module.GlobalConstantsModule;
-	using App.Module.Utils.LoggerModule;
+	using App.Modules.GlobalConstantsModule;
 	using App.Modules.GlobalStateModule;
 	using App.Modules.HealthModule;
+	using App.Modules.Utils.LoggerModule;
 	using Godot;
 
 	public partial class Player : CharacterBody3D

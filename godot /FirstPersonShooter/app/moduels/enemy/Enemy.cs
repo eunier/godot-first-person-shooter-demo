@@ -1,8 +1,8 @@
 namespace App.Modules.EnemyNode
 {
-	using App.Module.GlobalConstantsModule;
-	using App.Module.Utils.LoggerModule;
+	using App.Modules.GlobalConstantsModule;
 	using App.Modules.PlayerModule;
+	using App.Modules.Utils.LoggerModule;
 	using Godot;
 
 	public partial class Enemy : CharacterBody3D

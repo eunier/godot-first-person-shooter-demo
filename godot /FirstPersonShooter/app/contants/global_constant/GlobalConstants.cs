@@ -1,4 +1,4 @@
-namespace App.Module.GlobalConstantsModule
+namespace App.Modules.GlobalConstantsModule
 {
 	public static class GlobalConstants
 	{

@@ -1,7 +1,7 @@
 namespace App.Modules.HitscanShooterModule
 {
 	using System.Linq;
-	using App.Module.Utils.LoggerModule;
+	using App.Modules.Utils.LoggerModule;
 	using Godot;
 	using Godot.Collections;
 
