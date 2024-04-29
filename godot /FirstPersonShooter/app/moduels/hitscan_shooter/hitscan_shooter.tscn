@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://chwy5yi3kg7m2"]
+
+[ext_resource type="Script" path="res://app/moduels/hitscan_shooter/HitscanShooter.cs" id="1_8cegr"]
+
+[node name="HitscanShootComponent" type="Node3D"]
+script = ExtResource("1_8cegr")

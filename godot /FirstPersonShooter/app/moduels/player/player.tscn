@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2o0seo5k2ev5"]
+[gd_scene load_steps=6 format=3 uid="uid://b2o0seo5k2ev5"]
 
-[ext_resource type="Script" path="res://modules/player/Player.cs" id="1_ssbip"]
-[ext_resource type="PackedScene" uid="uid://ch62vv72iyy1f" path="res://shared/components/helth_component/helth_component.tscn" id="2_6yqn0"]
-[ext_resource type="PackedScene" uid="uid://bmq05c8lrya8b" path="res://modules/weapon_controller/weapon_controller.tscn" id="2_7v6ta"]
-[ext_resource type="Theme" uid="uid://be45corbhswpd" path="res://shared/resources/debug.tres" id="3_qyi01"]
+[ext_resource type="Script" path="res://app/moduels/player/Player.cs" id="1_ssbip"]
+[ext_resource type="PackedScene" uid="uid://ch62vv72iyy1f" path="res://app/moduels/health/health.tscn" id="2_6yqn0"]
+[ext_resource type="PackedScene" uid="uid://bmq05c8lrya8b" path="res://app/moduels/weapon_controller/weapon_controller.tscn" id="2_7v6ta"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
 
@@ -54,7 +53,6 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
 layout_mode = 2
-theme = ExtResource("3_qyi01")
 
 [node name="DebugLabel" type="Label" parent="UserInterface/DebugPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
