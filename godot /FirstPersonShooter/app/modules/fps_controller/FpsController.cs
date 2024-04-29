@@ -9,24 +9,21 @@ namespace App.Modules.FpsController
 		private CharacterBody3D? characterBody;
 
 		[Export]
+		private Node3D? cameraPivot;
+
+		[Export]
+		private float speed = 5.0f;
+
+		[Export]
+		private float jumpHeight = 1f;
+
+		[Export]
 		private float fallMultiplier = 1.5f;
 
 		[Export]
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
-
-		[Export]
-		private float jumpHeight = 1f;
-
-		[Export]
-		private float jumpVelocity = 4.5f;
-
-		[Export]
-		private float speed = 5.0f;
-
-		[Export]
-		private Node3D? cameraPivot;
 
 		private Vector2 mouseMotion = Vector2.Zero;
 
