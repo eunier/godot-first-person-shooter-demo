@@ -67,7 +67,11 @@ namespace App.Modules.EnemyModule
 
 		public override void _Process(double delta)
 		{
-			if (this.provoked && this.player is not null)
+			if (
+				this.provoked
+				&& this.player is not null
+				&& !this.player.IsQueuedForDeletion()
+			)
 			{
 				this.navigationAgent!.TargetPosition = this.player.GlobalPosition;
 			}
@@ -85,7 +89,7 @@ namespace App.Modules.EnemyModule
 			var nextPosition = this.navigationAgent!.GetNextPathPosition();
 			var direction = this.GlobalPosition.DirectionTo(nextPosition);
 
-			if (this.player is not null)
+			if (this.player is not null && !this.player.IsQueuedForDeletion())
 			{
 				var distanceToTarget = this.GlobalPosition.DistanceTo(
 					this.player.GlobalPosition

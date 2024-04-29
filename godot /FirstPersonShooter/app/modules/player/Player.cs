@@ -18,11 +18,11 @@ namespace App.Modules.PlayerModule
 		private const string DebugLabel1NodePath = "%DebugLabel";
 		private const string DebugPanelNodePath = "%DebugPanel";
 		private const string HealthNodePath = "%Health";
+		private float currentHealth = Player.MaxHealth;
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
 		private Camera3D? camera;
-		private float currentHealth = Player.MaxHealth;
 		private GlobalState? globalState;
 		private Health? health;
 		private Label? debugLabel1;
