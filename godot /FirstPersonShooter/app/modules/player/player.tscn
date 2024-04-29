@@ -14,7 +14,6 @@ script = ExtResource("1_ssbip")
 
 [node name="Health" parent="." instance=ExtResource("2_6yqn0")]
 unique_name_in_owner = true
-maxHealth = 200.0
 
 [node name="CameraPivot" type="Node3D" parent="."]
 unique_name_in_owner = true

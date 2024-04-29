@@ -67,13 +67,9 @@ namespace App.Modules.EnemyModule
 
 		public override void _Process(double delta)
 		{
-			if (
-				this.provoked
-				&& this.player is not null
-				&& !this.player.IsQueuedForDeletion()
-			)
+			if (this.provoked && IsInstanceValid(this.player))
 			{
-				this.navigationAgent!.TargetPosition = this.player.GlobalPosition;
+				this.navigationAgent!.TargetPosition = this.player!.GlobalPosition;
 			}
 		}
 
@@ -89,10 +85,10 @@ namespace App.Modules.EnemyModule
 			var nextPosition = this.navigationAgent!.GetNextPathPosition();
 			var direction = this.GlobalPosition.DirectionTo(nextPosition);
 
-			if (this.player is not null && !this.player.IsQueuedForDeletion())
+			if (IsInstanceValid(this.player))
 			{
 				var distanceToTarget = this.GlobalPosition.DistanceTo(
-					this.player.GlobalPosition
+					this.player!.GlobalPosition
 				);
 
 				if (distanceToTarget <= Enemy.AggroRange)
