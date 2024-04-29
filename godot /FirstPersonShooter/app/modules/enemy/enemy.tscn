@@ -4,9 +4,9 @@
 [ext_resource type="Material" uid="uid://wmvtx0quor2n" path="res://app/materials/standard_material_3d/debug_red_3_material.tres" id="2_yegdv"]
 [ext_resource type="Material" uid="uid://sd8ipdbyni1e" path="res://app/materials/standard_material_3d/debug_blue_3_material.tres" id="3_11w20"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_da40v"]
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2y8gx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_da40v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_qf7cm"]
 material = ExtResource("3_11w20")
@@ -114,14 +114,14 @@ _data = {
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_24pp3")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_2y8gx")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_da40v")
 surface_material_override/0 = ExtResource("2_yegdv")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_2y8gx")
 
 [node name="Visor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0.5)
