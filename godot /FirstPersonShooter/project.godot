@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="First Person Shooter"
-run/main_scene="res://modules/prototype/prototype.tscn"
+run/main_scene="res://app/moduels/prototype/prototype.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GlobalState="*res://global/GlobalState.cs"
+GlobalState="*res://modules/global_state/global_state.tscn"
 
 [display]
 
