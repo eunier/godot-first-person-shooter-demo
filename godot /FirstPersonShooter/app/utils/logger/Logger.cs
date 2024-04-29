@@ -1,4 +1,4 @@
-namespace App.Modules.Utils.LoggerModule
+namespace App.Modules.Utils
 {
 	using System.Diagnostics;
 	using System.Runtime.CompilerServices;
