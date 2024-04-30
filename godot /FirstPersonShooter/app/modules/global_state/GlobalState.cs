@@ -13,11 +13,7 @@ namespace App.Modules.GlobalStateModule
 			private get => this.playerCamera;
 			set
 			{
-				if (OS.IsDebugBuild())
-				{
-					Logger.Print($"Setting PlayerCamera with value: {value}");
-				}
-
+				Logger.Print($"Setting PlayerCamera with value: {value}");
 				this.playerCamera = value;
 			}
 		}
