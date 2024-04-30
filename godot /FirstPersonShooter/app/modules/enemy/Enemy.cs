@@ -50,11 +50,12 @@ namespace App.Modules.EnemyModule
 			this.player = (Player?)
 				this.GetTree().GetFirstNodeInGroup(GlobalConstants.Groups.Player);
 
-#if DEBUG
-			Logger.Print(
-				this.player is not null ? "Player found." : "Player not found."
-			);
-#endif
+			if (OS.IsDebugBuild())
+			{
+				Logger.Print(
+					this.player is not null ? "Player found." : "Player not found."
+				);
+			}
 
 			this.animationPlayer = this.GetNode<AnimationPlayer>(
 				Enemy.AnimationPlayerNodePath

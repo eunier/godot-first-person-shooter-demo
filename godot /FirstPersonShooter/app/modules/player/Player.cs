@@ -8,26 +8,16 @@ namespace App.Modules.PlayerModule
 
 	public partial class Player : CharacterBody3D
 	{
-		private const float FallMultiplier = 1.5f;
-		private const float JumpHeight = 1f;
-		private const float JumpVelocity = 4.5f;
-		private const float MaxHealth = 100;
-		private const float Speed = 5.0f;
 		private const string Camera3DNodePath = "%Camera3D";
 		private const string CameraPivotNodePath = "%CameraPivot";
 		private const string DebugLabel1NodePath = "%DebugLabel";
 		private const string DebugPanelNodePath = "%DebugPanel";
 		private const string HealthNodePath = "%Health";
-		private float currentHealth = Player.MaxHealth;
-		private float gravity = ProjectSettings
-			.GetSetting("physics/3d/default_gravity")
-			.AsSingle();
 		private Camera3D? camera;
 		private GlobalState? globalState;
 		private Health? health;
 		private Label? debugLabel1;
 		private Node3D? cameraPivot;
-		private Vector2 mouseMotion = Vector2.Zero;
 
 		public static Player? GetPlayer(Node caller)
 		{
@@ -60,27 +50,29 @@ namespace App.Modules.PlayerModule
 			this.health = this.GetNode<Health>(Player.HealthNodePath);
 			this.camera = this.GetNode<Camera3D>(Player.Camera3DNodePath);
 
-#if DEBUG
-			var debugPanel = this.GetNode<PanelContainer>(DebugPanelNodePath);
-
-			if (debugPanel is not null)
+			if (OS.IsDebugBuild())
 			{
-				debugPanel.Visible = true;
-			}
+				var debugPanel = this.GetNode<PanelContainer>(DebugPanelNodePath);
 
-			this.debugLabel1 = this.GetNode<Label>(DebugLabel1NodePath);
-#endif
+				if (debugPanel is not null)
+				{
+					debugPanel.Visible = true;
+				}
+
+				this.debugLabel1 = this.GetNode<Label>(DebugLabel1NodePath);
+			}
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
-#if DEBUG
-			if (this.debugLabel1 is not null)
+			if (OS.IsDebugBuild())
 			{
-				this.debugLabel1.Text =
-					$"Player Camera Global Position: {this.camera?.GlobalPosition.ToString()}";
+				if (this.debugLabel1 is not null)
+				{
+					this.debugLabel1.Text =
+						$"Player Camera Global Position: {this.camera?.GlobalPosition.ToString()}";
+				}
 			}
-#endif
 		}
 
 		public void Damage(float damageAmount)

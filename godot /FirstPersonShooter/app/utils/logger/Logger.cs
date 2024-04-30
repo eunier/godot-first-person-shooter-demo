@@ -1,14 +1,10 @@
 namespace App.Modules.Utils
 {
-	using System.Diagnostics;
 	using System.Runtime.CompilerServices;
 	using Godot;
 
 	public static class Logger
 	{
-		private const string DebugConditionString = "DEBUG";
-
-		[Conditional(Logger.DebugConditionString)]
 		public static void Print(
 			string message = "",
 			[CallerFilePath] string filePath = "",
@@ -16,12 +12,14 @@ namespace App.Modules.Utils
 			[CallerLineNumber] int lineNumber = 0
 		)
 		{
-			GD.Print(
-				Logger.GenerateFullMessage(message, filePath, memberName, lineNumber)
-			);
+			if (OS.IsDebugBuild())
+			{
+				GD.Print(
+					Logger.GenerateFullMessage(message, filePath, memberName, lineNumber)
+				);
+			}
 		}
 
-		[Conditional(Logger.DebugConditionString)]
 		public static void PrintErr(
 			string message = "",
 			[CallerFilePath] string filePath = "",
@@ -29,9 +27,12 @@ namespace App.Modules.Utils
 			[CallerLineNumber] int lineNumber = 0
 		)
 		{
-			GD.PrintErr(
-				Logger.GenerateFullMessage(message, filePath, memberName, lineNumber)
-			);
+			if (OS.IsDebugBuild())
+			{
+				GD.PrintErr(
+					Logger.GenerateFullMessage(message, filePath, memberName, lineNumber)
+				);
+			}
 		}
 
 		private static string GenerateFullMessage(

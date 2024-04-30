@@ -13,9 +13,11 @@ namespace App.Modules.GlobalStateModule
 			private get => this.playerCamera;
 			set
 			{
-#if DEBUG
-				Logger.Print($"Setting PlayerCamera with value: {value}");
-#endif
+				if (OS.IsDebugBuild())
+				{
+					Logger.Print($"Setting PlayerCamera with value: {value}");
+				}
+
 				this.playerCamera = value;
 			}
 		}
@@ -24,18 +26,19 @@ namespace App.Modules.GlobalStateModule
 		{
 			get
 			{
-#if DEBUG
-				if (this.PlayerCamera is null)
+				if (OS.IsDebugBuild())
 				{
-					var msg =
-						"Cannot access PlayerCameraGlobalPosition if PlayerCamera is null.";
-					Logger.PrintErr(msg);
+					if (this.PlayerCamera is null)
+					{
+						var msg =
+							"Cannot access PlayerCameraGlobalPosition if PlayerCamera is null.";
+						Logger.PrintErr(msg);
+					}
+					else
+					{
+						Logger.Print(this.PlayerCamera.GlobalPosition.ToString());
+					}
 				}
-				else
-				{
-					Logger.Print(this.PlayerCamera.GlobalPosition.ToString());
-				}
-#endif
 				return this.PlayerCamera?.GlobalPosition;
 			}
 			private set { }
