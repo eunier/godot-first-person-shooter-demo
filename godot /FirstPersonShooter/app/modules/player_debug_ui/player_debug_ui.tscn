@@ -1,13 +1,15 @@
-[gd_scene format=3 uid="uid://cdl8esekamert"]
+[gd_scene load_steps=2 format=3 uid="uid://cdl8esekamert"]
+
+[ext_resource type="Script" path="res://app/modules/player_debug_ui/PlayerDebugUI.cs" id="1_xva8g"]
 
 [node name="PlayerDebugUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_xva8g")
 
 [node name="DebugPanel" type="PanelContainer" parent="."]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
 offset_left = 10.0

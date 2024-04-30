@@ -1,13 +1,32 @@
 namespace App.Modules.PlayerDebugUIModule
 {
+	using App.Modules.Utils;
 	using Godot;
 
 	public partial class PlayerDebugUI : Control
 	{
-		// Called when the node enters the scene tree for the first time.
-		public override void _Ready() { }
+		public const string ResourcePath =
+			"res://app/modules/player_debug_ui/player_debug_ui.tscn";
+		private const string LabelNodePath = "%DebugLabel";
+		private Label? label;
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta) { }
+		public string Text
+		{
+			get { return this.label?.Text ?? string.Empty; }
+			set
+			{
+
+				if (this.label is not null)
+				{
+					Logger.Print(value);
+					this.label.Text = value;
+				}
+			}
+		}
+
+		public override void _Ready()
+		{
+			this.label = this.GetNode<Label>(PlayerDebugUI.LabelNodePath);
+		}
 	}
 }

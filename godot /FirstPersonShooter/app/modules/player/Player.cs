@@ -3,6 +3,7 @@ namespace App.Modules.PlayerModule
 	using App.Modules;
 	using App.Modules.GlobalStateModule;
 	using App.Modules.HealthModule;
+	using App.Modules.PlayerDebugUIModule;
 	using App.Modules.Utils;
 	using Godot;
 
@@ -18,6 +19,8 @@ namespace App.Modules.PlayerModule
 		private Health? health;
 		private Label? debugLabel1;
 		private Node3D? cameraPivot;
+		private PlayerDebugUI? debugUI;
+		private PackedScene playerDebugUIScene;
 
 		public static Player? GetPlayer(Node caller)
 		{
@@ -41,25 +44,25 @@ namespace App.Modules.PlayerModule
 
 		public override void _Ready()
 		{
+			this.health = this.GetNode<Health>(Player.HealthNodePath);
+			this.camera = this.GetNode<Camera3D>(Player.Camera3DNodePath);
 			this.cameraPivot = this.GetNode<Node3D>(Player.CameraPivotNodePath);
 
 			this.globalState = this.GetNode<GlobalState>(
 				GlobalConstants.NodePaths.GlobalState
 			);
 
-			this.health = this.GetNode<Health>(Player.HealthNodePath);
-			this.camera = this.GetNode<Camera3D>(Player.Camera3DNodePath);
-
 			if (OS.IsDebugBuild())
 			{
-				var debugPanel = this.GetNode<PanelContainer>(DebugPanelNodePath);
+				// this.debugUI = new PlayerDebugUI();
+				// this.GetTree().Root.AddChild(this.debugUI);
 
-				if (debugPanel is not null)
-				{
-					debugPanel.Visible = true;
-				}
+				var debugUIScene = ResourceLoader.Load<PackedScene>(
+					PlayerDebugUI.ResourcePath
+				);
 
-				this.debugLabel1 = this.GetNode<Label>(DebugLabel1NodePath);
+				this.debugUI = debugUIScene.Instantiate<PlayerDebugUI>();
+				this.AddChild(this.debugUI);
 			}
 		}
 
@@ -67,11 +70,8 @@ namespace App.Modules.PlayerModule
 		{
 			if (OS.IsDebugBuild())
 			{
-				if (this.debugLabel1 is not null)
-				{
-					this.debugLabel1.Text =
-						$"Player Camera Global Position: {this.camera?.GlobalPosition.ToString()}";
-				}
+				this.debugUI!.Text =
+					$"Player Camera Global Position: {this.camera?.GlobalPosition.ToString()}";
 			}
 		}
 

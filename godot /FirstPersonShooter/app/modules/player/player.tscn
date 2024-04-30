@@ -38,6 +38,7 @@ shape = SubResource("CapsuleShape3D_xia7e")
 mesh = SubResource("CapsuleMesh_mlo3j")
 
 [node name="UserInterface" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
