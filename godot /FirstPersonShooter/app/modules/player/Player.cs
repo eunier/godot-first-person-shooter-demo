@@ -65,7 +65,7 @@ namespace App.Modules.PlayerModule
 			if (OS.IsDebugBuild())
 			{
 				this.debugUI!.Text =
-					$"Player.Camera3D.GlobalPosition:{this.camera?.GlobalPosition.ToString()}";
+					$"{nameof(Player)}.{nameof(Player.camera)}.{nameof(Player.camera.GlobalPosition)}:{this.camera?.GlobalPosition.ToString()}";
 			}
 		}
 
