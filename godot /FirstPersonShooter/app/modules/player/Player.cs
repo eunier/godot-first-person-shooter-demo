@@ -11,8 +11,6 @@ namespace App.Modules.PlayerModule
 	{
 		private const string Camera3DNodePath = "%Camera3D";
 		private const string CameraPivotNodePath = "%CameraPivot";
-		private const string DebugLabel1NodePath = "%DebugLabel";
-		private const string DebugPanelNodePath = "%DebugPanel";
 		private const string HealthNodePath = "%Health";
 		private Camera3D? camera;
 		private GlobalState? globalState;
@@ -20,7 +18,6 @@ namespace App.Modules.PlayerModule
 		private Label? debugLabel1;
 		private Node3D? cameraPivot;
 		private PlayerDebugUI? debugUI;
-		private PackedScene playerDebugUIScene;
 
 		public static Player? GetPlayer(Node caller)
 		{
@@ -54,9 +51,6 @@ namespace App.Modules.PlayerModule
 
 			if (OS.IsDebugBuild())
 			{
-				// this.debugUI = new PlayerDebugUI();
-				// this.GetTree().Root.AddChild(this.debugUI);
-
 				var debugUIScene = ResourceLoader.Load<PackedScene>(
 					PlayerDebugUI.ResourcePath
 				);
