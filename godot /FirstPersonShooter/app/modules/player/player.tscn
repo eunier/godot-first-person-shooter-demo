@@ -19,10 +19,6 @@ unique_name_in_owner = true
 [node name="PlayerPhysics" parent="." node_paths=PackedStringArray("characterBody", "cameraPivot") instance=ExtResource("2_s1gng")]
 characterBody = NodePath("..")
 cameraPivot = NodePath("../CameraPivot")
-speed = 5.0
-jumpHeight = 1.0
-fallMultiplier = 1.5
-gravity = 9.8
 
 [node name="CameraPivot" type="Node3D" parent="."]
 unique_name_in_owner = true
