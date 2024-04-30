@@ -1,6 +1,5 @@
 namespace App.Modules.FpsController
 {
-	using System;
 	using Godot;
 
 	public partial class FpsController : Node3D
@@ -85,10 +84,10 @@ namespace App.Modules.FpsController
 		private void ProcessMovement(ref Vector3 velocity)
 		{
 			var inputDir = Input.GetVector(
-				App.Modules.GlobalConstants.InputMap.MoveLeft,
-				App.Modules.GlobalConstants.InputMap.MoveRight,
-				App.Modules.GlobalConstants.InputMap.MoveForward,
-				App.Modules.GlobalConstants.InputMap.MoveBackward
+				GlobalConstants.InputMap.MoveLeft,
+				GlobalConstants.InputMap.MoveRight,
+				GlobalConstants.InputMap.MoveForward,
+				GlobalConstants.InputMap.MoveBackward
 			);
 
 			var direction = (
