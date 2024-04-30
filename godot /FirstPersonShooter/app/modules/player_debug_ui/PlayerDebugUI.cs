@@ -1,6 +1,5 @@
 namespace App.Modules.PlayerDebugUIModule
 {
-	using App.Modules.Utils;
 	using Godot;
 
 	public partial class PlayerDebugUI : Control
@@ -18,7 +17,6 @@ namespace App.Modules.PlayerDebugUIModule
 
 				if (this.label is not null)
 				{
-					Logger.Print(value);
 					this.label.Text = value;
 				}
 			}
