@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://app/modules/player/Player.cs" id="1_ssbip"]
 [ext_resource type="PackedScene" uid="uid://ch62vv72iyy1f" path="res://app/modules/health/health.tscn" id="2_6yqn0"]
-[ext_resource type="PackedScene" uid="uid://ba7187otd6sk3" path="res://app/modules/fps_controller/fps_controller.tscn" id="2_s1gng"]
+[ext_resource type="PackedScene" uid="uid://ba7187otd6sk3" path="res://app/modules/player_physics/player_physics.tscn" id="2_s1gng"]
 [ext_resource type="PackedScene" uid="uid://bmq05c8lrya8b" path="res://app/modules/weapon_controller/weapon_controller.tscn" id="3_icw8s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xia7e"]
@@ -13,12 +13,16 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_ssbip")
 
-[node name="FpsController" parent="." node_paths=PackedStringArray("characterBody", "cameraPivot") instance=ExtResource("2_s1gng")]
-characterBody = NodePath("..")
-cameraPivot = NodePath("../CameraPivot")
-
 [node name="Health" parent="." instance=ExtResource("2_6yqn0")]
 unique_name_in_owner = true
+
+[node name="PlayerPhysics" parent="." node_paths=PackedStringArray("characterBody", "cameraPivot") instance=ExtResource("2_s1gng")]
+characterBody = NodePath("..")
+cameraPivot = NodePath("../CameraPivot")
+speed = 5.0
+jumpHeight = 1.0
+fallMultiplier = 1.5
+gravity = 9.8
 
 [node name="CameraPivot" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -26,6 +30,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 unique_name_in_owner = true
+current = true
 
 [node name="WeaponController" parent="CameraPivot/Camera3D" node_paths=PackedStringArray("camera") instance=ExtResource("3_icw8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130954, -0.271441, -0.462322)

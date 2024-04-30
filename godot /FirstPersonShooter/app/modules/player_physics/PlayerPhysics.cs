@@ -1,8 +1,8 @@
-namespace App.Modules.FpsController
+namespace App.Modules.PlayerPhysicsModule
 {
 	using Godot;
 
-	public partial class FpsController : Node3D
+	public partial class PlayerPhysics : Node3D
 	{
 		[Export]
 		private CharacterBody3D? characterBody;

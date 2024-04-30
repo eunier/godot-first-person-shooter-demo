@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba7187otd6sk3"]
+
+[ext_resource type="Script" path="res://app/modules/player_physics/PlayerPhysics.cs" id="1_1ciqt"]
+
+[node name="PlayerPhysics" type="Node3D"]
+script = ExtResource("1_1ciqt")
