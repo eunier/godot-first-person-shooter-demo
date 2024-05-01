@@ -1,7 +1,7 @@
 namespace App.Modules.HealthModule
 {
 	using System;
-	using App.Modules.Utils;
+	using App.Utils.LoggerModule;
 	using Godot;
 
 	public partial class Health : Node

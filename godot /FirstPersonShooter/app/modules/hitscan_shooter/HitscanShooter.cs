@@ -1,13 +1,12 @@
 namespace App.Modules.HitscanShooterModule
 {
 	using System.Linq;
-	using App.Modules.Utils;
+	using App.Utils.LoggerModule;
 	using Godot;
-	using Godot.Collections;
 
 	public partial class HitscanShooter : Node3D
 	{
-		public Dictionary Shoot(Camera3D camera, int range)
+		public ShootResult? Shoot(Camera3D camera, int range)
 		{
 			var cameraCenter = camera.GetViewport().GetVisibleRect().Size / 2;
 			var rayOrigin = camera.ProjectRayOrigin(cameraCenter);
@@ -25,7 +24,15 @@ namespace App.Modules.HitscanShooterModule
 				Logger.Print("Rifle miss.");
 			}
 
-			return rayInterception;
+			if (rayInterception.Any())
+			{
+				var res = new ShootResult((GodotObject)rayInterception["collider"]);
+				Logger.Print($"Hit {res.Collider}");
+				return res;
+			}
+
+			Logger.Print("Miss.");
+			return null;
 		}
 	}
 }

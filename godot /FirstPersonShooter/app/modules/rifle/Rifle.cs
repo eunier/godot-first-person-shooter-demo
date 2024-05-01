@@ -1,8 +1,9 @@
 namespace App.Modules.RifleModule
 {
+	using App.Modules.HealthModule;
 	using App.Modules.HitscanShooterModule;
-	using App.Modules.Utils;
 	using App.Modules.WeaponModule;
+	using App.Utils.LoggerModule;
 	using Godot;
 
 	public partial class Rifle : Weapon
@@ -19,8 +20,15 @@ namespace App.Modules.RifleModule
 
 		public void Shoot(Camera3D camera)
 		{
+			Debugger.Breakpoint();
 			Logger.Print($"Shooting");
 			var res = this.hitscanShooter!.Shoot(camera, 100);
+
+			if (res is not null && res.Collider is IWithHealth c)
+			{
+				c.Health.Damage(5);
+			}
+
 			Logger.Print($"Hit something? res: {res}.");
 		}
 	}

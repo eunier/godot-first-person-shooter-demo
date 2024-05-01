@@ -3,8 +3,8 @@ namespace App.Modules.WeaponControllerModule
 	using System.Collections.Generic;
 	using App.Modules.CannonModule;
 	using App.Modules.RifleModule;
-	using App.Modules.Utils;
 	using App.Modules.WeaponModule;
+	using App.Utils.LoggerModule;
 	using Godot;
 
 	public partial class WeaponController : Node3D

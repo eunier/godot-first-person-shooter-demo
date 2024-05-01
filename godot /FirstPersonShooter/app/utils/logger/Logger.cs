@@ -1,4 +1,4 @@
-namespace App.Modules.Utils
+namespace App.Utils.LoggerModule
 {
 	using System.Runtime.CompilerServices;
 	using Godot;

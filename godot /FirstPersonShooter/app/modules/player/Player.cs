@@ -1,13 +1,13 @@
 namespace App.Modules.PlayerModule
 {
+	using App.Global.GlobalStateModule;
 	using App.Modules;
-	using App.Modules.GlobalStateModule;
 	using App.Modules.HealthModule;
 	using App.Modules.PlayerDebugUIModule;
-	using App.Modules.Utils;
+	using App.Utils.LoggerModule;
 	using Godot;
 
-	public partial class Player : CharacterBody3D
+	public partial class Player : CharacterBody3D, IWithHealth
 	{
 		private const string Camera3DNodePath = "%Camera3D";
 		private const string CameraPivotNodePath = "%CameraPivot";
@@ -18,6 +18,8 @@ namespace App.Modules.PlayerModule
 		private Label? debugLabel1;
 		private Node3D? cameraPivot;
 		private PlayerDebugUI? debugUI;
+
+		public Health Health => this.health!;
 
 		public static Player? GetPlayer(Node caller)
 		{
@@ -69,6 +71,7 @@ namespace App.Modules.PlayerModule
 			}
 		}
 
+		// TODO: remove this method
 		public void Damage(float damageAmount)
 		{
 			this.health!.Damage(damageAmount);

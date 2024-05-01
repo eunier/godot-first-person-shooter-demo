@@ -1,11 +1,12 @@
 namespace App.Modules.EnemyModule
 {
 	using App.Modules;
+	using App.Modules.HealthModule;
 	using App.Modules.PlayerModule;
-	using App.Modules.Utils;
+	using App.Utils.LoggerModule;
 	using Godot;
 
-	public partial class Enemy : CharacterBody3D
+	public partial class Enemy : CharacterBody3D, IWithHealth
 	{
 		private const float AttackRange = 1.5f;
 		private const float FallMultiplier = 1.5f;
@@ -15,7 +16,9 @@ namespace App.Modules.EnemyModule
 		private const int AttackDamage = 20;
 		private const string AnimationPlayerNodePath = "%AnimationPlayer";
 		private const string AttackAnimationName = "attack";
+		private const string HealthNodePath = "%Health";
 		private const string NavigationAgent3DNodePath = "%NavigationAgent3D";
+		private Health? health;
 		private bool provoked = false;
 		private Player? player;
 		private AnimationPlayer? animationPlayer;
@@ -24,6 +27,7 @@ namespace App.Modules.EnemyModule
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
 		private float hitpoints = Enemy.MaxHitpoints;
+		public Health Health => this.health!;
 		private float Hitpoints
 		{
 			get { return this.hitpoints; }
@@ -64,6 +68,8 @@ namespace App.Modules.EnemyModule
 			this.navigationAgent = this.GetNode<NavigationAgent3D>(
 				Enemy.NavigationAgent3DNodePath
 			);
+
+			this.health = this.GetNode<Health>(HealthNodePath);
 		}
 
 		public override void _Process(double delta)

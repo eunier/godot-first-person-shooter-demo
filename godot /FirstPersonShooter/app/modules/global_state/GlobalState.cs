@@ -1,6 +1,6 @@
-namespace App.Modules.GlobalStateModule
+namespace App.Global.GlobalStateModule
 {
-	using App.Modules.Utils;
+	using App.Utils.LoggerModule;
 	using Godot;
 
 	public partial class GlobalState : Node
@@ -35,6 +35,7 @@ namespace App.Modules.GlobalStateModule
 						Logger.Print(this.PlayerCamera.GlobalPosition.ToString());
 					}
 				}
+
 				return this.PlayerCamera?.GlobalPosition;
 			}
 			private set { }
