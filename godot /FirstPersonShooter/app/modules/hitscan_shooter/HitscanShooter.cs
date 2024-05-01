@@ -17,15 +17,6 @@ namespace App.Modules.HitscanShooterModule
 
 			if (rayInterception.Any())
 			{
-				Logger.Print($"Rifle hit: {rayInterception}");
-			}
-			else
-			{
-				Logger.Print("Rifle miss.");
-			}
-
-			if (rayInterception.Any())
-			{
 				var res = new ShootResult((GodotObject)rayInterception["collider"]);
 				Logger.Print($"Hit {res.Collider}");
 				return res;
