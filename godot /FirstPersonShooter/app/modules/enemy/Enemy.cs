@@ -46,7 +46,6 @@ namespace App.Modules.EnemyModule
 		public void Attack()
 		{
 			Logger.Print(message: "Attacking.");
-			// this.player?.Damage(Enemy.AttackDamage);
 			this.player?.Health.Damage(Enemy.AttackDamage);
 		}
 

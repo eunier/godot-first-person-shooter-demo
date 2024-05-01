@@ -69,11 +69,5 @@ namespace App.Modules.PlayerModule
 					$"{nameof(Player)}.{nameof(Player.camera)}.{nameof(Player.camera.GlobalPosition)}:{this.camera?.GlobalPosition.ToString()}";
 			}
 		}
-
-		// // TODO: remove this method
-		// public void Damage(float damageAmount)
-		// {
-		// 	this.health!.Damage(damageAmount);
-		// }
 	}
 }
