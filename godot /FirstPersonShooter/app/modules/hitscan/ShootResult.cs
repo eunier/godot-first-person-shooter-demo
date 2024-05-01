@@ -1,4 +1,4 @@
-namespace App.Modules.HitscanShooterModule
+namespace App.Modules.HitscanModule
 {
 	using Godot;
 

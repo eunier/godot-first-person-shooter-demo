@@ -18,6 +18,7 @@ namespace App.Modules.PlayerModule
 		private Label? debugLabel1;
 		private Node3D? cameraPivot;
 		private PlayerDebugUI? debugUI;
+
 		public Health Health => this.health!;
 
 		public static Player? GetPlayer(Node caller)
@@ -68,6 +69,12 @@ namespace App.Modules.PlayerModule
 				this.debugUI!.Text =
 					$"{nameof(Player)}.{nameof(Player.camera)}.{nameof(Player.camera.GlobalPosition)}:{this.camera?.GlobalPosition.ToString()}";
 			}
+		}
+
+		// TODO: remove this method
+		public void Damage(float damageAmount)
+		{
+			this.health!.Damage(damageAmount);
 		}
 	}
 }

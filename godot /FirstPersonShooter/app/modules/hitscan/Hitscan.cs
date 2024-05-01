@@ -1,10 +1,10 @@
-namespace App.Modules.HitscanShooterModule
+namespace App.Modules.HitscanModule
 {
 	using System.Linq;
 	using App.Utils.LoggerModule;
 	using Godot;
 
-	public partial class HitscanShooter : Node3D
+	public partial class Hitscan : Node3D
 	{
 		public ShootResult? Shoot(Camera3D camera, int range)
 		{
