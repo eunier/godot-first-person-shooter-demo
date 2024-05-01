@@ -20,7 +20,6 @@ namespace App.Modules.RifleModule
 
 		public void Shoot(Camera3D camera)
 		{
-			Debugger.Breakpoint();
 			Logger.Print($"Shooting");
 			var res = this.hitscanShooter!.Shoot(camera, 100);
 
