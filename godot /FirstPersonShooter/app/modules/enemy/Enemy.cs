@@ -18,15 +18,15 @@ namespace App.Modules.EnemyModule
 		private const string AttackAnimationName = "attack";
 		private const string HealthNodePath = "%Health";
 		private const string NavigationAgent3DNodePath = "%NavigationAgent3D";
-		private Health? health;
 		private bool provoked = false;
-		private Player? player;
-		private AnimationPlayer? animationPlayer;
-		private NavigationAgent3D? navigationAgent;
 		private float gravity = ProjectSettings
 			.GetSetting("physics/3d/default_gravity")
 			.AsSingle();
 		private float hitpoints = Enemy.MaxHitpoints;
+		private AnimationPlayer? animationPlayer;
+		private Health? health;
+		private NavigationAgent3D? navigationAgent;
+		private Player? player;
 		public Health Health => this.health!;
 		private float Hitpoints
 		{
@@ -45,8 +45,9 @@ namespace App.Modules.EnemyModule
 
 		public void Attack()
 		{
-			Logger.Print("Attacking.");
-			this.player?.Damage(Enemy.AttackDamage);
+			Logger.Print(message: "Attacking.");
+			// this.player?.Damage(Enemy.AttackDamage);
+			this.player?.Health.Damage(Enemy.AttackDamage);
 		}
 
 		public override void _Ready()
