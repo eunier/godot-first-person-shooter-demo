@@ -45,8 +45,11 @@ namespace App.Modules.WeaponControllerModule
 			{
 				this.EquipPreviousWeapon();
 			}
+		}
 
-			if (@event.IsActionPressed(App.Modules.GlobalConstants.InputMap.Shoot))
+		public override void _Process(double delta)
+		{
+			if (Input.IsActionPressed(App.Modules.GlobalConstants.InputMap.Shoot))
 			{
 				this.Shoot();
 			}

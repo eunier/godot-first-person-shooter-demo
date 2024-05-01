@@ -46,7 +46,8 @@ namespace App.Utils.LoggerModule
 				? string.Empty
 				: System.IO.Path.GetFileNameWithoutExtension(filePath);
 
-			return $"[{className}.{memberName}:{lineNumber}]: {message}";
+			var time = Time.GetTicksMsec();
+			return $"{time}-[{className}.{memberName}:{lineNumber}]: {message}";
 		}
 	}
 }

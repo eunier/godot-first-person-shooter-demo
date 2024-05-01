@@ -182,6 +182,7 @@ mesh = SubResource("ArrayMesh_r1rda")
 skeleton = NodePath("")
 
 [node name="MuzzleFlash" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0506169, -0.521362)
 material_override = SubResource("StandardMaterial3D_40jbr")
 cast_shadow = 0
@@ -194,3 +195,8 @@ fixed_fps = 60
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_pg2w7")
 draw_pass_1 = SubResource("BoxMesh_3edu6")
+
+[node name="FireRateTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 36.267
+one_shot = true
