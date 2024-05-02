@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv4qmik2lauxs"]
+
+[ext_resource type="Script" path="res://app/modules/spark_controller/SparkController.cs" id="1_80u7g"]
+
+[node name="SparkController" type="Node3D"]
+script = ExtResource("1_80u7g")

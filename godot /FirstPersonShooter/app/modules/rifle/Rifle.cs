@@ -2,7 +2,7 @@ namespace App.Modules.RifleModule
 {
 	using App.Modules.HealthModule;
 	using App.Modules.HitscanModule;
-	using App.Modules.SparksControllerModule;
+	using App.Modules.SparkControllerModule;
 	using App.Modules.WeaponModule;
 	using App.Utils.LoggerModule;
 	using Godot;
@@ -14,18 +14,18 @@ namespace App.Modules.RifleModule
 		private const string FireRateTimerNodePath = "%FireRateTimer";
 		private const string HitscanNodePath = "%Hitscan";
 		private const string MuzzleFlashNodePath = "%MuzzleFlash";
-		private const string SparksControllerNodePath = "%SparksController";
+		private const string SparkControllerNodePath = "%SparkController";
 		private GpuParticles3D? muzzleFlash;
 		private Hitscan? hitscan;
-		private SparksController? sparksController;
+		private SparkController? sparkController;
 		private Timer? fireRateTimer;
 
 		public override void _Ready()
 		{
 			this.hitscan = this.GetNode<Hitscan>(Rifle.HitscanNodePath);
 
-			this.sparksController = this.GetNode<SparksController>(
-				Rifle.SparksControllerNodePath
+			this.sparkController = this.GetNode<SparkController>(
+				Rifle.SparkControllerNodePath
 			);
 
 			this.fireRateTimer = this.GetNode<Timer>(Rifle.FireRateTimerNodePath);
@@ -50,7 +50,7 @@ namespace App.Modules.RifleModule
 
 			if (res is not null)
 			{
-				this.sparksController!.Create(res.Position); // TODO remove sparks to spark (include controller)
+				this.sparkController!.Create(res.Position);
 
 				if (res.Collider is IWithHealth collider)
 				{
