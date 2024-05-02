@@ -1,7 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://c51di2og1rb4h"]
+[gd_scene load_steps=17 format=3 uid="uid://c51di2og1rb4h"]
 
 [ext_resource type="Script" path="res://app/modules/rifle/Rifle.cs" id="1_tfd1e"]
 [ext_resource type="PackedScene" uid="uid://chwy5yi3kg7m2" path="res://app/modules/hitscan/hitscan.tscn" id="2_a0mvl"]
+[ext_resource type="PackedScene" uid="uid://bv4qmik2lauxs" path="res://app/modules/sparks_controller/sparks_controller.tscn" id="2_s0c6b"]
+[ext_resource type="PackedScene" uid="uid://dbaxwy60hemlf" path="res://app/modules/sparks/sparks.tscn" id="3_qk0il"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dogf"]
 resource_name = "metal"
@@ -172,6 +174,10 @@ size = Vector3(0.1, 0.1, 0.1)
 
 [node name="Rifle" type="Node3D"]
 script = ExtResource("1_tfd1e")
+
+[node name="SparksController" parent="." instance=ExtResource("2_s0c6b")]
+unique_name_in_owner = true
+sparksScene = ExtResource("3_qk0il")
 
 [node name="Hitscan" parent="." instance=ExtResource("2_a0mvl")]
 unique_name_in_owner = true

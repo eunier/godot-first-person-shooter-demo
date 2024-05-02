@@ -4,11 +4,15 @@ namespace App.Modules.HitscanModule
 
 	public class ShootResult
 	{
-		public ShootResult(GodotObject collider)
+		public ShootResult(GodotObject collider, Vector3 position, Vector3 normal)
 		{
 			this.Collider = collider;
+			this.Position = position;
+			this.Normal = normal;
 		}
 
 		public GodotObject Collider { get; private set; }
+		public Vector3 Position { get; private set; }
+		public Vector3 Normal { get; private set; }
 	}
 }

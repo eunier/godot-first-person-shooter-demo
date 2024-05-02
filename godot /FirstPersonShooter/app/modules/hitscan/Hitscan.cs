@@ -12,13 +12,20 @@ namespace App.Modules.HitscanModule
 			var rayOrigin = camera.ProjectRayOrigin(cameraCenter);
 			var rayEnd = rayOrigin + (camera.ProjectRayNormal(cameraCenter) * range);
 			var rayQuery = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
+
 			var rayInterception = this.GetWorld3D()
 				.DirectSpaceState.IntersectRay(rayQuery);
 
 			if (rayInterception.Any())
 			{
-				var res = new ShootResult((GodotObject)rayInterception["collider"]);
-				Logger.Print($"Hit {res.Collider}");
+				Logger.Print($"Hit {rayInterception}");
+
+				var res = new ShootResult(
+					(GodotObject)rayInterception["collider"],
+					(Vector3)rayInterception["position"],
+					(Vector3)rayInterception["normal"]
+				);
+
 				return res;
 			}
 
