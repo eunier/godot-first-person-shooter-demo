@@ -62,3 +62,5 @@ namespace App.Modules.RifleModule
 		}
 	}
 }
+
+// TODO fix player stop for a sec when it start to shoot
