@@ -125,6 +125,11 @@ namespace App.Modules.EnemyModule
 			this.MoveAndSlide();
 		}
 
+		public void OnHealthDamaged()
+		{
+			this.provoked = true;
+		}
+
 		private void LookAtTarget(Vector3 direction)
 		{
 			direction.Y = 0;

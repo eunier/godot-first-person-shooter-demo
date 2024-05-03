@@ -141,3 +141,5 @@ unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_je2hx")
 }
+
+[connection signal="Damaged" from="Health" to="." method="OnHealthDamaged"]

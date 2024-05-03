@@ -12,6 +12,9 @@ namespace App.Modules.HealthModule
 		private float currentHealth;
 
 		[Signal]
+		public delegate void DamagedEventHandler();
+
+		[Signal]
 		public delegate void DiedEventHandler();
 
 		public override void _Ready()
@@ -26,6 +29,8 @@ namespace App.Modules.HealthModule
 			);
 
 			this.currentHealth = Math.Max(this.currentHealth - damageAmount, 0);
+			Logger.Print($"Emitting signal {SignalName.Damaged}");
+			this.EmitSignal(SignalName.Damaged);
 
 			if (this.currentHealth == 0)
 			{
