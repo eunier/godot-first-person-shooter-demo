@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://c51di2og1rb4h"]
+[gd_scene load_steps=17 format=3 uid="uid://c51di2og1rb4h"]
 
 [ext_resource type="Script" path="res://app/modules/rifle/Rifle.cs" id="1_tfd1e"]
+[ext_resource type="Resource" uid="uid://cpdmdthadelep" path="res://app/modules/rifle/rifle.tres" id="2_2qhds"]
 [ext_resource type="PackedScene" uid="uid://chwy5yi3kg7m2" path="res://app/modules/hitscan/hitscan.tscn" id="2_a0mvl"]
 [ext_resource type="PackedScene" uid="uid://bv4qmik2lauxs" path="res://app/modules/spark_controller/spark_controller.tscn" id="2_fkh7g"]
 
@@ -173,6 +174,7 @@ size = Vector3(0.1, 0.1, 0.1)
 
 [node name="Rifle" type="Node3D"]
 script = ExtResource("1_tfd1e")
+resource = ExtResource("2_2qhds")
 
 [node name="SparkController" parent="." instance=ExtResource("2_fkh7g")]
 unique_name_in_owner = true

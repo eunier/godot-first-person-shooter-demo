@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://c8pav3odtj4ar"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://cpdmdthadelep"]
 
 [ext_resource type="Script" path="res://app/modules/weapon/WeaponResource.cs" id="1_w8rir"]
 
 [resource]
 script = ExtResource("1_w8rir")
-Damage = 20
+Damage = 10
 Range = 100
+FireRatePerMinute = 600

@@ -9,12 +9,14 @@ namespace App.Modules.RifleModule
 
 	public partial class Rifle : Weapon
 	{
-		private const float FireRate = 14;
-		private const int DamageAmount = 15; // TODO: load the resource
 		private const string FireRateTimerNodePath = "%FireRateTimer";
 		private const string HitscanNodePath = "%Hitscan";
 		private const string MuzzleFlashNodePath = "%MuzzleFlash";
 		private const string SparkControllerNodePath = "%SparkController";
+
+		[Export]
+		private WeaponResource? resource;
+
 		private GpuParticles3D? muzzleFlash;
 		private Hitscan? hitscan;
 		private SparkController? sparkController;
@@ -29,7 +31,7 @@ namespace App.Modules.RifleModule
 			);
 
 			this.fireRateTimer = this.GetNode<Timer>(Rifle.FireRateTimerNodePath);
-			this.fireRateTimer!.WaitTime = 1 / Rifle.FireRate;
+			this.fireRateTimer!.WaitTime = this.resource!.FireRateWaitTime;
 
 			this.muzzleFlash = this.GetNode<GpuParticles3D>(
 				Rifle.MuzzleFlashNodePath
@@ -46,7 +48,7 @@ namespace App.Modules.RifleModule
 			Logger.Print($"Shooting");
 			this.muzzleFlash!.Restart();
 			this.fireRateTimer!.Start();
-			var res = this.hitscan!.Shoot(camera, 100); // TODO: use resource
+			var res = this.hitscan!.Shoot(camera, this.resource!.Range);
 
 			if (res is not null)
 			{
@@ -54,7 +56,7 @@ namespace App.Modules.RifleModule
 
 				if (res.Collider is IWithHealth collider)
 				{
-					collider.Health.Damage(Rifle.DamageAmount);
+					collider.Health.Damage(this.resource!.Damage);
 				}
 			}
 
