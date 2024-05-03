@@ -53,6 +53,11 @@ namespace App.Modules.WeaponControllerModule
 			{
 				this.Shoot();
 			}
+
+			if (Input.IsActionPressed(GlobalConstants.InputMap.Reload))
+			{
+				this.Reload();
+			}
 		}
 
 		private void EquipWeapon(WeaponEnum weaponEnum)
@@ -111,6 +116,19 @@ namespace App.Modules.WeaponControllerModule
 			{
 				case Rifle rifle:
 					rifle.Shoot(this.camera!);
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private void Reload()
+		{
+			switch (this.currentWeapon.Value)
+			{
+				case Rifle rifle:
+					rifle.Reload();
 					break;
 
 				default:

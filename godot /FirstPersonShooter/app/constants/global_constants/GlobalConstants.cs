@@ -12,6 +12,7 @@ namespace App.Modules
 			public const string MoveRight = "move_right";
 			public const string NextWeapon = "next_weapon";
 			public const string PreviousWeapon = "previous_weapon";
+			public const string Reload = "reload";
 			public const string Shoot = "shoot";
 			public const string UiCancel = "ui_cancel";
 		}

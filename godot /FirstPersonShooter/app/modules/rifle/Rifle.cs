@@ -77,5 +77,11 @@ namespace App.Modules.RifleModule
 			Logger.Print("Reloading");
 			this.Visible = false;
 		}
+
+		public void OnReloadTimerTimeout()
+		{
+			Logger.Print("Finish Reload");
+			this.Visible = true;
+		}
 	}
 }

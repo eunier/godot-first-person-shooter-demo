@@ -11,7 +11,7 @@ namespace App.Modules.WeaponModule
 		public WeaponResource(
 			int damage,
 			int range,
-			int fireRatePerMinute,
+			float fireRatePerMinute,
 			int magazineSize,
 			int magazines,
 			float reloadTime
@@ -32,7 +32,7 @@ namespace App.Modules.WeaponModule
 		public int Range { get; set; }
 
 		[Export]
-		public int FireRatePerMinute { get; set; }
+		public float FireRatePerMinute { get; set; }
 
 		[Export]
 		public int MagazineSize { get; set; }
