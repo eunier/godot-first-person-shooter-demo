@@ -7,3 +7,6 @@ script = ExtResource("1_w8rir")
 Damage = 10
 Range = 100
 FireRatePerMinute = 600
+MagazineSize = 30
+Magazines = 10
+ReloadTime = 2.0

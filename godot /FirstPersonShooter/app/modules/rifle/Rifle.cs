@@ -13,6 +13,7 @@ namespace App.Modules.RifleModule
 		private const string HitscanNodePath = "%Hitscan";
 		private const string MuzzleFlashNodePath = "%MuzzleFlash";
 		private const string SparkControllerNodePath = "%SparkController";
+		private const string ReloadTimerNodePath = "%ReloadTimer";
 
 		[Export]
 		private WeaponResource? resource;
@@ -21,17 +22,19 @@ namespace App.Modules.RifleModule
 		private Hitscan? hitscan;
 		private SparkController? sparkController;
 		private Timer? fireRateTimer;
+		private Timer? reloadTimer;
 
 		public override void _Ready()
 		{
+			this.fireRateTimer = this.GetNode<Timer>(Rifle.FireRateTimerNodePath);
+			this.fireRateTimer!.WaitTime = this.resource!.FireRateWaitTime;
+			this.reloadTimer = this.GetNode<Timer>(Rifle.ReloadTimerNodePath);
+			this.reloadTimer.WaitTime = this.resource!.ReloadTime;
 			this.hitscan = this.GetNode<Hitscan>(Rifle.HitscanNodePath);
 
 			this.sparkController = this.GetNode<SparkController>(
 				Rifle.SparkControllerNodePath
 			);
-
-			this.fireRateTimer = this.GetNode<Timer>(Rifle.FireRateTimerNodePath);
-			this.fireRateTimer!.WaitTime = this.resource!.FireRateWaitTime;
 
 			this.muzzleFlash = this.GetNode<GpuParticles3D>(
 				Rifle.MuzzleFlashNodePath
@@ -40,7 +43,7 @@ namespace App.Modules.RifleModule
 
 		public void Shoot(Camera3D camera)
 		{
-			if (!this.fireRateTimer!.IsStopped())
+			if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
 			{
 				return;
 			}
@@ -61,6 +64,18 @@ namespace App.Modules.RifleModule
 			}
 
 			Logger.Print($"Hit something? res: {res}.");
+		}
+
+		public void Reload()
+		{
+			if (!this.reloadTimer!.IsStopped())
+			{
+				return;
+			}
+
+			this.reloadTimer.Start();
+			Logger.Print("Reloading");
+			this.Visible = false;
 		}
 	}
 }
