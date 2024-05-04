@@ -6,8 +6,18 @@ namespace App.Modules.WeaponModule
 	public partial class WeaponResource : Resource
 	{
 		public WeaponResource()
-			: this(string.Empty, null, 0, 0, 0, 0, 0, 0, WeaponProjectileEnum.Hitscan)
-		{ }
+			: this(
+				string.Empty,
+				null,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				WeaponProjectileEnum.Hitscan,
+				null
+			) { }
 
 		public WeaponResource(
 			string name,
@@ -18,7 +28,8 @@ namespace App.Modules.WeaponModule
 			int magazineSize,
 			int magazines,
 			float reloadTime,
-			WeaponProjectileEnum projectileEnum
+			WeaponProjectileEnum projectileEnum,
+			PackedScene? hitScene
 		)
 		{
 			this.Name = name;
@@ -30,6 +41,7 @@ namespace App.Modules.WeaponModule
 			this.MagazineSize = magazineSize;
 			this.Magazines = magazines;
 			this.ProjectileEnum = projectileEnum;
+			this.HitScene = hitScene;
 		}
 
 		[Export]
@@ -58,6 +70,9 @@ namespace App.Modules.WeaponModule
 
 		[Export]
 		public WeaponProjectileEnum ProjectileEnum { get; set; }
+
+		[Export]
+		public PackedScene? HitScene { get; set; }
 
 		public float FireRateWaitTime
 		{

@@ -210,6 +210,8 @@ namespace App.Modules.WeaponControllerModule
 
 			if (res is not null)
 			{
+				this.CreateHitEffect(res.Position);
+
 				if (res.Collider is IWithHealth collider)
 				{
 					collider.Health.Damage(this.currentWeaponResource.Damage);
@@ -231,6 +233,15 @@ namespace App.Modules.WeaponControllerModule
 			this.reloadTimer.Start();
 			Logger.Print("Reloading...");
 			this.currentWeaponNode!.Visible = false;
+		}
+
+		private void CreateHitEffect(Vector3 position)
+		{
+			var effectNode =
+				this.currentWeaponResource!.HitScene!.Instantiate<Node3D>();
+
+			this.AddChild(effectNode);
+			effectNode.GlobalPosition = position;
 		}
 
 		// private void Reload()
