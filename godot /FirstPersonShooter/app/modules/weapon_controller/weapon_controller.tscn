@@ -8,3 +8,11 @@ script = ExtResource("1_c748v")
 
 [node name="Hitscan" parent="." instance=ExtResource("2_neato")]
 unique_name_in_owner = true
+
+[node name="FireRateTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true

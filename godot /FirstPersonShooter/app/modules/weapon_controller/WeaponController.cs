@@ -8,14 +8,18 @@ namespace App.Modules.WeaponControllerModule
 	using App.Modules.RifleModule;
 	using App.Modules.WeaponModule;
 	using App.Utils.LoggerModule;
+	using App.Utils.UtilsModule;
 	using Godot;
 
 	public partial class WeaponController : Node3D
 	{
 		// private const string RifleNodePath = "Rifle";
 		// private const string CannonNodePath = "Cannon";
+		private const string FireRateTimerNodePath = "%FireRateTimer";
+		private const string ReloadTimerNodePath = "%ReloadTimer";
+
 		// private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
-		private const string HitscanNodePath = "%Hitscan";
+
 		private readonly List<Node3D> weaponNodes = new();
 
 		[Export]
@@ -32,6 +36,8 @@ namespace App.Modules.WeaponControllerModule
 		private WeaponResource? currentWeaponResource;
 		private Node3D? currentWeaponNode;
 		private Hitscan? hitscan;
+		private Timer? fireRateTimer;
+		private Timer? reloadTimer;
 
 		private int WeaponCount
 		{
@@ -46,7 +52,15 @@ namespace App.Modules.WeaponControllerModule
 			// this.weapons.Add(WeaponEnum.Rifle, this.rifle);
 			// this.weapons.Add(WeaponEnum.Cannon, this.cannon);
 
-			this.hitscan = this.GetNode<Hitscan>(WeaponController.HitscanNodePath);
+			this.hitscan = this.GetNode<Hitscan>(GlobalConstants.NodePaths.Hitscan);
+
+			this.fireRateTimer = this.GetNode<Timer>(
+				WeaponController.FireRateTimerNodePath
+			);
+
+			this.reloadTimer = this.GetNode<Timer>(
+				WeaponController.ReloadTimerNodePath
+			);
 
 			foreach (var weaponResource in this.weaponResources!)
 			{
@@ -67,6 +81,7 @@ namespace App.Modules.WeaponControllerModule
 			// TODO get should this be.
 			if (
 				@event.IsActionPressed(App.Modules.GlobalConstants.InputMap.NextWeapon)
+				&& Input.MouseMode == Input.MouseModeEnum.Captured
 			)
 			{
 				this.EquipNextWeapon();
@@ -76,6 +91,7 @@ namespace App.Modules.WeaponControllerModule
 				@event.IsActionPressed(
 					App.Modules.GlobalConstants.InputMap.PreviousWeapon
 				)
+				&& Input.MouseMode == Input.MouseModeEnum.Captured
 			)
 			{
 				this.EquipPreviousWeapon();
@@ -103,15 +119,20 @@ namespace App.Modules.WeaponControllerModule
 
 				if (index == i)
 				{
-					weaponNode.Visible = true;
-					weaponNode.SetProcess(true);
-
 					Logger.Print(
 						$"Unequipped weapon {this.currentWeaponResource!.Name}."
 					);
 
+					weaponNode.Visible = true;
+					weaponNode.SetProcess(true);
+
 					this.currentWeaponNode = weaponNode;
 					this.currentWeaponResource = this.weaponResources![i];
+
+					this.fireRateTimer!.WaitTime =
+						this.currentWeaponResource.FireRateWaitTime;
+
+					this.reloadTimer!.WaitTime = this.currentWeaponResource.ReloadTime;
 
 					Logger.Print($"Equipped weapon {this.currentWeaponResource!.Name}.");
 				}
@@ -154,19 +175,7 @@ namespace App.Modules.WeaponControllerModule
 			switch (this.currentWeaponResource!.ProjectileEnum)
 			{
 				case WeaponProjectileEnum.Hitscan:
-					var res = this.hitscan!.Shoot(
-						this.camera!,
-						this.currentWeaponResource.Range
-					);
-
-					if (res is not null)
-					{
-						if (res.Collider is IWithHealth collider)
-						{
-							collider.Health.Damage(this.currentWeaponResource.Damage);
-						}
-					}
-
+					this.HandleHitscanShoot();
 					break;
 
 				case WeaponProjectileEnum.Physical:
@@ -175,6 +184,36 @@ namespace App.Modules.WeaponControllerModule
 
 				default:
 					break;
+			}
+		}
+
+		private void HandleHitscanShoot()
+		{
+			// Debugger.Breakpoint();
+
+			if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
+			{
+				return;
+			}
+
+			Logger.Print("Shooting hitscan weapon.");
+			this.fireRateTimer!.Start();
+
+			var res = this.hitscan!.Shoot(
+				this.camera!,
+				this.currentWeaponResource!.Range
+			);
+
+			if (res is not null)
+			{
+				if (res.Collider is IWithHealth collider)
+				{
+					collider.Health.Damage(this.currentWeaponResource.Damage);
+
+					Logger.Print(
+						$"Damage {collider} by {this.currentWeaponResource.Damage} hitpoints."
+					);
+				}
 			}
 		}
 

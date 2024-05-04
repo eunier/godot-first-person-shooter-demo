@@ -26,6 +26,7 @@ namespace App.Modules
 		public static class NodePaths
 		{
 			public const string GlobalState = "/root/GlobalState";
+			public const string Hitscan = "%Hitscan";
 		}
 	}
 }
