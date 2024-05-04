@@ -201,6 +201,7 @@ namespace App.Modules.WeaponControllerModule
 			}
 
 			Logger.Print("Shooting hitscan weapon.");
+			this.CreateShootMuzzleEffect();
 			this.fireRateTimer!.Start();
 
 			var res = this.hitscan!.Shoot(
@@ -233,6 +234,15 @@ namespace App.Modules.WeaponControllerModule
 			this.reloadTimer.Start();
 			Logger.Print("Reloading...");
 			this.currentWeaponNode!.Visible = false;
+		}
+
+		private void CreateShootMuzzleEffect()
+		{
+			var muzzleNode = this.GetNode(
+				$"{this.currentWeaponNode!.GetPath()}/{this.currentWeaponResource!.MuzzleNodePath}"
+			);
+
+			Logger.Print(muzzleNode.ToString());
 		}
 
 		private void CreateHitEffect(Vector3 position)

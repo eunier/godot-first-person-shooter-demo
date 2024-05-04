@@ -16,6 +16,7 @@ namespace App.Modules.WeaponModule
 				0,
 				0,
 				WeaponProjectileEnum.Hitscan,
+				null,
 				null
 			) { }
 
@@ -29,6 +30,7 @@ namespace App.Modules.WeaponModule
 			int magazines,
 			float reloadTime,
 			WeaponProjectileEnum projectileEnum,
+			NodePath? muzzleNodePath,
 			PackedScene? hitScene
 		)
 		{
@@ -41,6 +43,7 @@ namespace App.Modules.WeaponModule
 			this.MagazineSize = magazineSize;
 			this.Magazines = magazines;
 			this.ProjectileEnum = projectileEnum;
+			this.MuzzleNodePath = muzzleNodePath;
 			this.HitScene = hitScene;
 		}
 
@@ -70,6 +73,9 @@ namespace App.Modules.WeaponModule
 
 		[Export]
 		public WeaponProjectileEnum ProjectileEnum { get; set; }
+
+		[Export]
+		public NodePath? MuzzleNodePath { get; set; }
 
 		[Export]
 		public PackedScene? HitScene { get; set; }
