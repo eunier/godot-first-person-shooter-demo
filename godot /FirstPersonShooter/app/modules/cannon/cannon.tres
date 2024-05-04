@@ -15,4 +15,5 @@ MagazineSize = 6
 Magazines = 8
 ReloadTime = 3.0
 ProjectileEnum = 1
+MuzzleFashNodePath = NodePath("MuzzleFlash")
 HitScene = ExtResource("1_f1xp6")
