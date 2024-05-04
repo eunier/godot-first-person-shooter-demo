@@ -105,10 +105,16 @@ namespace App.Modules.WeaponControllerModule
 				this.Shoot();
 			}
 
-			// if (Input.IsActionPressed(GlobalConstants.InputMap.Reload))
-			// {
-			// 	this.Reload();
-			// }
+			if (Input.IsActionPressed(GlobalConstants.InputMap.Reload))
+			{
+				this.Reload();
+			}
+		}
+
+		public void OnReloadTimerTimeout()
+		{
+			Logger.Print("Finish Reload.");
+			this.currentWeaponNode!.Visible = true;
 		}
 
 		private void EquipWeapon(int index)
@@ -189,8 +195,6 @@ namespace App.Modules.WeaponControllerModule
 
 		private void HandleHitscanShoot()
 		{
-			// Debugger.Breakpoint();
-
 			if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
 			{
 				return;
@@ -215,6 +219,18 @@ namespace App.Modules.WeaponControllerModule
 					);
 				}
 			}
+		}
+
+		private void Reload()
+		{
+			if (!this.reloadTimer!.IsStopped())
+			{
+				return;
+			}
+
+			this.reloadTimer.Start();
+			Logger.Print("Reloading...");
+			this.currentWeaponNode!.Visible = false;
 		}
 
 		// private void Reload()
