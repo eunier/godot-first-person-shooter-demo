@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_x8rra")
+Name = "Cannon"
 Scene = ExtResource("1_gkbvb")
 Damage = 40
 Range = 100
@@ -12,3 +13,4 @@ FireRatePerMinute = 60.0
 MagazineSize = 6
 Magazines = 8
 ReloadTime = 3.0
+ProjectileEnum = 1

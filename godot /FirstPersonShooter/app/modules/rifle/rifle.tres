@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_w8rir")
+Name = "Rifle"
 Scene = ExtResource("1_yq4oj")
 Damage = 10
 Range = 100
@@ -12,3 +13,4 @@ FireRatePerMinute = 600.0
 MagazineSize = 30
 Magazines = 10
 ReloadTime = 2.0
+ProjectileEnum = 0

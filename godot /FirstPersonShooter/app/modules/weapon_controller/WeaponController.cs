@@ -3,6 +3,8 @@ namespace App.Modules.WeaponControllerModule
 	using System.Collections.Generic;
 	using System.Linq;
 	using App.Modules.CannonModule;
+	using App.Modules.HealthModule;
+	using App.Modules.HitscanModule;
 	using App.Modules.RifleModule;
 	using App.Modules.WeaponModule;
 	using App.Utils.LoggerModule;
@@ -13,6 +15,7 @@ namespace App.Modules.WeaponControllerModule
 		// private const string RifleNodePath = "Rifle";
 		// private const string CannonNodePath = "Cannon";
 		// private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
+		private const string HitscanNodePath = "%Hitscan";
 		private readonly List<Node3D> weaponNodes = new();
 
 		[Export]
@@ -28,6 +31,7 @@ namespace App.Modules.WeaponControllerModule
 		private int currentWeaponIndex = 0;
 		private WeaponResource? currentWeaponResource;
 		private Node3D? currentWeaponNode;
+		private Hitscan? hitscan;
 
 		private int WeaponCount
 		{
@@ -42,6 +46,7 @@ namespace App.Modules.WeaponControllerModule
 			// this.weapons.Add(WeaponEnum.Rifle, this.rifle);
 			// this.weapons.Add(WeaponEnum.Cannon, this.cannon);
 
+			this.hitscan = this.GetNode<Hitscan>(WeaponController.HitscanNodePath);
 
 			foreach (var weaponResource in this.weaponResources!)
 			{
@@ -52,6 +57,8 @@ namespace App.Modules.WeaponControllerModule
 				this.AddChild(weapon);
 			}
 
+			this.currentWeaponNode = this.weaponNodes.First();
+			this.currentWeaponResource = this.weaponResources.First();
 			this.EquipWeapon(this.currentWeaponIndex);
 		}
 
@@ -77,10 +84,10 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _Process(double delta)
 		{
-			// if (Input.IsActionPressed(App.Modules.GlobalConstants.InputMap.Shoot))
-			// {
-			// 	this.Shoot();
-			// }
+			if (Input.IsActionPressed(App.Modules.GlobalConstants.InputMap.Shoot))
+			{
+				this.Shoot();
+			}
 
 			// if (Input.IsActionPressed(GlobalConstants.InputMap.Reload))
 			// {
@@ -98,8 +105,15 @@ namespace App.Modules.WeaponControllerModule
 				{
 					weaponNode.Visible = true;
 					weaponNode.SetProcess(true);
+
+					Logger.Print(
+						$"Unequipped weapon {this.currentWeaponResource!.Name}."
+					);
+
 					this.currentWeaponNode = weaponNode;
 					this.currentWeaponResource = this.weaponResources![i];
+
+					Logger.Print($"Equipped weapon {this.currentWeaponResource!.Name}.");
 				}
 				else
 				{
@@ -132,27 +146,37 @@ namespace App.Modules.WeaponControllerModule
 				this.WeaponCount
 			);
 
-			// var nextWeaponEnum = (WeaponEnum)nextWeaponIndex;
-			// Logger.Print($"Equipping preview weapon: {nextWeaponEnum}.");
 			this.EquipWeapon(nextWeaponIndex);
 		}
 
-		// private void Shoot()
-		// {
-		// 	switch (this.currentWeapon.Value)
-		// 	{
-		// 		case Rifle rifle:
-		// 			rifle.Shoot(this.camera!);
-		// 			break;
+		private void Shoot()
+		{
+			switch (this.currentWeaponResource!.ProjectileEnum)
+			{
+				case WeaponProjectileEnum.Hitscan:
+					var res = this.hitscan!.Shoot(
+						this.camera!,
+						this.currentWeaponResource.Range
+					);
 
-		// 		case Cannon cannon:
-		// 			cannon.Shoot(this.camera!);
-		// 			break;
+					if (res is not null)
+					{
+						if (res.Collider is IWithHealth collider)
+						{
+							collider.Health.Damage(this.currentWeaponResource.Damage);
+						}
+					}
 
-		// 		default:
-		// 			break;
-		// 	}
-		// }
+					break;
+
+				case WeaponProjectileEnum.Physical:
+
+					break;
+
+				default:
+					break;
+			}
+		}
 
 		// private void Reload()
 		// {

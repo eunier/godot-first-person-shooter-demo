@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmq05c8lrya8b"]
+[gd_scene load_steps=3 format=3 uid="uid://bmq05c8lrya8b"]
 
 [ext_resource type="Script" path="res://app/modules/weapon_controller/WeaponController.cs" id="1_c748v"]
+[ext_resource type="PackedScene" uid="uid://chwy5yi3kg7m2" path="res://app/modules/hitscan/hitscan.tscn" id="2_neato"]
 
 [node name="WeaponController" type="Node3D"]
 script = ExtResource("1_c748v")
+
+[node name="Hitscan" parent="." instance=ExtResource("2_neato")]
+unique_name_in_owner = true
