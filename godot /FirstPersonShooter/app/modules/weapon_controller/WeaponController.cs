@@ -118,6 +118,10 @@ namespace App.Modules.WeaponControllerModule
 					rifle.Shoot(this.camera!);
 					break;
 
+				case Cannon cannon:
+					cannon.Shoot(this.camera!);
+					break;
+
 				default:
 					break;
 			}
@@ -129,6 +133,10 @@ namespace App.Modules.WeaponControllerModule
 			{
 				case Rifle rifle:
 					rifle.Reload();
+					break;
+
+				case Cannon cannon:
+					cannon.Reload();
 					break;
 
 				default:

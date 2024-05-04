@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://nr55iw2tajx"]
+
+[ext_resource type="Script" path="res://app/modules/cannon_projectile/CannonProjectile.cs" id="1_lfoav"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6f2y"]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_su7cp"]
+radius = 0.25
+height = 0.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eb5at"]
+radius = 0.0
+
+[node name="CannonProjectile" type="RigidBody3D"]
+script = ExtResource("1_lfoav")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_o6f2y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_su7cp")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_eb5at")
+
+[connection signal="body_entered" from="Area3D" to="." method="OnArea3DBodyEntered"]

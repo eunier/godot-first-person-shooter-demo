@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://7kheabegsno"]
+[gd_scene load_steps=13 format=3 uid="uid://7kheabegsno"]
 
 [ext_resource type="Script" path="res://app/modules/cannon/Cannon.cs" id="1_keb3d"]
 
@@ -120,6 +120,29 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qsx55")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3gyn"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="Curve" id="Curve_6igdv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_43xo6"]
+curve = SubResource("Curve_6igdv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5q4b7"]
+direction = Vector3(0, 0, -1)
+spread = 8.0
+initial_velocity_min = 6.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_43xo6")
+
+[sub_resource type="BoxMesh" id="BoxMesh_3hv3c"]
+size = Vector3(0.1, 0.1, 0.1)
+
 [node name="Cannon" type="Node3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.01, -0.12)
 script = ExtResource("1_keb3d")
@@ -127,3 +150,18 @@ script = ExtResource("1_keb3d")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_kbw3b")
 skeleton = NodePath("")
+
+[node name="MuzzleFlash" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 7.64274e-15, 1.74846e-07, -7.64274e-15, -1, 8.74228e-08, 1.74846e-07, -8.74228e-08, -1, -0.00590692, 0.0180014, 0.271174)
+material_override = SubResource("StandardMaterial3D_w3gyn")
+cast_shadow = 0
+emitting = false
+amount = 16
+lifetime = 0.07
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_5q4b7")
+draw_pass_1 = SubResource("BoxMesh_3hv3c")

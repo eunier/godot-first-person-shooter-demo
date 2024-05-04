@@ -20,6 +20,7 @@ namespace App.Modules
 		public static class Groups
 		{
 			public const string Player = "player";
+			public const string WithHealth = "with_health";
 		}
 
 		public static class NodePaths
