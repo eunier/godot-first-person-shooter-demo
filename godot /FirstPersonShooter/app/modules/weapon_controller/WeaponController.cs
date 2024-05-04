@@ -29,6 +29,12 @@ namespace App.Modules.WeaponControllerModule
 		private WeaponResource? currentWeaponResource;
 		private Node3D? currentWeaponNode;
 
+		private int WeaponCount
+		{
+			get => this.weaponResources!.Length;
+			set { }
+		}
+
 		public override void _Ready()
 		{
 			// this.rifle = this.GetNode<Rifle>(WeaponController.RifleNodePath);
@@ -42,7 +48,6 @@ namespace App.Modules.WeaponControllerModule
 				var weapon = (Node3D)weaponResource.Scene!.Instantiate();
 				weapon.Visible = false;
 				weapon.SetProcess(false);
-
 				this.weaponNodes.Add(weapon);
 				this.AddChild(weapon);
 			}
@@ -52,21 +57,22 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _UnhandledInput(InputEvent @event)
 		{
-			// if (
-			// 	@event.IsActionPressed(App.Modules.GlobalConstants.InputMap.NextWeapon)
-			// )
-			// {
-			// 	this.EquipNextWeapon();
-			// }
+			// TODO get should this be.
+			if (
+				@event.IsActionPressed(App.Modules.GlobalConstants.InputMap.NextWeapon)
+			)
+			{
+				this.EquipNextWeapon();
+			}
 
-			// if (
-			// 	@event.IsActionPressed(
-			// 		App.Modules.GlobalConstants.InputMap.PreviousWeapon
-			// 	)
-			// )
-			// {
-			// 	this.EquipPreviousWeapon();
-			// }
+			if (
+				@event.IsActionPressed(
+					App.Modules.GlobalConstants.InputMap.PreviousWeapon
+				)
+			)
+			{
+				this.EquipPreviousWeapon();
+			}
 		}
 
 		public override void _Process(double delta)
@@ -84,7 +90,7 @@ namespace App.Modules.WeaponControllerModule
 
 		private void EquipWeapon(int index)
 		{
-			for (int i = 0; i < this.weaponNodes.Count; i++)
+			for (int i = 0; i < this.WeaponCount; i++)
 			{
 				var weaponNode = this.weaponNodes[i];
 
@@ -105,31 +111,31 @@ namespace App.Modules.WeaponControllerModule
 			this.currentWeaponIndex = index;
 		}
 
-		// private void EquipNextWeapon()
-		// {
-		// 	var nextWeaponIndex = Mathf.Wrap(
-		// 		(int)this.currentWeapon.Key + 1,
-		// 		0,
-		// 		this.weapons.Count
-		// 	);
+		private void EquipNextWeapon()
+		{
+			var nextWeaponIndex = Mathf.Wrap(
+				this.currentWeaponIndex + 1,
+				0,
+				this.WeaponCount
+			);
 
-		// 	var nextWeaponEnum = (WeaponEnum)nextWeaponIndex;
-		// 	Logger.Print($"Equipping preview weapon: {nextWeaponEnum}.");
-		// 	this.EquipWeapon((WeaponEnum)nextWeaponIndex);
-		// }
+			// var nextWeaponEnum = (WeaponEnum)nextWeaponIndex;
+			// Logger.Print($"Equipping preview weapon: {nextWeaponEnum}.");
+			this.EquipWeapon(nextWeaponIndex);
+		}
 
-		// private void EquipPreviousWeapon()
-		// {
-		// 	var nextWeaponIndex = Mathf.Wrap(
-		// 		(int)this.currentWeapon.Key - 1,
-		// 		0,
-		// 		this.weapons.Count
-		// 	);
+		private void EquipPreviousWeapon()
+		{
+			var nextWeaponIndex = Mathf.Wrap(
+				this.currentWeaponIndex - 1,
+				0,
+				this.WeaponCount
+			);
 
-		// 	var previousWeaponEnum = (WeaponEnum)nextWeaponIndex;
-		// 	Logger.Print($"Equipping preview weapon: {previousWeaponEnum}.");
-		// 	this.EquipWeapon((WeaponEnum)nextWeaponIndex);
-		// }
+			// var nextWeaponEnum = (WeaponEnum)nextWeaponIndex;
+			// Logger.Print($"Equipping preview weapon: {nextWeaponEnum}.");
+			this.EquipWeapon(nextWeaponIndex);
+		}
 
 		// private void Shoot()
 		// {
