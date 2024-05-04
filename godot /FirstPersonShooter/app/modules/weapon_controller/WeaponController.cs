@@ -238,11 +238,11 @@ namespace App.Modules.WeaponControllerModule
 
 		private void CreateShootMuzzleEffect()
 		{
-			var muzzleNode = this.GetNode(
-				$"{this.currentWeaponNode!.GetPath()}/{this.currentWeaponResource!.MuzzleNodePath}"
+			var muzzleFlashNode = this.GetNode<GpuParticles3D>(
+				$"{this.currentWeaponNode!.GetPath()}/{this.currentWeaponResource!.MuzzleFashNodePath}"
 			);
 
-			Logger.Print(muzzleNode.ToString());
+			muzzleFlashNode.Restart();
 		}
 
 		private void CreateHitEffect(Vector3 position)

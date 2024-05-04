@@ -15,5 +15,5 @@ MagazineSize = 30
 Magazines = 10
 ReloadTime = 2.0
 ProjectileEnum = 0
-MuzzleNodePath = NodePath("Muzzle")
+MuzzleFashNodePath = NodePath("MuzzleFlash")
 HitScene = ExtResource("1_eu2ef")

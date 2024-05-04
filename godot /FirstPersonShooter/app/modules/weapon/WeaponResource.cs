@@ -30,7 +30,7 @@ namespace App.Modules.WeaponModule
 			int magazines,
 			float reloadTime,
 			WeaponProjectileEnum projectileEnum,
-			NodePath? muzzleNodePath,
+			NodePath? muzzleFashNodePath,
 			PackedScene? hitScene
 		)
 		{
@@ -43,7 +43,7 @@ namespace App.Modules.WeaponModule
 			this.MagazineSize = magazineSize;
 			this.Magazines = magazines;
 			this.ProjectileEnum = projectileEnum;
-			this.MuzzleNodePath = muzzleNodePath;
+			this.MuzzleFashNodePath = muzzleFashNodePath;
 			this.HitScene = hitScene;
 		}
 
@@ -74,8 +74,12 @@ namespace App.Modules.WeaponModule
 		[Export]
 		public WeaponProjectileEnum ProjectileEnum { get; set; }
 
+		/// <summary>
+		/// 	 Gets or sets `PackedScene`.
+		/// 	 Node type is `GpuParticles3D`.
+		/// </summary>
 		[Export]
-		public NodePath? MuzzleNodePath { get; set; }
+		public NodePath? MuzzleFashNodePath { get; set; }
 
 		[Export]
 		public PackedScene? HitScene { get; set; }
