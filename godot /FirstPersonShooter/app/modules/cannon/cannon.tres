@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://dm1gw82bewx5y"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://dm1gw82bewx5y"]
 
+[ext_resource type="PackedScene" uid="uid://7kheabegsno" path="res://app/modules/cannon/cannon.tscn" id="1_gkbvb"]
 [ext_resource type="Script" path="res://app/modules/weapon/WeaponResource.cs" id="1_x8rra"]
 
 [resource]
 script = ExtResource("1_x8rra")
+Scene = ExtResource("1_gkbvb")
 Damage = 40
 Range = 100
 FireRatePerMinute = 60.0

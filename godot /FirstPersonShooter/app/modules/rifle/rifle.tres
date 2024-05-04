@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://cpdmdthadelep"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://cpdmdthadelep"]
 
 [ext_resource type="Script" path="res://app/modules/weapon/WeaponResource.cs" id="1_w8rir"]
+[ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://app/modules/rifle/rifle.tscn" id="1_yq4oj"]
 
 [resource]
 script = ExtResource("1_w8rir")
+Scene = ExtResource("1_yq4oj")
 Damage = 10
 Range = 100
-FireRatePerMinute = 600
+FireRatePerMinute = 600.0
 MagazineSize = 30
 Magazines = 10
 ReloadTime = 2.0

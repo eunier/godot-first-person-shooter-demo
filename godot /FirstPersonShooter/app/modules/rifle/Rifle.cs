@@ -15,8 +15,8 @@ namespace App.Modules.RifleModule
 		private const string SparkControllerNodePath = "%SparkController";
 		private const string ReloadTimerNodePath = "%ReloadTimer";
 
-		[Export]
-		private WeaponResource? resource;
+		// [Export]
+		// private WeaponResource? resource;
 
 		private GpuParticles3D? muzzleFlash;
 		private Hitscan? hitscan;
@@ -27,9 +27,9 @@ namespace App.Modules.RifleModule
 		public override void _Ready()
 		{
 			this.fireRateTimer = this.GetNode<Timer>(Rifle.FireRateTimerNodePath);
-			this.fireRateTimer!.WaitTime = this.resource!.FireRateWaitTime;
+			// this.fireRateTimer!.WaitTime = this.resource!.FireRateWaitTime;
 			this.reloadTimer = this.GetNode<Timer>(Rifle.ReloadTimerNodePath);
-			this.reloadTimer.WaitTime = this.resource!.ReloadTime;
+			// this.reloadTimer.WaitTime = this.resource!.ReloadTime;
 			this.hitscan = this.GetNode<Hitscan>(Rifle.HitscanNodePath);
 
 			this.sparkController = this.GetNode<SparkController>(
@@ -43,27 +43,27 @@ namespace App.Modules.RifleModule
 
 		public void Shoot(Camera3D camera)
 		{
-			if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
-			{
-				return;
-			}
+			// if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
+			// {
+			// 	return;
+			// }
 
-			Logger.Print($"Shooting");
-			this.muzzleFlash!.Restart();
-			this.fireRateTimer!.Start();
-			var res = this.hitscan!.Shoot(camera, this.resource!.Range);
+			// Logger.Print($"Shooting");
+			// this.muzzleFlash!.Restart();
+			// this.fireRateTimer!.Start();
+			// var res = this.hitscan!.Shoot(camera, this.resource!.Range);
 
-			if (res is not null)
-			{
-				this.sparkController!.Create(res.Position);
+			// if (res is not null)
+			// {
+			// 	this.sparkController!.Create(res.Position);
 
-				if (res.Collider is IWithHealth collider)
-				{
-					collider.Health.Damage(this.resource!.Damage);
-				}
-			}
+			// 	if (res.Collider is IWithHealth collider)
+			// 	{
+			// 		collider.Health.Damage(this.resource!.Damage);
+			// 	}
+			// }
 
-			Logger.Print($"Hit something? res: {res}.");
+			// Logger.Print($"Hit something? res: {res}.");
 		}
 
 		public void Reload()
