@@ -19,6 +19,7 @@ height = 0.3
 
 [node name="CannonProjectile" type="RigidBody3D"]
 top_level = true
+collision_layer = 0
 input_ray_pickable = false
 gravity_scale = 0.0
 continuous_cd = true

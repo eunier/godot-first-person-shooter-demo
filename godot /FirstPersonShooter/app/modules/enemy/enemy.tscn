@@ -112,7 +112,7 @@ _data = {
 "attack": SubResource("Animation_umdny")
 }
 
-[node name="Enemy" type="CharacterBody3D"]
+[node name="Enemy" type="CharacterBody3D" groups=["with_health"]]
 script = ExtResource("1_24pp3")
 
 [node name="Health" parent="." instance=ExtResource("2_0rg50")]
