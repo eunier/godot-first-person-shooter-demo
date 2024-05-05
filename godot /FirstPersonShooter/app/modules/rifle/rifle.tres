@@ -1,19 +1,23 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=4 format=3 uid="uid://cpdmdthadelep"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=5 format=3 uid="uid://cpdmdthadelep"]
 
 [ext_resource type="PackedScene" uid="uid://dbaxwy60hemlf" path="res://app/modules/spark/spark.tscn" id="1_eu2ef"]
 [ext_resource type="Script" path="res://app/modules/weapon/WeaponResource.cs" id="1_w8rir"]
 [ext_resource type="PackedScene" uid="uid://c51di2og1rb4h" path="res://app/modules/rifle/rifle.tscn" id="1_yq4oj"]
+[ext_resource type="PackedScene" uid="uid://nr55iw2tajx" path="res://app/modules/cannon_projectile/cannon_projectile.tscn" id="2_ela3p"]
 
 [resource]
 script = ExtResource("1_w8rir")
 Name = "Rifle"
 Scene = ExtResource("1_yq4oj")
+ProjectileEnum = 0
+MuzzleFashNodePath = NodePath("MuzzleFlash")
+ProjectilePointNodePath = NodePath("ProjectilePoint")
+HitScene = ExtResource("1_eu2ef")
+ProjectileScene = ExtResource("2_ela3p")
 Damage = 10
 Range = 100
 FireRatePerMinute = 600.0
 MagazineSize = 30
 Magazines = 10
 ReloadTime = 2.0
-ProjectileEnum = 0
-MuzzleFashNodePath = NodePath("MuzzleFlash")
-HitScene = ExtResource("1_eu2ef")
+ProjectileSpeed = 2

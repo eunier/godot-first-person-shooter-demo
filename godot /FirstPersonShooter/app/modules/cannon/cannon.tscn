@@ -165,3 +165,6 @@ fixed_fps = 60
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_5q4b7")
 draw_pass_1 = SubResource("BoxMesh_3hv3c")
+
+[node name="ProjectilePoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00590705, 0.0180014, 1.84351)

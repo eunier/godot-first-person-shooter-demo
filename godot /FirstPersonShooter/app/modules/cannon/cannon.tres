@@ -1,19 +1,23 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=4 format=3 uid="uid://dm1gw82bewx5y"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=5 format=3 uid="uid://dm1gw82bewx5y"]
 
 [ext_resource type="PackedScene" uid="uid://dbaxwy60hemlf" path="res://app/modules/spark/spark.tscn" id="1_f1xp6"]
 [ext_resource type="PackedScene" uid="uid://7kheabegsno" path="res://app/modules/cannon/cannon.tscn" id="1_gkbvb"]
 [ext_resource type="Script" path="res://app/modules/weapon/WeaponResource.cs" id="1_x8rra"]
+[ext_resource type="PackedScene" uid="uid://nr55iw2tajx" path="res://app/modules/cannon_projectile/cannon_projectile.tscn" id="2_quk7d"]
 
 [resource]
 script = ExtResource("1_x8rra")
 Name = "Cannon"
 Scene = ExtResource("1_gkbvb")
-Damage = 40
+ProjectileEnum = 1
+MuzzleFashNodePath = NodePath("MuzzleFlash")
+ProjectilePointNodePath = NodePath("ProjectilePoint")
+HitScene = ExtResource("1_f1xp6")
+ProjectileScene = ExtResource("2_quk7d")
+Damage = 0
 Range = 100
 FireRatePerMinute = 60.0
 MagazineSize = 6
 Magazines = 8
 ReloadTime = 3.0
-ProjectileEnum = 1
-MuzzleFashNodePath = NodePath("MuzzleFlash")
-HitScene = ExtResource("1_f1xp6")
+ProjectileSpeed = 100

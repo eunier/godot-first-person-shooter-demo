@@ -5,8 +5,10 @@ namespace App.Modules.WeaponControllerModule
 	using App.Modules.CannonModule;
 	using App.Modules.HealthModule;
 	using App.Modules.HitscanModule;
+	using App.Modules.ProjectileModule;
 	using App.Modules.RifleModule;
 	using App.Modules.WeaponModule;
+	using App.Utils.CameraUtilsModule;
 	using App.Utils.LoggerModule;
 	using App.Utils.UtilsModule;
 	using Godot;
@@ -185,7 +187,7 @@ namespace App.Modules.WeaponControllerModule
 					break;
 
 				case WeaponProjectileEnum.Physical:
-
+					this.HandlePhysicalProjectileShoot();
 					break;
 
 				default:
@@ -204,12 +206,17 @@ namespace App.Modules.WeaponControllerModule
 			this.CreateShootMuzzleEffect();
 			this.fireRateTimer!.Start();
 
-			var res = this.hitscan!.Shoot(
-				this.camera!,
+			// var res = this.hitscan!.Shoot(
+			// 	this.camera!,
+			// 	this.currentWeaponResource!.Range
+			// );
+
+			var res = CameraUtils.GetCameraRayInterception(
+				this,
 				this.currentWeaponResource!.Range
 			);
 
-			if (res is not null)
+			if (res.Collider is not null)
 			{
 				this.CreateHitEffect(res.Position);
 
@@ -222,6 +229,97 @@ namespace App.Modules.WeaponControllerModule
 					);
 				}
 			}
+		}
+
+		private void HandlePhysicalProjectileShoot()
+		{
+			//Debugger.Breakpoint();
+
+			if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
+			{
+				return;
+			}
+
+			Logger.Print("Shooting projectile weapon.");
+			this.CreateShootMuzzleEffect();
+			this.fireRateTimer!.Start();
+
+			var cameraRayInterception = CameraUtils.GetCameraRayInterception(
+				this,
+				this.currentWeaponResource!.Range
+			);
+
+			var projectilePoint = Weapon.GetProjectilePointNode(
+				this,
+				this.currentWeaponNode!,
+				this.currentWeaponResource!
+			);
+
+			var direction = (
+				cameraRayInterception.Position - projectilePoint.GlobalTransform.Origin
+			).Normalized();
+
+			Logger.Print(
+				"Projectile Point Position: " + projectilePoint.GlobalTransform.Origin
+			);
+			Logger.Print(
+				"Camera Ray Interception Position: " + cameraRayInterception.Position
+			);
+
+			var projectile =
+				this.currentWeaponResource!.ProjectileScene!.Instantiate<Projectile>();
+
+			if (OS.IsDebugBuild())
+			{
+				var projectileScript = (Script)projectile.GetScript();
+
+				if (projectileScript is null)
+				{
+					GD.PushError(
+						$"No script attacked to script of projectile for weapon {this.currentWeaponResource.Name}." // TODO use node.name
+					); // TODO: throw vs log error vs push error
+				}
+			}
+
+			projectilePoint.AddChild(projectile);
+			projectile.LookAt(cameraRayInterception.Position, Vector3.Up);
+			projectile.TopLevel = true;
+			projectile.Damage = this.currentWeaponResource.Damage;
+			projectile.Speed = this.currentWeaponResource.ProjectileSpeed;
+
+			// projectile.ApplyImpulse(
+			// 	projectile.Basis.Z,
+			// 	-projectile.Basis.Z * this.currentWeaponResource.ProjectileSpeed * 99999
+			// );
+
+			// projectile.ApplyImpulse(
+			// 	-projectile.Basis.Z,
+			// 	projectile.Basis.Z * this.currentWeaponResource.ProjectileSpeed
+			// );
+
+			// var projectileImpulsePosition =
+			// 	cameraRayInterception.Position
+			// 	* this.currentWeaponResource.ProjectileSpeed;
+
+			// // projectile.ApplyImpulse(direction, projectileImpulsePosition);
+			// projectile.ApplyImpulse(cameraRayInterception.Position);
+
+			// projectile.LinearVelocity =
+			// 	-direction * this.currentWeaponResource.ProjectileSpeed;
+
+			// projectile.ApplyImpulse(
+			// 	projectile.GlobalTransform.Origin,
+			// 	direction.Normalized()
+			// 		* this.currentWeaponResource.ProjectileSpeed
+			// 		* 1000
+			// );
+
+			// projectile.ApplyImpulse()
+		}
+
+		private void OnProjectileBodyEntered(Node node)
+		{
+			Logger.Print(node.ToString());
 		}
 
 		private void Reload()
@@ -238,8 +336,10 @@ namespace App.Modules.WeaponControllerModule
 
 		private void CreateShootMuzzleEffect()
 		{
-			var muzzleFlashNode = this.GetNode<GpuParticles3D>(
-				$"{this.currentWeaponNode!.GetPath()}/{this.currentWeaponResource!.MuzzleFashNodePath}"
+			var muzzleFlashNode = Weapon.GetMuzzleFlashNode(
+				this,
+				this.currentWeaponNode!,
+				this.currentWeaponResource!
 			);
 
 			muzzleFlashNode.Restart();

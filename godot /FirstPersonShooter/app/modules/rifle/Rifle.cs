@@ -7,7 +7,7 @@ namespace App.Modules.RifleModule
 	using App.Utils.LoggerModule;
 	using Godot;
 
-	public partial class Rifle : Weapon
+	public partial class Rifle : Weapon // TODO do i need this?
 	{
 		private const string FireRateTimerNodePath = "%FireRateTimer";
 		private const string HitscanNodePath = "%Hitscan";

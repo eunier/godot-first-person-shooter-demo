@@ -7,44 +7,47 @@ namespace App.Modules.WeaponModule
 	{
 		public WeaponResource()
 			: this(
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				null,
+				null,
+				null,
+				null,
 				string.Empty,
-				null,
-				0,
-				0,
-				0,
-				0,
-				0,
-				0,
-				WeaponProjectileEnum.Hitscan,
-				null,
-				null
+				WeaponProjectileEnum.Hitscan
 			) { }
 
 		public WeaponResource(
-			string name,
-			PackedScene? scene,
-			int damage,
-			int range,
 			float fireRatePerMinute,
-			int magazineSize,
-			int magazines,
 			float reloadTime,
-			WeaponProjectileEnum projectileEnum,
+			int damage,
+			int magazines,
+			int magazineSize,
+			int range,
 			NodePath? muzzleFashNodePath,
-			PackedScene? hitScene
+			PackedScene? hitScene,
+			PackedScene? projectileScene,
+			PackedScene? scene,
+			string name,
+			WeaponProjectileEnum projectileEnum
 		)
 		{
-			this.Name = name;
-			this.Scene = scene;
 			this.Damage = damage;
-			this.ReloadTime = reloadTime;
-			this.Range = range;
 			this.FireRatePerMinute = fireRatePerMinute;
-			this.MagazineSize = magazineSize;
-			this.Magazines = magazines;
-			this.ProjectileEnum = projectileEnum;
-			this.MuzzleFashNodePath = muzzleFashNodePath;
 			this.HitScene = hitScene;
+			this.Magazines = magazines;
+			this.MagazineSize = magazineSize;
+			this.MuzzleFashNodePath = muzzleFashNodePath;
+			this.Name = name;
+			this.ProjectileEnum = projectileEnum;
+			this.ProjectileScene = projectileScene;
+			this.Range = range;
+			this.ReloadTime = reloadTime;
+			this.Scene = scene;
 		}
 
 		[Export]
@@ -53,6 +56,34 @@ namespace App.Modules.WeaponModule
 		[Export]
 		public PackedScene? Scene { get; set; }
 
+		[Export]
+		public WeaponProjectileEnum ProjectileEnum { get; set; }
+
+		/// <summary>
+		/// 	 Gets or sets `PackedScene`.
+		/// 	 Node type is `GpuParticles3D`.
+		/// </summary>
+		[Export]
+		public NodePath? MuzzleFashNodePath { get; set; }
+
+		/// <summary>
+		/// 	 Gets or sets `NodePath`.
+		/// 	 Node type is `Node3D`.
+		/// </summary>
+		[Export(PropertyHint.None, "Only for WeaponProjectileEnum.Physical.")]
+		public NodePath? ProjectilePointNodePath { get; set; }
+
+		[Export]
+		public PackedScene? HitScene { get; set; }
+
+		/// <summary>
+		/// 	 Gets or sets `PackedScene`.
+		/// 	 Node type is `Projectile`.
+		/// </summary>
+		[Export]
+		public PackedScene? ProjectileScene { get; set; }
+
+		[ExportGroup("Stats")]
 		[Export]
 		public int Damage { get; set; }
 
@@ -72,17 +103,7 @@ namespace App.Modules.WeaponModule
 		public float ReloadTime { get; set; }
 
 		[Export]
-		public WeaponProjectileEnum ProjectileEnum { get; set; }
-
-		/// <summary>
-		/// 	 Gets or sets `PackedScene`.
-		/// 	 Node type is `GpuParticles3D`.
-		/// </summary>
-		[Export]
-		public NodePath? MuzzleFashNodePath { get; set; }
-
-		[Export]
-		public PackedScene? HitScene { get; set; }
+		public int ProjectileSpeed { get; set; }
 
 		public float FireRateWaitTime
 		{
