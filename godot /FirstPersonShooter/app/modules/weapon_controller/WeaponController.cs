@@ -23,6 +23,8 @@ namespace App.Modules.WeaponControllerModule
 		// private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
 
 		private readonly List<Node3D> weaponNodes = new();
+		private readonly List<int> weaponMagazines = new();
+		private readonly List<int> weaponMagazinesAmmo = new();
 
 		[Export]
 		private Camera3D? camera;
@@ -35,16 +37,26 @@ namespace App.Modules.WeaponControllerModule
 		private WeaponResource[]? weaponResources;
 
 		private int currentWeaponIndex = 0;
-		private WeaponResource? currentWeaponResource;
+		private WeaponResource? currentWeaponResource; // TODO use setter and currentWeaponIndex
 		private Node3D? currentWeaponNode;
 		private Hitscan? hitscan;
 		private Timer? fireRateTimer;
 		private Timer? reloadTimer;
 
+		private int CurrentWeaponMagazines
+		{
+			get => this.weaponMagazines[this.currentWeaponIndex];
+			set => this.weaponMagazines[this.currentWeaponIndex] = value;
+		}
+		private int CurrentWeaponCurrentMagazineAmmo
+		{
+			get => this.weaponMagazinesAmmo[this.currentWeaponIndex];
+			set => this.weaponMagazinesAmmo[this.currentWeaponIndex] = value;
+		}
+
 		private int WeaponCount
 		{
 			get => this.weaponResources!.Length;
-			set { }
 		}
 
 		public override void _Ready()
@@ -70,17 +82,19 @@ namespace App.Modules.WeaponControllerModule
 				weapon.Visible = false;
 				weapon.SetProcess(false);
 				this.weaponNodes.Add(weapon);
+				this.weaponMagazines.Add(weaponResource.Magazines);
+				this.weaponMagazinesAmmo.Add(weaponResource.MagazineSize);
 				this.AddChild(weapon);
 			}
 
-			this.currentWeaponNode = this.weaponNodes.First();
-			this.currentWeaponResource = this.weaponResources.First();
+			this.currentWeaponNode = this.weaponNodes.First(); // TODO do i need this is the is  a EquipWeapon call below?
+			this.currentWeaponResource = this.weaponResources.First(); // TODO do i need this is the is  a EquipWeapon call below?
 			this.EquipWeapon(this.currentWeaponIndex);
 		}
 
 		public override void _UnhandledInput(InputEvent @event)
 		{
-			// TODO get should this be.
+			// TODO where should this be.
 			if (
 				@event.IsActionPressed(App.Modules.GlobalConstants.InputMap.NextWeapon)
 				&& Input.MouseMode == Input.MouseModeEnum.Captured
@@ -197,14 +211,25 @@ namespace App.Modules.WeaponControllerModule
 
 		private void HandleHitscanShoot()
 		{
-			if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
+			// Debugger.Breakpoint();
+			if (
+				!this.fireRateTimer!.IsStopped()
+				|| !this.reloadTimer!.IsStopped()
+				|| this.CurrentWeaponCurrentMagazineAmmo == 0
+			)
 			{
 				return;
 			}
 
-			Logger.Print("Shooting hitscan weapon.");
 			this.CreateShootMuzzleEffect();
 			this.fireRateTimer!.Start();
+			this.CurrentWeaponCurrentMagazineAmmo--;
+
+			Logger.Print("Shoot hitscan weapon.");
+
+			Logger.Print(
+				$"Current magazine ammo: {this.CurrentWeaponCurrentMagazineAmmo}."
+			);
 
 			// var res = this.hitscan!.Shoot(
 			// 	this.camera!,
@@ -235,14 +260,25 @@ namespace App.Modules.WeaponControllerModule
 		{
 			//Debugger.Breakpoint();
 
-			if (!this.fireRateTimer!.IsStopped() || !this.reloadTimer!.IsStopped())
+			if (
+				!this.fireRateTimer!.IsStopped()
+				|| !this.reloadTimer!.IsStopped()
+				|| this.CurrentWeaponCurrentMagazineAmmo == 0
+			)
 			{
 				return;
 			}
 
-			Logger.Print("Shooting projectile weapon.");
 			this.CreateShootMuzzleEffect();
 			this.fireRateTimer!.Start();
+
+			this.CurrentWeaponCurrentMagazineAmmo--;
+
+			Logger.Print("Shoot hitscan weapon.");
+
+			Logger.Print(
+				$"Current magazine ammo: {this.CurrentWeaponCurrentMagazineAmmo}."
+			);
 
 			var cameraRayInterception = CameraUtils.GetCameraRayInterception(
 				this,
