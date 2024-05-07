@@ -1,5 +1,6 @@
 namespace App.Modules.WeaponControllerModule
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using App.Modules.CannonModule;
@@ -129,8 +130,14 @@ namespace App.Modules.WeaponControllerModule
 
 		public void OnReloadTimerTimeout()
 		{
-			Logger.Print("Finish Reload.");
 			this.currentWeaponNode!.Visible = true;
+			this.CurrentWeaponMagazines--;
+
+			this.CurrentWeaponCurrentMagazineAmmo =
+				this.currentWeaponResource!.MagazineSize;
+
+			Logger.Print("Finish Reload.");
+			Logger.Print($"Current magazines count: {this.CurrentWeaponMagazines}.");
 		}
 
 		private void EquipWeapon(int index)
@@ -228,7 +235,7 @@ namespace App.Modules.WeaponControllerModule
 			Logger.Print("Shoot hitscan weapon.");
 
 			Logger.Print(
-				$"Current magazine ammo: {this.CurrentWeaponCurrentMagazineAmmo}."
+				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.currentWeaponResource!.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.currentWeaponResource!.MagazineSize}."
 			);
 
 			// var res = this.hitscan!.Shoot(
@@ -277,7 +284,7 @@ namespace App.Modules.WeaponControllerModule
 			Logger.Print("Shoot hitscan weapon.");
 
 			Logger.Print(
-				$"Current magazine ammo: {this.CurrentWeaponCurrentMagazineAmmo}."
+				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.currentWeaponResource!.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.currentWeaponResource!.MagazineSize}."
 			);
 
 			var cameraRayInterception = CameraUtils.GetCameraRayInterception(
@@ -360,7 +367,7 @@ namespace App.Modules.WeaponControllerModule
 
 		private void Reload()
 		{
-			if (!this.reloadTimer!.IsStopped())
+			if (!this.reloadTimer!.IsStopped() || this.CurrentWeaponMagazines == 0)
 			{
 				return;
 			}
