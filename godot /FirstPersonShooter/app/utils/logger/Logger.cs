@@ -35,6 +35,21 @@ namespace App.Utils.LoggerModule
 			}
 		}
 
+		public static void PushErr(
+			string message = "",
+			[CallerFilePath] string filePath = "",
+			[CallerMemberName] string memberName = "",
+			[CallerLineNumber] int lineNumber = 0
+		)
+		{
+			if (OS.IsDebugBuild())
+			{
+				GD.PushError(
+					Logger.GenerateFullMessage(message, filePath, memberName, lineNumber)
+				);
+			}
+		}
+
 		private static string GenerateFullMessage(
 			string message,
 			string filePath,

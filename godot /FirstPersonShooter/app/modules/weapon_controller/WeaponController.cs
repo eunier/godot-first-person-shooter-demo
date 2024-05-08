@@ -55,6 +55,7 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _Ready()
 		{
+			Logger.PushErr("some err");
 			this.fireRateTimer = this.GetNode<Timer>(
 				WeaponController.FireRateTimerNodePath
 			);
@@ -287,9 +288,9 @@ namespace App.Modules.WeaponControllerModule
 
 				if (projectileScript is null)
 				{
-					GD.PushError(
-						$"No script attacked to script of projectile for weapon {this.CurrentWeaponResource.Name}." // TODO use node.name
-					); // TODO: throw vs log error vs push error
+					Logger.PushErr(
+						$"No script attacked to script of projectile for weapon {this.CurrentWeaponResource.Name}."
+					);
 				}
 			}
 
