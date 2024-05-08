@@ -29,10 +29,17 @@ namespace App.Modules.WeaponControllerModule
 		private WeaponResource[]? weaponResources;
 
 		private int currentWeaponIndex = 0;
-		private WeaponResource? currentWeaponResource; // TODO use setter and currentWeaponIndex
+
+		// private WeaponResource? currentWeaponResource; // TODO use setter and currentWeaponIndex
 		private Node3D? currentWeaponNode;
 		private Timer? fireRateTimer;
 		private Timer? reloadTimer;
+
+		private WeaponResource CurrentWeaponResource
+		{
+			get => this.weaponResources![this.currentWeaponIndex];
+			set => this.weaponResources![this.currentWeaponIndex] = value;
+		}
 
 		private int CurrentWeaponMagazines
 		{
@@ -72,7 +79,7 @@ namespace App.Modules.WeaponControllerModule
 			}
 
 			this.currentWeaponNode = this.weaponNodes.First(); // TODO do i need this is the is  a EquipWeapon call below?
-			this.currentWeaponResource = this.weaponResources.First(); // TODO do i need this is the is  a EquipWeapon call below?
+			this.CurrentWeaponResource = this.weaponResources.First(); // TODO do i need this is the is  a EquipWeapon call below?
 			this.EquipWeapon(this.currentWeaponIndex);
 		}
 
@@ -117,7 +124,7 @@ namespace App.Modules.WeaponControllerModule
 			this.CurrentWeaponMagazines--;
 
 			this.CurrentWeaponCurrentMagazineAmmo =
-				this.currentWeaponResource!.MagazineSize;
+				this.CurrentWeaponResource.MagazineSize;
 
 			Logger.Print("Finish Reload.");
 			Logger.Print($"Current magazines count: {this.CurrentWeaponMagazines}.");
@@ -131,22 +138,20 @@ namespace App.Modules.WeaponControllerModule
 
 				if (index == i)
 				{
-					Logger.Print(
-						$"Unequipped weapon {this.currentWeaponResource!.Name}."
-					);
+					Logger.Print($"Unequipped weapon {this.CurrentWeaponResource.Name}.");
 
 					weaponNode.Visible = true;
 					weaponNode.SetProcess(true);
 
 					this.currentWeaponNode = weaponNode;
-					this.currentWeaponResource = this.weaponResources![i];
+					// this.CurrentWeaponResource = this.weaponResources![i];
 
 					this.fireRateTimer!.WaitTime =
-						this.currentWeaponResource.FireRateWaitTime;
+						this.CurrentWeaponResource.FireRateWaitTime;
 
-					this.reloadTimer!.WaitTime = this.currentWeaponResource.ReloadTime;
+					this.reloadTimer!.WaitTime = this.CurrentWeaponResource.ReloadTime;
 
-					Logger.Print($"Equipped weapon {this.currentWeaponResource!.Name}.");
+					Logger.Print($"Equipped weapon {this.CurrentWeaponResource.Name}.");
 				}
 				else
 				{
@@ -184,7 +189,7 @@ namespace App.Modules.WeaponControllerModule
 
 		private void Shoot()
 		{
-			switch (this.currentWeaponResource!.ProjectileEnum)
+			switch (this.CurrentWeaponResource.ProjectileEnum)
 			{
 				case WeaponProjectileEnum.Hitscan:
 					this.HandleHitscanShoot();
@@ -217,12 +222,12 @@ namespace App.Modules.WeaponControllerModule
 			Logger.Print("Shoot hitscan weapon.");
 
 			Logger.Print(
-				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.currentWeaponResource!.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.currentWeaponResource!.MagazineSize}."
+				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.CurrentWeaponResource.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.CurrentWeaponResource.MagazineSize}."
 			);
 
 			var res = Camera.GetCameraRayInterception(
 				this,
-				this.currentWeaponResource!.Range
+				this.CurrentWeaponResource.Range
 			);
 
 			if (res.Collider is not null)
@@ -231,10 +236,10 @@ namespace App.Modules.WeaponControllerModule
 
 				if (res.Collider is IWithHealth collider)
 				{
-					collider.Health.Damage(this.currentWeaponResource.Damage);
+					collider.Health.Damage(this.CurrentWeaponResource.Damage);
 
 					Logger.Print(
-						$"Damage {collider} by {this.currentWeaponResource.Damage} hitpoints."
+						$"Damage {collider} by {this.CurrentWeaponResource.Damage} hitpoints."
 					);
 				}
 			}
@@ -259,16 +264,16 @@ namespace App.Modules.WeaponControllerModule
 			Logger.Print("Shoot hitscan weapon.");
 
 			Logger.Print(
-				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.currentWeaponResource!.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.currentWeaponResource!.MagazineSize}."
+				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.CurrentWeaponResource.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.CurrentWeaponResource.MagazineSize}."
 			);
 
 			var cameraRayInterception = Camera.GetCameraRayInterception(
 				this,
-				this.currentWeaponResource!.Range
+				this.CurrentWeaponResource.Range
 			);
 
 			var projectilePoint = this.GetNode<Node3D>(
-				$"{this.currentWeaponNode!.GetPath()}/{this.currentWeaponResource!.ProjectilePointNodePath}"
+				$"{this.currentWeaponNode!.GetPath()}/{this.CurrentWeaponResource.ProjectilePointNodePath}"
 			);
 
 			var direction = (
@@ -283,7 +288,7 @@ namespace App.Modules.WeaponControllerModule
 			);
 
 			var projectile =
-				this.currentWeaponResource!.ProjectileScene!.Instantiate<Projectile>();
+				this.CurrentWeaponResource.ProjectileScene!.Instantiate<Projectile>();
 
 			if (OS.IsDebugBuild())
 			{
@@ -292,7 +297,7 @@ namespace App.Modules.WeaponControllerModule
 				if (projectileScript is null)
 				{
 					GD.PushError(
-						$"No script attacked to script of projectile for weapon {this.currentWeaponResource.Name}." // TODO use node.name
+						$"No script attacked to script of projectile for weapon {this.CurrentWeaponResource.Name}." // TODO use node.name
 					); // TODO: throw vs log error vs push error
 				}
 			}
@@ -300,8 +305,8 @@ namespace App.Modules.WeaponControllerModule
 			projectilePoint.AddChild(projectile);
 			projectile.LookAt(cameraRayInterception.Position, Vector3.Up);
 			projectile.TopLevel = true;
-			projectile.Damage = this.currentWeaponResource.Damage;
-			projectile.Speed = this.currentWeaponResource.ProjectileSpeed;
+			projectile.Damage = this.CurrentWeaponResource.Damage;
+			projectile.Speed = this.CurrentWeaponResource.ProjectileSpeed;
 		}
 
 		private void OnProjectileBodyEntered(Node node)
@@ -324,7 +329,7 @@ namespace App.Modules.WeaponControllerModule
 		private void CreateShootMuzzleEffect()
 		{
 			var muzzleFlashNode = this.GetNode<GpuParticles3D>(
-				$"{this.currentWeaponNode!.GetPath()}/{this.currentWeaponResource!.MuzzleFashNodePath}"
+				$"{this.currentWeaponNode!.GetPath()}/{this.CurrentWeaponResource.MuzzleFashNodePath}"
 			);
 
 			muzzleFlashNode.Restart();
@@ -333,7 +338,7 @@ namespace App.Modules.WeaponControllerModule
 		private void CreateHitEffect(Vector3 position)
 		{
 			var effectNode =
-				this.currentWeaponResource!.HitScene!.Instantiate<Node3D>();
+				this.CurrentWeaponResource.HitScene!.Instantiate<Node3D>();
 
 			this.AddChild(effectNode);
 			effectNode.GlobalPosition = position;
