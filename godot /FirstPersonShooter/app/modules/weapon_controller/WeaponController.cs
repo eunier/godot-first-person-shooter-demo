@@ -30,12 +30,16 @@ namespace App.Modules.WeaponControllerModule
 		private WeaponResource CurrentWeaponResource
 		{
 			get => this.weaponResources![this.currentWeaponIndex];
-			set => this.weaponResources![this.currentWeaponIndex] = value;
 		}
 
 		private Node3D CurrentWeaponNode
 		{
 			get => this.weaponNodes[this.currentWeaponIndex];
+		}
+
+		private int WeaponCount
+		{
+			get => this.weaponResources!.Length;
 		}
 
 		private int CurrentWeaponMagazines
@@ -47,11 +51,6 @@ namespace App.Modules.WeaponControllerModule
 		{
 			get => this.weaponMagazinesAmmo[this.currentWeaponIndex];
 			set => this.weaponMagazinesAmmo[this.currentWeaponIndex] = value;
-		}
-
-		private int WeaponCount
-		{
-			get => this.weaponResources!.Length;
 		}
 
 		public override void _Ready()
@@ -75,7 +74,6 @@ namespace App.Modules.WeaponControllerModule
 				this.AddChild(weapon);
 			}
 
-			this.CurrentWeaponResource = this.weaponResources.First(); // TODO do i need this is the is  a EquipWeapon call below?
 			this.EquipWeapon(this.currentWeaponIndex);
 		}
 
