@@ -11,13 +11,8 @@ namespace App.Modules.WeaponControllerModule
 
 	public partial class WeaponController : Node3D
 	{
-		// private const string RifleNodePath = "Rifle";
-		// private const string CannonNodePath = "Cannon";
 		private const string FireRateTimerNodePath = "%FireRateTimer";
 		private const string ReloadTimerNodePath = "%ReloadTimer";
-
-		// private readonly Dictionary<WeaponEnum, Weapon> weapons = new();
-
 		private readonly List<Node3D> weaponNodes = new();
 		private readonly List<int> weaponMagazines = new();
 		private readonly List<int> weaponMagazinesAmmo = new();
@@ -29,9 +24,6 @@ namespace App.Modules.WeaponControllerModule
 		private WeaponResource[]? weaponResources;
 
 		private int currentWeaponIndex = 0;
-
-		// private WeaponResource? currentWeaponResource; // TODO use setter and currentWeaponIndex
-		private Node3D? currentWeaponNode;
 		private Timer? fireRateTimer;
 		private Timer? reloadTimer;
 
@@ -39,6 +31,11 @@ namespace App.Modules.WeaponControllerModule
 		{
 			get => this.weaponResources![this.currentWeaponIndex];
 			set => this.weaponResources![this.currentWeaponIndex] = value;
+		}
+
+		private Node3D CurrentWeaponNode
+		{
+			get => this.weaponNodes[this.currentWeaponIndex];
 		}
 
 		private int CurrentWeaponMagazines
@@ -78,7 +75,6 @@ namespace App.Modules.WeaponControllerModule
 				this.AddChild(weapon);
 			}
 
-			this.currentWeaponNode = this.weaponNodes.First(); // TODO do i need this is the is  a EquipWeapon call below?
 			this.CurrentWeaponResource = this.weaponResources.First(); // TODO do i need this is the is  a EquipWeapon call below?
 			this.EquipWeapon(this.currentWeaponIndex);
 		}
@@ -120,7 +116,7 @@ namespace App.Modules.WeaponControllerModule
 
 		public void OnReloadTimerTimeout()
 		{
-			this.currentWeaponNode!.Visible = true;
+			this.CurrentWeaponNode.Visible = true;
 			this.CurrentWeaponMagazines--;
 
 			this.CurrentWeaponCurrentMagazineAmmo =
@@ -142,9 +138,6 @@ namespace App.Modules.WeaponControllerModule
 
 					weaponNode.Visible = true;
 					weaponNode.SetProcess(true);
-
-					this.currentWeaponNode = weaponNode;
-					// this.CurrentWeaponResource = this.weaponResources![i];
 
 					this.fireRateTimer!.WaitTime =
 						this.CurrentWeaponResource.FireRateWaitTime;
@@ -273,7 +266,7 @@ namespace App.Modules.WeaponControllerModule
 			);
 
 			var projectilePoint = this.GetNode<Node3D>(
-				$"{this.currentWeaponNode!.GetPath()}/{this.CurrentWeaponResource.ProjectilePointNodePath}"
+				$"{this.CurrentWeaponNode.GetPath()}/{this.CurrentWeaponResource.ProjectilePointNodePath}"
 			);
 
 			var direction = (
@@ -323,13 +316,13 @@ namespace App.Modules.WeaponControllerModule
 
 			this.reloadTimer.Start();
 			Logger.Print("Reloading...");
-			this.currentWeaponNode!.Visible = false;
+			this.CurrentWeaponNode.Visible = false;
 		}
 
 		private void CreateShootMuzzleEffect()
 		{
 			var muzzleFlashNode = this.GetNode<GpuParticles3D>(
-				$"{this.currentWeaponNode!.GetPath()}/{this.CurrentWeaponResource.MuzzleFashNodePath}"
+				$"{this.CurrentWeaponNode.GetPath()}/{this.CurrentWeaponResource.MuzzleFashNodePath}"
 			);
 
 			muzzleFlashNode.Restart();
