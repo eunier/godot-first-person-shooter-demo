@@ -19,7 +19,8 @@ namespace App.Modules.WeaponModule
 				null,
 				string.Empty,
 				WeaponProjectileEnum.Hitscan
-			) { }
+			)
+		{ }
 
 		public WeaponResource(
 			float fireRatePerMinute,
