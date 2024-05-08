@@ -4,7 +4,6 @@ namespace App.Modules.WeaponControllerModule
 	using System.Linq;
 	using App.Modules.CameraModule;
 	using App.Modules.HealthModule;
-	using App.Modules.HitscanModule;
 	using App.Modules.ProjectileModule;
 	using App.Modules.WeaponModule;
 	using App.Utils.LoggerModule;
@@ -26,17 +25,12 @@ namespace App.Modules.WeaponControllerModule
 		[Export]
 		private Camera3D? camera;
 
-		// private KeyValuePair<WeaponEnum, Weapon> currentWeapon;
-		// private Rifle? rifle;
-		// private Cannon? cannon;
-
 		[Export]
 		private WeaponResource[]? weaponResources;
 
 		private int currentWeaponIndex = 0;
 		private WeaponResource? currentWeaponResource; // TODO use setter and currentWeaponIndex
 		private Node3D? currentWeaponNode;
-		private Hitscan? hitscan;
 		private Timer? fireRateTimer;
 		private Timer? reloadTimer;
 
@@ -58,13 +52,6 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _Ready()
 		{
-			// this.rifle = this.GetNode<Rifle>(WeaponController.RifleNodePath);
-			// this.cannon = this.GetNode<Cannon>(WeaponController.CannonNodePath);
-			// this.weapons.Add(WeaponEnum.Rifle, this.rifle);
-			// this.weapons.Add(WeaponEnum.Cannon, this.cannon);
-
-			this.hitscan = this.GetNode<Hitscan>(GlobalConstants.NodePaths.Hitscan);
-
 			this.fireRateTimer = this.GetNode<Timer>(
 				WeaponController.FireRateTimerNodePath
 			);
@@ -214,7 +201,6 @@ namespace App.Modules.WeaponControllerModule
 
 		private void HandleHitscanShoot()
 		{
-			// Debugger.Breakpoint();
 			if (
 				!this.fireRateTimer!.IsStopped()
 				|| !this.reloadTimer!.IsStopped()
@@ -233,11 +219,6 @@ namespace App.Modules.WeaponControllerModule
 			Logger.Print(
 				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.currentWeaponResource!.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.currentWeaponResource!.MagazineSize}."
 			);
-
-			// var res = this.hitscan!.Shoot(
-			// 	this.camera!,
-			// 	this.currentWeaponResource!.Range
-			// );
 
 			var res = Camera.GetCameraRayInterception(
 				this,
