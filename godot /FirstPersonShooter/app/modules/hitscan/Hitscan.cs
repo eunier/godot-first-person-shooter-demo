@@ -1,7 +1,6 @@
 namespace App.Modules.HitscanModule
 {
 	using System.Linq;
-	using App.Utils.CameraUtilsModule;
 	using App.Utils.LoggerModule;
 	using Godot;
 

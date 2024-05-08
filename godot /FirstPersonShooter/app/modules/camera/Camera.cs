@@ -1,10 +1,10 @@
-namespace App.Utils.CameraUtilsModule
+namespace App.Modules.CameraModule
 {
 	using System.Linq;
 	using App.Utils.LoggerModule;
 	using Godot;
 
-	public static class CameraUtils // TODO should this be in the modules folder ?
+	public static class Camera
 	{
 		public static CameraRayInterceptionResult GetCameraRayInterception(
 			Node3D caller,
@@ -15,7 +15,6 @@ namespace App.Utils.CameraUtilsModule
 			var cameraCenter = camera.GetViewport().GetVisibleRect().Size / 2;
 			var rayOrigin = camera.ProjectRayOrigin(cameraCenter);
 			var rayEnd = rayOrigin + (camera.ProjectRayNormal(cameraCenter) * range);
-
 			var rayQuery = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
 
 			var rayInterception = caller

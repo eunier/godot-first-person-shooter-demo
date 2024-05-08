@@ -1,17 +1,13 @@
 namespace App.Modules.WeaponControllerModule
 {
-	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using App.Modules.CannonModule;
+	using App.Modules.CameraModule;
 	using App.Modules.HealthModule;
 	using App.Modules.HitscanModule;
 	using App.Modules.ProjectileModule;
-	using App.Modules.RifleModule;
 	using App.Modules.WeaponModule;
-	using App.Utils.CameraUtilsModule;
 	using App.Utils.LoggerModule;
-	using App.Utils.UtilsModule;
 	using Godot;
 
 	public partial class WeaponController : Node3D
@@ -243,7 +239,7 @@ namespace App.Modules.WeaponControllerModule
 			// 	this.currentWeaponResource!.Range
 			// );
 
-			var res = CameraUtils.GetCameraRayInterception(
+			var res = Camera.GetCameraRayInterception(
 				this,
 				this.currentWeaponResource!.Range
 			);
@@ -287,7 +283,7 @@ namespace App.Modules.WeaponControllerModule
 				$"Current Ammo: {this.CurrentWeaponCurrentMagazineAmmo} / {this.CurrentWeaponMagazines * this.currentWeaponResource!.MagazineSize}  | {this.CurrentWeaponMagazines} / {this.currentWeaponResource!.MagazineSize}."
 			);
 
-			var cameraRayInterception = CameraUtils.GetCameraRayInterception(
+			var cameraRayInterception = Camera.GetCameraRayInterception(
 				this,
 				this.currentWeaponResource!.Range
 			);

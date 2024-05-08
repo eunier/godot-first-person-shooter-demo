@@ -1,4 +1,4 @@
-namespace App.Utils.CameraUtilsModule
+namespace App.Modules.CameraModule
 {
 	using Godot;
 
