@@ -47,6 +47,7 @@ namespace App.Modules.WeaponControllerModule
 			get => this.weaponMagazines[this.currentWeaponIndex];
 			set => this.weaponMagazines[this.currentWeaponIndex] = value;
 		}
+
 		private int CurrentWeaponCurrentMagazineAmmo
 		{
 			get => this.weaponMagazinesAmmo[this.currentWeaponIndex];
