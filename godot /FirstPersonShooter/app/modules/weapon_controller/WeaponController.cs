@@ -55,7 +55,6 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _Ready()
 		{
-			Logger.PushErr("some err");
 			this.fireRateTimer = this.GetNode<Timer>(
 				WeaponController.FireRateTimerNodePath
 			);
@@ -80,7 +79,7 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _UnhandledInput(InputEvent @event)
 		{
-			if (Input.MouseMode == Input.MouseModeEnum.Captured)
+			if (Input.MouseMode != Input.MouseModeEnum.Captured)
 			{
 				return;
 			}
