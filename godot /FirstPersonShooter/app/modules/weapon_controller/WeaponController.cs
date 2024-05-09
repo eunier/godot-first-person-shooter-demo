@@ -80,9 +80,13 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _UnhandledInput(InputEvent @event)
 		{
+			if (Input.MouseMode == Input.MouseModeEnum.Captured)
+			{
+				return;
+			}
+
 			if (
 				@event.IsActionPressed(App.Modules.GlobalConstants.InputMap.NextWeapon)
-				&& Input.MouseMode == Input.MouseModeEnum.Captured
 			)
 			{
 				this.EquipNextWeapon();
@@ -92,7 +96,6 @@ namespace App.Modules.WeaponControllerModule
 				@event.IsActionPressed(
 					App.Modules.GlobalConstants.InputMap.PreviousWeapon
 				)
-				&& Input.MouseMode == Input.MouseModeEnum.Captured
 			)
 			{
 				this.EquipPreviousWeapon();
@@ -101,7 +104,6 @@ namespace App.Modules.WeaponControllerModule
 
 		public override void _Process(double delta)
 		{
-			// TODO use _Input for immediate check, use _Process for continuous check
 			if (Input.IsActionPressed(App.Modules.GlobalConstants.InputMap.Shoot))
 			{
 				this.Shoot();
